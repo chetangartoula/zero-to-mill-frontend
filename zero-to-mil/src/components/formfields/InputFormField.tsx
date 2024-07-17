@@ -14,6 +14,9 @@ export interface InputFieldProps {
   label: string;
   isDisabled?: boolean;
   placeholder?: string;
+  formItemProps?: React.ComponentProps<typeof FormItem>;
+  formLabelProps?: React.ComponentProps<typeof FormLabel>;
+  formControlProps?: React.ComponentProps<typeof FormControl>;
 }
 
 function InputFormField({
@@ -21,6 +24,8 @@ function InputFormField({
   label,
   isDisabled,
   placeholder,
+  formControlProps,
+  formLabelProps,
 }: InputFieldProps & InputProps) {
   const form = useFormContext();
   return (
@@ -29,8 +34,8 @@ function InputFormField({
       control={form.control}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
-          <FormControl>
+          <FormLabel {...formLabelProps}>{label}</FormLabel>
+          <FormControl {...formControlProps}>
             <Input
               {...field}
               disabled={isDisabled}
