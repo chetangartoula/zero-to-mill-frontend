@@ -3,10 +3,10 @@ import AppForm from "@/components/base/form/AppForm";
 import CheckBoxFormField from "@/components/formfields/CheckBoxFormField";
 import InputFormField from "@/components/formfields/InputFormField";
 import { Button } from "@/components/ui/button";
+import AuthWrapper from "@/components/wrapper/authWrapper";
 import { cn } from "@/lib/utils";
 import { LoginSchema } from "@/schemas/auth";
 import { getPageRoutes } from "@/utils/getRoutes";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { z } from "zod";
@@ -14,15 +14,12 @@ import { z } from "zod";
 type Login = z.infer<typeof LoginSchema>;
 function Login() {
   return (
-    <div>
-      <Image
-        src={"/ZeroToMilLogo.svg"}
-        alt={"logo"}
-        width={100}
-        height={24}
-        priority
-      />
-      <h1 className="text-3xl font-bold">Login</h1>
+    <AuthWrapper
+      title="Login"
+      wrapperProps={{
+        className: "relative top-20 m-4",
+      }}
+    >
       <AppForm
         defaultValues={{ username: "", password: "" }}
         schema={LoginSchema}
@@ -52,7 +49,7 @@ function Login() {
           <Link href={getPageRoutes("sign-up")}>Sign up</Link>
         </p>
       </AppForm>
-    </div>
+    </AuthWrapper>
   );
 }
 
