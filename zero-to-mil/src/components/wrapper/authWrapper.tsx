@@ -15,7 +15,7 @@ function AuthWrapper({
   },
 }: AuthWrapperProps & PropsWithChildren) {
   return (
-    <div className={cn("h-screen", wrapperProps?.className)}>
+    <div className={cn("", wrapperProps?.className)}>
       <div className="flex justify-center mb-4">
         <Image
           src={"/ZeroToMilLogo.svg"}

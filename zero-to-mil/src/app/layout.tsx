@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn("h-screen w-screen p-0 m-0", inter.className)}>
+      <body className={cn("p-0 m-0", inter.className)}>
         <AppProvider>{children}</AppProvider>
       </body>
     </html>
