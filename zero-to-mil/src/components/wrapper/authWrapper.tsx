@@ -4,27 +4,27 @@ import React, { PropsWithChildren } from "react";
 
 export interface AuthWrapperProps {
   title: string;
+  includeLogo?: boolean;
+  logoSrc?: string;
   wrapperProps?: React.ComponentProps<"div">;
 }
 
 function AuthWrapper({
   title,
   children,
+  includeLogo = true,
+  logoSrc = "/ZeroToMilLogo.svg",
   wrapperProps = {
     className: "h-screen",
   },
 }: AuthWrapperProps & PropsWithChildren) {
   return (
     <div className={cn("", wrapperProps?.className)}>
-      <div className="flex justify-center mb-4">
-        <Image
-          src={"/ZeroToMilLogo.svg"}
-          alt={"logo"}
-          width={100}
-          height={24}
-          priority
-        />
-      </div>
+      {includeLogo && (
+        <div className="flex justify-center mb-4">
+          <Image src={logoSrc} alt={"logo"} width={100} height={24} priority />
+        </div>
+      )}
 
       <h1 className="font-switzer font-semibold text-2xl leading-5 text-center">
         {title}

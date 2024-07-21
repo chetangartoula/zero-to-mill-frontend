@@ -16,6 +16,8 @@ function Login() {
   return (
     <AuthWrapper
       title="Login"
+      includeLogo
+      logoSrc={"/ZeroToMilLogo.svg"}
       wrapperProps={{
         className: "relative top-20 m-4",
       }}
