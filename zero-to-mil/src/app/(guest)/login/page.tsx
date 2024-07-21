@@ -15,9 +15,8 @@ type Login = z.infer<typeof LoginSchema>;
 function Login() {
   return (
     <AuthWrapper
-      title="Login"
+      title="Welcome back"
       includeLogo
-      logoSrc={"/ZeroToMilLogo.svg"}
       wrapperProps={{
         className: "relative top-20 m-4",
       }}

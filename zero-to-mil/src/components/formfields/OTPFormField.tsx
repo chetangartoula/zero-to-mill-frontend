@@ -13,7 +13,7 @@ export interface OTPFormFieldProps {
   name: string;
   label: string;
   length: string;
-  isDisabled: string;
+  isDisabled?: string;
 }
 
 function OTPFormField({ name, label }: OTPFormFieldProps) {
