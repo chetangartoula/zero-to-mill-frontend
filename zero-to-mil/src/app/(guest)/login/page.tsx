@@ -43,9 +43,7 @@ function Login() {
             <Link href={getPageRoutes("forgot-password")}>Forgot Password</Link>
           </div>
 
-          <Button variant="destructive" size={"full"}>
-            Login
-          </Button>
+          <Button size={"full"}>Login</Button>
           <p>
             Don&apos;t have an account?{" "}
             <Link href={getPageRoutes("sign-up")}>Sign up</Link>
