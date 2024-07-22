@@ -3,7 +3,9 @@ import AppForm from "@/components/base/form/AppForm";
 import CheckBoxFormField from "@/components/formfields/CheckBoxFormField";
 import InputFormField from "@/components/formfields/InputFormField";
 import { Button } from "@/components/ui/button";
+import Text from "@/components/ui/text";
 import AuthWrapper from "@/components/wrapper/authWrapper";
+import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { cn } from "@/lib/utils";
 import { LoginSchema } from "@/schemas/auth";
 import { getPageRoutes } from "@/utils/getRoutes";
@@ -26,7 +28,7 @@ function Login() {
         schema={LoginSchema}
         onSubmit={(data) => console.log(data)}
       >
-        <div className="space-y-3">
+        <FormContentWrapper>
           <InputFormField name="username" label="Username" />
           <InputFormField name="password" label="Password" type="password" />
           <div className="flex justify-between">
@@ -37,18 +39,23 @@ function Login() {
                 className: cn("flex items-center"),
               }}
               formLabelProps={{
-                className: cn("!mt-0 "),
+                className: cn("!mt-0 !font-normal"),
               }}
             />
-            <Link href={getPageRoutes("forgot-password")}>Forgot Password</Link>
+            <Text variant="primary">
+              <Link href={getPageRoutes("forgot-password")}>
+                Forgot Password
+              </Link>
+            </Text>
           </div>
-
-          <Button size={"full"}>Login</Button>
-          <p>
-            Don&apos;t have an account?{" "}
-            <Link href={getPageRoutes("sign-up")}>Sign up</Link>
-          </p>
-        </div>
+        </FormContentWrapper>
+        <Button size={"full"}>Login</Button>
+        <Text className="text-center mt-3">
+          Don&apos;t have an account?{" "}
+          <Link href={getPageRoutes("sign-up")} className="text-primary">
+            Sign up
+          </Link>
+        </Text>
       </AppForm>
     </AuthWrapper>
   );

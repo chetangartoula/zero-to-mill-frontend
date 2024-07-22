@@ -11,12 +11,12 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp";
 
 export interface OTPFormFieldProps {
   name: string;
-  label: string;
-  length: string;
+  label?: string;
+  length: number;
   isDisabled?: string;
 }
 
-function OTPFormField({ name, label }: OTPFormFieldProps) {
+function OTPFormField({ name, label, length }: OTPFormFieldProps) {
   const form = useFormContext();
   return (
     <FormField
@@ -24,8 +24,8 @@ function OTPFormField({ name, label }: OTPFormFieldProps) {
       control={form.control}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
-          <FormControl>
+          {label && <FormLabel>{label}</FormLabel>}
+          <FormControl className="">
             <InputOTP {...field} maxLength={length}>
               {Array.from({ length }).map((_, index) => (
                 <InputOTPGroup key={`${name}[${index}]`} {...field}>

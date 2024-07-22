@@ -1,15 +1,39 @@
-import React from "react";
+import { cn } from "@/lib/utils";
+import { Variant } from "@/types/global";
+import React, { PropsWithChildren } from "react";
+import { Props } from "recharts/types/container/Surface";
 
 interface TextProps {
-  title: string;
-  textProps: React.HTMLProps<HTMLParagraphElement>;
+  text?: string;
+  textProps?: React.HTMLProps<HTMLParagraphElement>;
+  variant?: Variant;
+  className?: string;
 }
 
-function Text({ title, textProps }: TextProps) {
+function Text({
+  text,
+  textProps,
+  children,
+  className,
+  variant = "muted",
+}: PropsWithChildren<TextProps>) {
+  const textColor = {
+    primary: "text-primary",
+    secondary: "text-secondary",
+    muted: "text-muted",
+    white: "text-white",
+  };
+
   return (
-    <p className={textProps?.className ?? "text-muted"} {...textProps}>
-      {title}
-    </p>
+    <div
+      className={cn(
+        `text-sm ${textColor[variant]}`,
+        className ?? textProps?.className
+      )}
+      {...textProps}
+    >
+      {text ?? children}
+    </div>
   );
 }
 

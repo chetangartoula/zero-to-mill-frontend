@@ -7,6 +7,8 @@ import { RegisterSchema } from "@/schemas/auth";
 import React from "react";
 import Link from "next/link";
 import { getPageRoutes } from "@/utils/getRoutes";
+import Text from "@/components/ui/text";
+import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 
 function SignUp() {
   return (
@@ -27,7 +29,7 @@ function SignUp() {
         schema={RegisterSchema}
         onSubmit={(data) => console.log(data)}
       >
-        <div>
+        <FormContentWrapper>
           <InputFormField name="email" label="Email" />
           <InputFormField name="username" label="Username" />
           <InputFormField name="password" label="Password" type="password" />
@@ -36,14 +38,14 @@ function SignUp() {
             label="Confirm Password"
             type="password"
           />
-        </div>
-        <Button variant="destructive" size={"full"}>
-          Login
-        </Button>
-        <p>
+        </FormContentWrapper>
+        <Button size={"full"}>Create Account</Button>
+        <Text variant="white" className="text-center mt-3">
           Do you have an account?{" "}
-          <Link href={getPageRoutes("sign-up")}>Login</Link>
-        </p>
+          <Link href={getPageRoutes("login")} className="text-primary">
+            Login
+          </Link>
+        </Text>
       </AppForm>
     </AuthWrapper>
   );
