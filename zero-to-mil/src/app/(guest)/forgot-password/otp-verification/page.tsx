@@ -1,8 +1,10 @@
 "use client";
 import AppForm from "@/components/base/form/AppForm";
 import OTPFormField from "@/components/formfields/OTPFormField";
+import { Button } from "@/components/ui/button";
 import Text from "@/components/ui/text";
 import AuthWrapper from "@/components/wrapper/authWrapper";
+import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { otpVerificationSchema } from "@/schemas/auth";
 import React from "react";
 
@@ -11,15 +13,45 @@ type Props = {};
 function OTPVerification({}: Props) {
   return (
     <AuthWrapper title="OTP code verification" includeLogo={false}>
-      <Text text="We have sent an OTP to your email  address ramxxxXgmail.com. Enter the code below to verify" />
+      <Text
+        text="We have sent an OTP to your email  address ramxxxXgmail.com. Enter the code below to verify"
+        className="my-2"
+      />
       <AppForm
         defaultValues={{ otp: "" }}
         schema={otpVerificationSchema}
         onSubmit={(data) => console.log(data)}
       >
-        <OTPFormField name="otp" length={6} />
-        <Text>Didn&apos;t receive code?</Text>
-        <Text>You can receive teh code in sec</Text>
+        {(form) => (
+          <FormContentWrapper
+            props={{
+              className: "flex-column justify-center space-y-4 mt-5",
+            }}
+          >
+            <div className="flex justify-center">
+              <OTPFormField name="otp" length={6} />
+            </div>
+            <div>
+              <Text className="text-center">Didn&apos;t receive code?</Text>
+              {true ? (
+                <Text className="text-center">
+                  You can receive teh code in 10 sec
+                </Text>
+              ) : (
+                <Text variant="primary" className="text-center m-0">
+                  Resend Code
+                </Text>
+              )}
+            </div>
+
+            <Button
+              size={"full"}
+              variant={form.watch("otp").length === 6 ? "default" : "disabled"}
+            >
+              Verify
+            </Button>
+          </FormContentWrapper>
+        )}
       </AppForm>
     </AuthWrapper>
   );

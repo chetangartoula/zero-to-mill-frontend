@@ -18,7 +18,6 @@ function Login() {
   return (
     <AuthWrapper
       title="Welcome back"
-      includeLogo
       wrapperProps={{
         className: "relative top-20 m-4",
       }}

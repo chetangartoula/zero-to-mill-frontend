@@ -20,7 +20,9 @@ export interface AppFormProps<FValues extends FieldValues>
   schema: z.Schema<FValues>;
   onSubmit: (data: FValues, formHelpers: FormHelpers<FValues>) => void;
   debug?: boolean;
-  children?: React.ReactNode;
+  children?:
+    | React.ReactNode
+    | ((form: UseFormReturn<FValues>) => React.ReactNode);
   className?: React.HTMLAttributes<HTMLDivElement>["className"];
 }
 
@@ -45,7 +47,7 @@ function AppForm<FValues extends FieldValues>({
         onSubmit={form.handleSubmit((data) => onSubmit(data, form))}
         onReset={() => form.reset()}
       >
-        {children}
+        {typeof children === "function" ? children(form) : children}
         {debug && <DevTool control={form.control} />}
       </form>
     </Form>

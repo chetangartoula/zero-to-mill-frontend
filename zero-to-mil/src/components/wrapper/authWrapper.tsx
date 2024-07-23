@@ -19,7 +19,7 @@ function AuthWrapper({
   },
 }: AuthWrapperProps & PropsWithChildren) {
   return (
-    <div className={cn("", wrapperProps?.className)}>
+    <div className={cn("mx-4", wrapperProps?.className)}>
       {includeLogo && (
         <div className="flex justify-center mb-4">
           <Image src={logoSrc} alt={"logo"} width={100} height={24} priority />
