@@ -4,4 +4,5 @@ export const PageRoutes = {
   "sign-up": "./sign-up",
   "otp-verification": "./forgot-password/otp-verification",
   "new-password": "./new-password",
+  dashboard: "./dashboard",
 };

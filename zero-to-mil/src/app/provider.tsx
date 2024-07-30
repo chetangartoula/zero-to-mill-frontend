@@ -13,7 +13,7 @@ export function AppProvider({
 }): ReactElement {
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
+      <ReactQueryDevtools initialIsOpen={false} position="top" />
       <AppStoreProvider>{children}</AppStoreProvider>
     </QueryClientProvider>
   );
