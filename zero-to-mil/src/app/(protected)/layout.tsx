@@ -1,14 +1,10 @@
-"use client";
 import BottomBar from "@/components/navigation/BottomBar";
-import { usePathname } from "next/navigation";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
-type Props = {};
-
-function ProtectedLayout({}: Props) {
-  const params = usePathname();
+function ProtectedLayout({ children }: PropsWithChildren) {
   return (
     <div>
+      {children}
       <BottomBar />
     </div>
   );

@@ -14,11 +14,11 @@ function BottomBar() {
   const router = useRouter();
   const params = usePathname();
   return (
-    <Menubar className="fixed bottom-0 w-full bg-gray-900 flex justify-between items-center h-13 rounded-none">
+    <Menubar className="fixed bottom-0 w-full bg-accent flex justify-between items-center h-13 rounded-none">
       {routes.map((item, index) => (
         <MenubarMenu key={`${item.value}.${index}`}>
           <MenubarTrigger
-            className={`flex flex-col items-center py-2 relative `}
+            className={`flex flex-col items-center py-1 relative `}
             onClick={() => router.push(getPageRoutes(item.value))}
           >
             {item.special ? (
