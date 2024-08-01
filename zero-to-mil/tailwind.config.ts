@@ -99,6 +99,12 @@ const config = {
         "2xs": "0.625rem",
         "3xs": "0.5rem",
       },
+      height: {
+        17: "4.25rem", // 68px
+        "17.5": "4.375rem", // 70px
+        18: "4.5rem", // 72px
+        19: "4.75rem", // 76px
+      },
       spacing: {
         "4.5": "1.125rem",
         "5": "1.25rem",
