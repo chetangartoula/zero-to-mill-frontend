@@ -9,12 +9,19 @@ import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { cn } from "@/lib/utils";
 import { LoginSchema } from "@/schemas/auth";
 import { getPageRoutes } from "@/utils/getRoutes";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import React from "react";
 import { z } from "zod";
 
 type Login = z.infer<typeof LoginSchema>;
 function Login() {
+  const loginMutation = useMutation({
+    mutationFn: async (data: Login) => {
+      console.log(data);
+    },
+  });
+
   return (
     <AuthWrapper
       title="Welcome back"
@@ -22,10 +29,10 @@ function Login() {
         className: "relative top-20 m-4",
       }}
     >
-      <AppForm
+      <AppForm<Login>
         defaultValues={{ username: "", password: "" }}
         schema={LoginSchema}
-        onSubmit={(data) => console.log(data)}
+        onSubmit={(data: Login) => loginMutation.mutate(data)}
       >
         <FormContentWrapper>
           <InputFormField name="username" label="Username" />

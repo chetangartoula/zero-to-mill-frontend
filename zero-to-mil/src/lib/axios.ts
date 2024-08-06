@@ -11,7 +11,7 @@ declare module "axios" {
 
 export const axiosService = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
-  headers: {},
+  timeout: 1000 * 30,
 });
 
 axios.interceptors.request.use(
