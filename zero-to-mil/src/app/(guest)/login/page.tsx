@@ -8,17 +8,21 @@ import AuthWrapper from "@/components/wrapper/authWrapper";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { cn } from "@/lib/utils";
 import { LoginSchema } from "@/schemas/auth";
+import { loginUser } from "@/services";
+import { LoginDTO } from "@/types/base";
 import { getPageRoutes } from "@/utils/getRoutes";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import React from "react";
-import { z } from "zod";
 
-type Login = z.infer<typeof LoginSchema>;
 function Login() {
-  const loginMutation = useMutation({
-    mutationFn: async (data: Login) => {
+  const { mutate } = useMutation({
+    mutationFn: async (data: LoginDTO) => await loginUser(data),
+    onSuccess: (data) => {
       console.log(data);
+    },
+    onError: (error) => {
+      console.log("error", error);
     },
   });
 
@@ -29,10 +33,10 @@ function Login() {
         className: "relative top-20 m-4",
       }}
     >
-      <AppForm<Login>
+      <AppForm<LoginDTO>
         defaultValues={{ username: "", password: "" }}
         schema={LoginSchema}
-        onSubmit={(data: Login) => loginMutation.mutate(data)}
+        onSubmit={(data) => mutate(data)}
       >
         <FormContentWrapper>
           <InputFormField name="username" label="Username" />

@@ -1,6 +1,6 @@
 import { apiRoutes } from "@/constants/apiRoutes";
 import { getApiRoutes } from "@/utils/getRoutes";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 declare module "axios" {
   interface AxiosRequestConfig {
@@ -9,12 +9,12 @@ declare module "axios" {
   }
 }
 
-export const axiosService = axios.create({
+export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   timeout: 1000 * 30,
 });
 
-axios.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   function (config) {
     if (config.name) {
       config.url = getApiRoutes(config.name ?? "", config.modifier);
@@ -27,7 +27,7 @@ axios.interceptors.request.use(
 );
 
 // Add a response interceptor
-axios.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data

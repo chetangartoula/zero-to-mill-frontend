@@ -44,7 +44,7 @@ function AppForm<FValues extends FieldValues>({
     <Form {...form}>
       <form
         className={className}
-        onSubmit={form.handleSubmit((data) => onSubmit(data, form))}
+        onSubmit={form.handleSubmit((data: FValues) => onSubmit(data, form))}
         onReset={() => form.reset()}
       >
         {typeof children === "function" ? children(form) : children}
