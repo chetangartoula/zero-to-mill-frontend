@@ -6,8 +6,10 @@ import { Button } from "@/components/ui/button";
 import { newPasswordSchema } from "@/schemas/auth";
 import AppForm from "@/components/base/form/AppForm";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
+import { useAppMutation } from "@/lib/api";
 
 function NewPasswordSetUp() {
+  const { mutate } = useAppMutation("resetPassword");
   return (
     <AuthWrapper
       title="Set New Password"
@@ -21,7 +23,7 @@ function NewPasswordSetUp() {
           passwordConfirmation: "",
         }}
         schema={newPasswordSchema}
-        onSubmit={(data) => console.log(data)}
+        onSubmit={(data) => mutate(data)}
       >
         <FormContentWrapper>
           {" "}

@@ -12,3 +12,5 @@ export const apiRoutes = {
   // transaction
   "load-money": "/transaction/load-admin/",
 };
+
+export type ApiRoutes = keyof typeof apiRoutes;

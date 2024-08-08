@@ -4,10 +4,12 @@ import InputFormField from "@/components/formfields/InputFormField";
 import { Button } from "@/components/ui/button";
 import AuthWrapper from "@/components/wrapper/authWrapper";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
+import { useAppMutation } from "@/lib/api";
 import { forgotPasswordSchema } from "@/schemas/auth";
 import React from "react";
 
 function ForgotPassword() {
+  const { mutate } = useAppMutation("otp", {});
   return (
     <AuthWrapper
       title="Forgot Password"
@@ -18,7 +20,7 @@ function ForgotPassword() {
       <AppForm
         defaultValues={{ email: "" }}
         schema={forgotPasswordSchema}
-        onSubmit={(data) => console.log(data)}
+        onSubmit={(data) => mutate(data)}
       >
         <FormContentWrapper>
           <InputFormField name="email" label="Email" />

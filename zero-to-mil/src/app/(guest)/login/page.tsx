@@ -6,25 +6,16 @@ import { Button } from "@/components/ui/button";
 import Text from "@/components/ui/text";
 import AuthWrapper from "@/components/wrapper/authWrapper";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
+import { useAppMutation } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { LoginSchema } from "@/schemas/auth";
-import { loginUser } from "@/services";
 import { LoginDTO } from "@/types/base";
 import { getPageRoutes } from "@/utils/getRoutes";
-import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import React from "react";
 
 function Login() {
-  const { mutate } = useMutation({
-    mutationFn: async (data: LoginDTO) => await loginUser(data),
-    onSuccess: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log("error", error);
-    },
-  });
+  const { mutate } = useAppMutation("login", {});
 
   return (
     <AuthWrapper

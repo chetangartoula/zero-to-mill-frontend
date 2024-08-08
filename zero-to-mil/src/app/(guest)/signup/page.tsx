@@ -9,8 +9,10 @@ import Link from "next/link";
 import { getPageRoutes } from "@/utils/getRoutes";
 import Text from "@/components/ui/text";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
+import { useAppMutation } from "@/lib/api";
 
 function SignUp() {
+  const { mutate } = useAppMutation("register");
   return (
     <AuthWrapper
       title="Get Started"
@@ -27,7 +29,7 @@ function SignUp() {
           passwordConfirmation: "",
         }}
         schema={RegisterSchema}
-        onSubmit={(data) => console.log(data)}
+        onSubmit={(data) => mutate(data)}
       >
         <FormContentWrapper>
           <InputFormField name="email" label="Email" />

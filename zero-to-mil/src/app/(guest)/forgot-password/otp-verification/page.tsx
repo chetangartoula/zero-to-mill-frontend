@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 import Text from "@/components/ui/text";
 import AuthWrapper from "@/components/wrapper/authWrapper";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
+import { useAppMutation } from "@/lib/api";
 import { otpVerificationSchema } from "@/schemas/auth";
 import React from "react";
 
-type Props = {};
-
-function OTPVerification({}: Props) {
+function OTPVerification() {
+  const { mutate } = useAppMutation("otp");
   return (
     <AuthWrapper title="OTP code verification" includeLogo={false}>
       <Text
