@@ -13,9 +13,14 @@ import { LoginDTO } from "@/types/base";
 import { getPageRoutes } from "@/utils/getRoutes";
 import Link from "next/link";
 import React from "react";
+import { toast } from "sonner";
 
 function Login() {
-  const { mutate } = useAppMutation("login", {});
+  const { mutate } = useAppMutation("login", {
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
 
   return (
     <AuthWrapper

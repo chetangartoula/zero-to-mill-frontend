@@ -6,3 +6,5 @@ export const PageRoutes = {
   "new-password": "./new-password",
   dashboard: "./dashboard",
 };
+
+export type PageRoutesType = keyof typeof PageRoutes;

@@ -1,6 +1,7 @@
 import { apiRoutes } from "@/constants/apiRoutes";
+import { handleApiError } from "@/utils/error";
 import { getApiRoutes } from "@/utils/getRoutes";
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 
 declare module "axios" {
   interface AxiosRequestConfig {
@@ -15,27 +16,16 @@ export const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(
-  function (config) {
+  (config) => {
     if (config.name) {
       config.url = getApiRoutes(config.name ?? "", config.modifier);
     }
     return config;
   },
-  function (error: Error) {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// Add a response interceptor
 axiosInstance.interceptors.response.use(
-  function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
-    return response;
-  },
-  function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    return Promise.reject(error);
-  }
+  (response) => response,
+  (error) => Promise.reject(handleApiError(error))
 );

@@ -1,15 +1,23 @@
-import type { NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
+const PUBLIC_PATHS = [
+  "/login",
+  "/signup",
+  "/forgot-password",
+  "/forgot-password/otp-verification",
+  "/forgot-password/new-password",
+];
 export function middleware(request: NextRequest) {
-  const currentUser = request.cookies.get("currentUser")?.value;
-
-  if (currentUser && !request.nextUrl.pathname.startsWith("/dashboard")) {
-    return Response.redirect(new URL("/dashboard", request.url));
+  const { pathname } = request.nextUrl;
+  if (PUBLIC_PATHS.includes(pathname)) {
+    return NextResponse.next();
   }
+  const isAuthorized = request.cookies.has("token");
 
-  if (!currentUser && !request.nextUrl.pathname.startsWith("/login")) {
-    return Response.redirect(new URL("/login", request.url));
+  if (!isAuthorized) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
+  return NextResponse.next();
 }
 
 export const config = {

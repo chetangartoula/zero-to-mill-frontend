@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { ApiRoutes } from "../constants/apiRoutes";
 import { axiosInstance } from "./axios";
 import { BaseApiResponse } from "@/types/global";
+import { isString } from "lodash";
 
 interface UseAppQueryOptions<ResponseData>
   extends Omit<UseQueryOptions<ResponseData>, "queryFn"> {
@@ -76,14 +77,8 @@ export function useAppMutation<ResponseData, Values = FieldValues, E = Error>(
   mutationOptions?: UseAppMutationOptions<ResponseData, Values, E>,
   requestConfig?: Omit<AxiosRequestConfig, "name">
 ) {
-  const showFailureToast = mutationOptions?.showFailureToast ?? true;
-
   return useMutation({
-    onError: (error) => {
-      if (error instanceof Error && showFailureToast) {
-        toast.error(error.message);
-      }
-    },
+    onError: (error) => isString(error) && toast.error(error),
     ...mutationOptions,
     mutationKey: mutationOptions?.mutationKey ?? [routeName],
     mutationFn: async (value: Values) => {
@@ -94,6 +89,7 @@ export function useAppMutation<ResponseData, Values = FieldValues, E = Error>(
         data: value,
       });
 
+      console.log(data);
       return data.data;
     },
   });

@@ -1,4 +1,5 @@
 "use client";
+import { Toaster } from "@/components/ui/sonner";
 import { AppStoreProvider } from "@/store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -15,6 +16,7 @@ export function AppProvider({
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} position="top" />
       <AppStoreProvider>{children}</AppStoreProvider>
+      <Toaster richColors position="top-right" />
     </QueryClientProvider>
   );
 }
