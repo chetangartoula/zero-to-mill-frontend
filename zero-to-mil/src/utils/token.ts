@@ -1,41 +1,59 @@
-import { axiosService } from "@/lib/axios";
+import { axiosInstance } from "@/lib/axios";
 import { isSSR } from "./ssr";
-export const getAuthTokens = () => {
+
+export const setAccessToken = (accessToken: string) => {
   const isServer = isSSR();
+  console.log("isServer", isServer);
+
+  if (isServer) {
+    throw new Error("This function should not be called on the server");
+  }
+  localStorage.setItem("accessToken", accessToken);
+};
+
+export function setRefreshToken(token: string): void {
+  document.cookie = `refreshToken=${token}; HttpOnly; Secure; SameSite=Strict; Max-Age=604800`; // 7 days
+}
+
+export function getRefreshToken(): string | null {
+  const cookies = document.cookie.split("; ");
+  const refreshToken = cookies.find((cookie) =>
+    cookie.startsWith("refreshToken=")
+  );
+  return refreshToken ? refreshToken.split("=")[1] : null;
+}
+
+export const getAccessToken = () => {
+  const isServer = isSSR();
+
+  console.log("isServer", isServer);
+
   if (isServer) {
     throw new Error("This function should not be called on the server");
   }
 
-  return {
-    accessToken: localStorage.getItem("accessToken"),
-    refreshToken: localStorage.getItem("refreshToken"),
-  };
+  return localStorage.getItem("accessToken");
 };
 
-export const setAuthTokens = ({
+export function removeTokens(): void {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("accessToken");
+  }
+  document.cookie =
+    "refreshToken=; Max-Age=0; path=/; HttpOnly; Secure; SameSite=Strict";
+}
+
+export const setTokens = ({
   accessToken,
   refreshToken,
 }: {
   accessToken: string;
   refreshToken: string;
 }) => {
-  const isServer = isSSR();
-  if (isServer) {
-    throw new Error("This function should not be called on the server");
-  }
+  console.log("isServer", "hihi");
 
-  localStorage.setItem("accessToken", accessToken);
-  localStorage.setItem("refreshToken", refreshToken);
-};
-
-export const clearAuthTokens = () => {
-  const isServer = isSSR();
-  if (isServer) {
-    throw new Error("This function should not be called on the server");
-  }
-
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("refreshToken");
+  setAccessToken(accessToken);
+  setRefreshToken(refreshToken);
 };
 
 export const setAxiosAuthTokens = ({
@@ -45,13 +63,13 @@ export const setAxiosAuthTokens = ({
   accessToken: string;
   refreshToken: string;
 }) => {
-  axiosService.defaults.headers.common[
+  axiosInstance.defaults.headers.common[
     "Authorization"
   ] = `Bearer ${accessToken}`;
-  axiosService.defaults.headers.common["Refresh"] = refreshToken;
+  axiosInstance.defaults.headers.common["Refresh"] = refreshToken;
 };
 
 export const clearAxiosAuthTokens = () => {
-  delete axiosService.defaults.headers.common["Authorization"];
-  delete axiosService.defaults.headers.common["Refresh"];
+  delete axiosInstance.defaults.headers.common["Authorization"];
+  delete axiosInstance.defaults.headers.common["Refresh"];
 };

@@ -7,20 +7,39 @@ import AuthWrapper from "@/components/wrapper/authWrapper";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { useAppMutation } from "@/lib/api";
 import { otpVerificationSchema } from "@/schemas/auth";
+import { getPageRoutes } from "@/utils/getRoutes";
+import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
+import { toast } from "sonner";
 
 function OTPVerification() {
-  const { mutate } = useAppMutation("otp");
+  const router = useRouter();
+  const { mutate, error } = useAppMutation("otp", {
+    onSuccess: () => {
+      router.push(getPageRoutes("login"));
+      toast.success("OTP verification successful");
+    },
+  });
+  const otp = useSearchParams().get("otp");
+  const email = useSearchParams().get("email");
+  const username = useSearchParams().get("username");
+
   return (
     <AuthWrapper title="OTP code verification" includeLogo={false}>
       <Text
-        text="We have sent an OTP to your email  address ramxxxXgmail.com. Enter the code below to verify"
+        text={`Since this is a test case. Please enter ${otp} as OTP`}
         className="my-2"
       />
       <AppForm
         defaultValues={{ otp_code: "" }}
         schema={otpVerificationSchema}
-        onSubmit={(data) => console.log(data)}
+        onSubmit={(data) =>
+          mutate({
+            email,
+            username,
+            otp_code: data.otp_code,
+          })
+        }
       >
         {(form) => (
           <FormContentWrapper

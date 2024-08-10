@@ -10,15 +10,28 @@ import { useAppMutation } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { LoginSchema } from "@/schemas/auth";
 import { LoginDTO } from "@/types/base";
+import { BaseApiResponse } from "@/types/global";
 import { getPageRoutes } from "@/utils/getRoutes";
+import { setTokens } from "@/utils/token";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
 
 function Login() {
+  const router = useRouter();
   const { mutate } = useAppMutation("login", {
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: (data: { access: string; refresh: string }) => {
+      try {
+        setTokens({
+          accessToken: data.access,
+          refreshToken: data.refresh,
+        });
+        toast.success("Login successful");
+        router.push(getPageRoutes("dashboard"));
+      } catch (e) {
+        console.log("error", e);
+      }
     },
   });
 

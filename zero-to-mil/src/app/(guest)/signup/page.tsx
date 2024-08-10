@@ -10,9 +10,38 @@ import { getPageRoutes } from "@/utils/getRoutes";
 import Text from "@/components/ui/text";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { useAppMutation } from "@/lib/api";
+import { LoginDTO, RegisterDTO } from "@/types/base";
+import { toast } from "sonner";
+import { BaseApiResponse } from "@/types/global";
+import { useRouter } from "next/navigation";
 
 function SignUp() {
-  const { mutate } = useAppMutation("register");
+  const router = useRouter();
+  const { mutate } = useAppMutation("register", {
+    onSuccess: (
+      data: BaseApiResponse<{ otp: string; responseData: string }>,
+      variables: RegisterDTO
+    ) => {
+      console.log("data", data);
+      toast.success("Account created successfully");
+      const otpVerificationUrl = getPageRoutes(
+        "otp-verification",
+        {},
+        {
+          otp: data.responseData.otp,
+          email: variables.email,
+          username: variables.username,
+        }
+      );
+      console.log("Navigating to:", otpVerificationUrl);
+      try {
+        router.push(decodeURIComponent(otpVerificationUrl));
+      } catch (error) {
+        console.error("Failed to navigate:", error);
+      }
+    },
+  });
+
   return (
     <AuthWrapper
       title="Get Started"
@@ -21,12 +50,12 @@ function SignUp() {
         className: "relative top-20 m-4",
       }}
     >
-      <AppForm
+      <AppForm<RegisterDTO>
         defaultValues={{
           email: "",
           username: "",
           password: "",
-          passwordConfirmation: "",
+          confirm_password: "",
         }}
         schema={RegisterSchema}
         onSubmit={(data) => mutate(data)}
@@ -36,7 +65,7 @@ function SignUp() {
           <InputFormField name="username" label="Username" />
           <InputFormField name="password" label="Password" type="password" />
           <InputFormField
-            name="passwordConfirmation"
+            name="confirm_password"
             label="Confirm Password"
             type="password"
           />

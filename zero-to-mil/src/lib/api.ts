@@ -50,7 +50,7 @@ export function useAppQuery<ResponseData>({
           method: "GET",
           ...requestConfig,
         });
-        return data.data;
+        return data.responseData;
       } catch (err) {
         if (err instanceof Error) {
           throw err;
@@ -82,15 +82,15 @@ export function useAppMutation<ResponseData, Values = FieldValues, E = Error>(
     ...mutationOptions,
     mutationKey: mutationOptions?.mutationKey ?? [routeName],
     mutationFn: async (value: Values) => {
-      const { data } = await axiosInstance<BaseApiResponse<ResponseData>>({
+      const { data } = await axiosInstance<ResponseData>({
         method: "POST",
         ...requestConfig,
         name: routeName,
         data: value,
       });
 
-      console.log(data);
-      return data.data;
+      // console.log(data);
+      return data;
     },
   });
 }

@@ -5,7 +5,7 @@ export const forgotPasswordSchema = z.object({
 });
 
 export const otpVerificationSchema = z.object({
-  otp: z.string().length(6),
+  otp_code: z.string().length(6),
 });
 
 export const newPasswordSchema = z

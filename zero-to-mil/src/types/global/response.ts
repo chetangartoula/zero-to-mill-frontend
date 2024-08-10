@@ -7,7 +7,7 @@ export interface MetaData {
 }
 
 export interface BaseApiResponse<T> {
-  data: T;
+  responseData: T;
   message: string;
   status: number;
 }
