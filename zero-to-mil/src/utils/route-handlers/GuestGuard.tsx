@@ -1,8 +1,7 @@
 import React, { PropsWithChildren } from "react";
-import { getAuthTokens } from "../token";
 
 function GuestGuard({ children }: PropsWithChildren) {
-  const isAuthenticated = getAuthTokens();
+  const isAuthenticated = true;
 
   return <div>{children}</div>;
 }
