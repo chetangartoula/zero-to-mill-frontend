@@ -9,10 +9,10 @@ import { useAppMutation } from "@/lib/api";
 import { otpVerificationSchema } from "@/schemas/auth";
 import { getPageRoutes } from "@/utils/getRoutes";
 import { useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
 import { toast } from "sonner";
 
-function OTPVerification() {
+function OTPVerification({ searchParams }: { searchParams: URLSearchParams }) {
   const router = useRouter();
   const { mutate, error } = useAppMutation("otp", {
     onSuccess: () => {
@@ -20,10 +20,9 @@ function OTPVerification() {
       toast.success("OTP verification successful");
     },
   });
-  const otp = useSearchParams().get("otp");
-  const email = useSearchParams().get("email");
-  const username = useSearchParams().get("username");
-
+  const otp = searchParams.get("otp");
+  const email = searchParams.get("email");
+  const username = searchParams.get("username");
   return (
     <AuthWrapper title="OTP code verification" includeLogo={false}>
       <Text

@@ -12,7 +12,9 @@ export const setAccessToken = (accessToken: string) => {
 };
 
 export function setRefreshToken(token: string): void {
-  document.cookie = `refreshToken=${token}; HttpOnly; Secure; SameSite=Strict; Max-Age=604800`; // 7 days
+  const expires = new Date();
+  expires.setTime(expires.getTime() + 7 * 24 * 60 * 60 * 1000); // 7 days in milliseconds
+  document.cookie = `refreshToken=${token}; Secure; SameSite=Strict; Expires=${expires.toUTCString()}; Path=/`;
 }
 
 export function getRefreshToken(): string | null {
