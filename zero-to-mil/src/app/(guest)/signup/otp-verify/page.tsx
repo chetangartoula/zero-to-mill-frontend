@@ -20,9 +20,9 @@ function OTPVerification({ searchParams }: { searchParams: URLSearchParams }) {
       toast.success("OTP verification successful");
     },
   });
-  const otp = searchParams.get("otp");
-  const email = searchParams.get("email");
-  const username = searchParams.get("username");
+  const otp = searchParams?.get("otp") || "";
+  const email = searchParams?.get("email") || "";
+  const username = searchParams?.get("username") || "";
   return (
     <AuthWrapper title="OTP code verification" includeLogo={false}>
       <Text
