@@ -12,7 +12,15 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense } from "react";
 import { toast } from "sonner";
 
-function OTPVerification({ searchParams }: { searchParams: URLSearchParams }) {
+function OTPVerification({
+  searchParams,
+}: {
+  searchParams: {
+    otp: string;
+    email: string;
+    username: string;
+  };
+}) {
   const router = useRouter();
   const { mutate, error } = useAppMutation("otp", {
     onSuccess: () => {
@@ -20,9 +28,11 @@ function OTPVerification({ searchParams }: { searchParams: URLSearchParams }) {
       toast.success("OTP verification successful");
     },
   });
-  const otp = searchParams?.get("otp") || "";
-  const email = searchParams?.get("email") || "";
-  const username = searchParams?.get("username") || "";
+
+  console.log("searchParams", searchParams);
+  const otp = searchParams.otp || "";
+  const email = searchParams.email || "";
+  const username = searchParams.email || "";
   return (
     <AuthWrapper title="OTP code verification" includeLogo={false}>
       <Text

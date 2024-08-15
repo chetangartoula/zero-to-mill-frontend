@@ -28,9 +28,9 @@ function SignUp() {
         "otp-verification",
         {},
         {
-          otp: data.responseData.otp,
-          email: variables.email,
-          username: variables.username,
+          otp: decodeURIComponent(data.responseData.otp),
+          email: decodeURIComponent(variables.email),
+          username: decodeURIComponent(variables.username),
         }
       );
       console.log("Navigating to:", otpVerificationUrl);
