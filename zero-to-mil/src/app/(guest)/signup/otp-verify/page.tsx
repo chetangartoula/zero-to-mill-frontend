@@ -29,10 +29,9 @@ function OTPVerification({
     },
   });
 
-  console.log("searchParams", searchParams);
   const otp = searchParams.otp || "";
   const email = searchParams.email || "";
-  const username = searchParams.email || "";
+  const username = searchParams.username || "";
   return (
     <AuthWrapper title="OTP code verification" includeLogo={false}>
       <Text
