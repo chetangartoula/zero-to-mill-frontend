@@ -8,8 +8,8 @@ import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { useAppMutation } from "@/lib/api";
 import { otpVerificationSchema } from "@/schemas/auth";
 import { getPageRoutes } from "@/utils/getRoutes";
-import { useRouter, useSearchParams } from "next/navigation";
-import React, { Suspense } from "react";
+import { useRouter } from "next/navigation";
+import React from "react";
 import { toast } from "sonner";
 
 function OTPVerification({
