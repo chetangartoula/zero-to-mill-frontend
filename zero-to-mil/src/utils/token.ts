@@ -20,28 +20,16 @@ export const getAccessToken = () => {
   return sessionStorage.getItem("accessToken");
 };
 
-export function removeTokens(): void {
-  if (typeof window !== "undefined") {
-    localStorage.removeItem("accessToken");
-  }
-  document.cookie =
-    "refreshToken=; Max-Age=0; path=/; HttpOnly; Secure; SameSite=Strict";
-}
-
 export const setAxiosAuthTokens = ({
   accessToken,
-  refreshToken,
 }: {
   accessToken: string;
-  refreshToken: string;
 }) => {
   axiosInstance.defaults.headers.common[
     "Authorization"
   ] = `Bearer ${accessToken}`;
-  axiosInstance.defaults.headers.common["Refresh"] = refreshToken;
 };
 
 export const clearAxiosAuthTokens = () => {
   delete axiosInstance.defaults.headers.common["Authorization"];
-  delete axiosInstance.defaults.headers.common["Refresh"];
 };

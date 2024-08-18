@@ -25,6 +25,7 @@ export default async function LoginUser(data: LoginDTO) {
     }
   } catch (error) {
     if (isAxiosError(error)) {
+      console.log(error, "error");
       return new Error(error.response?.data.message || "An error occurred");
     } else {
       return new Error("An unexpected error occurred");

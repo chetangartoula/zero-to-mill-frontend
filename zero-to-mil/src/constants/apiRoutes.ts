@@ -2,6 +2,7 @@ export const apiRoutes = {
   login: "/auth/user-login/",
   register: "/auth/register/",
   otp: "/auth/verify-otp/",
+  "access-token": "/auth/token/refresh/",
   "user-profile": "/auth/me/profile/",
   "set-up-pin": "/auth/me/setup-pin/",
   //re-verify
