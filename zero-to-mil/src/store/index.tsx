@@ -2,9 +2,10 @@
 import { createContext, useContext, useRef } from "react";
 import { create, StoreApi, useStore } from "zustand";
 import { Store } from "./store";
+import { createAuthStore } from "./slices/accessToken";
 
-const appStore = create<Store>()((set) => ({
-  count: 0,
+const appStore = create<Store>()((...set) => ({
+  ...createAuthStore(...set),
 }));
 
 export const AppStoreContext = createContext<StoreApi<Store>>(null!);

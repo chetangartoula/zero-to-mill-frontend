@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create, StateCreator } from "zustand";
 
 export interface AccessTokenState {
   accessToken: string;
@@ -6,8 +6,8 @@ export interface AccessTokenState {
   removeAccessToken: () => void;
 }
 
-export const useAuthStore = create<AccessTokenState>((set) => ({
+export const createAuthStore: StateCreator<AccessTokenState> = (set) => ({
   accessToken: "",
   setAccessToken: (accessToken: string) => set({ accessToken }),
   removeAccessToken: () => set({ accessToken: "" }),
-}));
+});
