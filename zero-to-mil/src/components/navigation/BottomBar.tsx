@@ -5,6 +5,9 @@ import { routes } from "@/constants/routes";
 import DynamicIcon from "../utils/DynamicIcon";
 import { usePathname, useRouter } from "next/navigation";
 import { getPageRoutes } from "@/utils/getRoutes";
+import { MenuIcon } from "lucide-react";
+import NavDrawer from "./NavDrawer";
+import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
 
 function normalizePath(path: string): string {
   return path.replace(/^\/+/, "./");
@@ -14,43 +17,53 @@ function BottomBar() {
   const router = useRouter();
   const params = usePathname();
   return (
-    <Menubar className="fixed bottom-0 w-full bg-accent flex justify-between items-center h-13 rounded-none">
-      {routes.map((item, index) => (
-        <MenubarMenu key={`${item.value}.${index}`}>
-          <MenubarTrigger
-            className={`flex flex-col items-center py-1 relative `}
-            onClick={() => router.push(getPageRoutes(item.value))}
-          >
-            {item.special ? (
-              <div className="absolute -top-6 flex items-center justify-center w-12 h-12 rounded-full bg-primary shadow-lg">
+    <>
+      <Menubar className="fixed bottom-0 w-full bg-accent flex justify-between items-center h-13 rounded-none">
+        {routes.map((item, index) => (
+          <MenubarMenu key={`${item.value}.${index}`}>
+            <MenubarTrigger
+              className={`flex flex-col items-center py-1 relative `}
+              onClick={() => router.push(getPageRoutes(item.value))}
+            >
+              {item.special ? (
+                <div className="absolute -top-6 flex items-center justify-center w-12 h-12 rounded-full bg-primary shadow-lg">
+                  <DynamicIcon
+                    IconComponent={item.icon}
+                    className="text-white "
+                  />
+                </div>
+              ) : (
                 <DynamicIcon
                   IconComponent={item.icon}
-                  className="text-white "
+                  className={`${
+                    normalizePath(params)?.includes(getPageRoutes(item.value))
+                      ? "text-primary"
+                      : "text-gray-400"
+                  }`}
                 />
-              </div>
-            ) : (
-              <DynamicIcon
-                IconComponent={item.icon}
-                className={`${
+              )}
+              <span
+                className={`text-xs ${
                   normalizePath(params)?.includes(getPageRoutes(item.value))
                     ? "text-primary"
                     : "text-gray-400"
-                }`}
-              />
-            )}
-            <span
-              className={`text-xs ${
-                normalizePath(params)?.includes(getPageRoutes(item.value))
-                  ? "text-primary"
-                  : "text-gray-400"
-              } ${item.special ? "mt-7" : "mt-2"}`}
-            >
-              {item.label}
-            </span>
+                } ${item.special ? "mt-7" : "mt-2"}`}
+              >
+                {item.label}
+              </span>
+            </MenubarTrigger>
+          </MenubarMenu>
+        ))}
+
+        <MenubarMenu>
+          <MenubarTrigger
+            className={`flex flex-col items-center py-1 relative `}
+          >
+            <NavDrawer />
           </MenubarTrigger>
         </MenubarMenu>
-      ))}
-    </Menubar>
+      </Menubar>
+    </>
   );
 }
 

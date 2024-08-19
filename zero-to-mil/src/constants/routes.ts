@@ -30,9 +30,4 @@ export const routes: Route[] = [
     icon: ClockIcon,
     label: "History",
   },
-  {
-    value: "login",
-    icon: MenuIcon,
-    label: "Menu",
-  },
 ];
