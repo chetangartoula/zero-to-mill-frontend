@@ -22,7 +22,6 @@ function ProtectedLayout({ children }: PropsWithChildren) {
   }, [setAccessToken]);
   return (
     <div>
-      <MobileTopNav />
       {children}
       <div
         style={{

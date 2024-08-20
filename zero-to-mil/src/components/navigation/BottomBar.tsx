@@ -54,14 +54,13 @@ function BottomBar() {
             </MenubarTrigger>
           </MenubarMenu>
         ))}
-
-        <MenubarMenu>
+        {/* <MenubarMenu>
           <MenubarTrigger
             className={`flex flex-col items-center py-1 relative `}
           >
             <NavDrawer />
           </MenubarTrigger>
-        </MenubarMenu>
+        </MenubarMenu> */}
       </Menubar>
     </>
   );

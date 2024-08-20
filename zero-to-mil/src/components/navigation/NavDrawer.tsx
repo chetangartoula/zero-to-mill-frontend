@@ -1,13 +1,19 @@
 "use client";
 
 import React from "react";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerFooter,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import DynamicIcon from "../utils/DynamicIcon";
 import { MenuIcon } from "lucide-react";
 
 function NavDrawer() {
   return (
-    <Drawer>
+    <Drawer direction="left">
       <DrawerTrigger asChild>
         <div>
           <DynamicIcon
