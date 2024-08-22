@@ -1,21 +1,19 @@
 import React from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, Controller } from "react-hook-form";
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
+} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
-  SelectGroup,
-  SelectLabel,
+  SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
-import { SelectItem } from "@radix-ui/react-select";
+} from "@/components/ui/select";
 
 export interface SelectFormFieldProps {
   name: string;
@@ -32,29 +30,40 @@ function SelectFormField({
   options,
   isDisabled = false,
 }: SelectFormFieldProps) {
-  const form = useFormContext();
+  const { control } = useFormContext();
+
   return (
     <FormField
+      control={control}
       name={name}
-      control={form.control}
       render={({ field }) => (
         <FormItem>
           {label && <FormLabel>{label}</FormLabel>}
-          <FormControl className="">
-            <Select disabled={isDisabled}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder={placeholder ?? `Select a ${label}`} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  {options.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+          <FormControl>
+            <Controller
+              name={name}
+              control={control}
+              render={({ field: { onChange, value, ref } }) => (
+                <Select
+                  disabled={isDisabled}
+                  onValueChange={onChange}
+                  value={value}
+                >
+                  <SelectTrigger ref={ref}>
+                    <SelectValue
+                      placeholder={placeholder ?? `Select a ${label}`}
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {options.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
           </FormControl>
           <FormMessage />
         </FormItem>

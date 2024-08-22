@@ -1,3 +1,4 @@
+"use client";
 import AppForm from "@/components/base/form/AppForm";
 import InputFormField from "@/components/formfields/InputFormField";
 import SelectFormField from "@/components/formfields/SelectFormField";
@@ -25,7 +26,16 @@ function Deposit() {
       onSubmit={(data) => mutate(data)}
     >
       <FormContentWrapper>
-        <SelectFormField name="username" label="UserName" options={[]} />
+        <SelectFormField
+          name="username"
+          label="UserName"
+          options={[
+            {
+              label: "John Doe",
+              value: "John Doe",
+            },
+          ]}
+        />
         <SelectFormField name="password" label="Password" options={[]} />
         <InputFormField name="email" label="Email" />
         <InputFormField name="amount" label="Amount" />
