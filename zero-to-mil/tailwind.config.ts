@@ -70,6 +70,10 @@ const config = {
           DEFAULT: "hsl(var(--menu))",
           foreground: "hsl(var(--menu-foreground))",
         },
+        haravara: {
+          DEFAULT: "hsl(var(--haravara))",
+          foreground: "hsl(var(--haravara-foreground))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

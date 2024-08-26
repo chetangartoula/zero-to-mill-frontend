@@ -8,10 +8,12 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
+import { get } from "lodash";
 
 export interface InputFieldProps {
   name: string;
   label: string;
+  type?: string;
   isDisabled?: boolean;
   placeholder?: string;
   formItemProps?: React.ComponentProps<typeof FormItem>;
@@ -26,6 +28,7 @@ function InputFormField({
   placeholder,
   formControlProps,
   formLabelProps,
+  type,
 }: InputFieldProps & InputProps) {
   const form = useFormContext();
   return (
@@ -38,8 +41,16 @@ function InputFormField({
           <FormControl {...formControlProps}>
             <Input
               {...field}
+              type={type ?? "text"}
               disabled={isDisabled}
               placeholder={placeholder ?? `Please enter the ${label}`}
+              {...(type === "number" && {
+                inputMode: "numeric",
+                onChange: (e) => {
+                  const value = get(e, "target.value", "0");
+                  field.onChange(parseInt(value, 10));
+                },
+              })}
             />
           </FormControl>
           <FormMessage />

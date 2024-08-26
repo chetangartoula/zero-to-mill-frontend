@@ -1,4 +1,5 @@
 "use client";
+import NumberCarousel from "@/components/base/carousel/NumberCarousel";
 import AppForm from "@/components/base/form/AppForm";
 import InputFormField from "@/components/formfields/InputFormField";
 import SelectFormField from "@/components/formfields/SelectFormField";
@@ -8,9 +9,11 @@ import { useAppMutation } from "@/lib/api";
 import { DepositSchema } from "@/schemas/deposit";
 import { DepositDTO } from "@/types/base/deposit";
 import React from "react";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
 
 function Deposit() {
   const { mutate } = useAppMutation("load-money");
+  const methods = useForm();
 
   const initialValues: DepositDTO = {
     currency: "USD",
@@ -19,29 +22,57 @@ function Deposit() {
     amount: 0,
   };
 
+  const handleNumberClick = (value: number) => {
+    const currentAmount = methods.getValues("amount") || 0;
+    methods.setValue("amount", currentAmount + value);
+  };
+
   return (
-    <AppForm
-      defaultValues={initialValues}
-      schema={DepositSchema}
-      onSubmit={(data) => mutate(data)}
-    >
-      <FormContentWrapper>
-        <SelectFormField
-          name="username"
-          label="UserName"
-          options={[
-            {
-              label: "John Doe",
-              value: "John Doe",
-            },
-          ]}
-        />
-        <SelectFormField name="password" label="Password" options={[]} />
-        <InputFormField name="email" label="Email" />
-        <InputFormField name="amount" label="Amount" />
-      </FormContentWrapper>
-      <Button size={"full"}>Deposit</Button>
-    </AppForm>
+    <FormProvider {...methods}>
+      <AppForm
+        defaultValues={initialValues}
+        schema={DepositSchema}
+        onSubmit={(data) => console.log("data", data)}
+      >
+        {(form) => (
+          <>
+            <FormContentWrapper>
+              <SelectFormField
+                name="currency"
+                label="Currency"
+                options={[
+                  {
+                    label: "John Doe",
+                    value: "John Doe",
+                  },
+                ]}
+              />
+              <SelectFormField
+                name="deposit_method"
+                label="Deposit Method"
+                options={[
+                  {
+                    label: "John Doe",
+                    value: "John Doe",
+                  },
+                ]}
+              />
+              <InputFormField name="email" label="Email" />
+              <InputFormField name="amount" label="Amount" type="number" />
+              <NumberCarousel
+                onClick={(value) =>
+                  form.setValue(
+                    "amount",
+                    form.getValues("amount") + parseInt(value.toString())
+                  )
+                }
+              />
+            </FormContentWrapper>
+            <Button size={"full"}>Deposit</Button>
+          </>
+        )}
+      </AppForm>
+    </FormProvider>
   );
 }
 
