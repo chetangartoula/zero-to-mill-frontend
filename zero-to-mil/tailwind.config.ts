@@ -107,6 +107,13 @@ const config = {
       fontFamily: {
         switzer: ["Switzer", "sans-serif"],
       },
+      fontWeight: {
+        light: "300",
+        normal: "400",
+        medium: "500",
+        semibold: "600",
+        bold: "700",
+      },
       fontSize: {
         "2xs": "0.625rem",
         "3xs": "0.5rem",
