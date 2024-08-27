@@ -3,7 +3,7 @@ import { Route } from "./routes";
 
 export const NavDrawerItem: Omit<Route, "special">[] = [
   {
-    value: "login",
+    value: "account-setting",
     icon: StarIcon,
     label: "Account Setting",
   },
@@ -13,7 +13,7 @@ export const NavDrawerItem: Omit<Route, "special">[] = [
     label: "Notifications",
   },
   {
-    value: "login",
+    value: "verify",
     icon: StarIcon,
     label: "Verify",
   },
@@ -23,12 +23,12 @@ export const NavDrawerItem: Omit<Route, "special">[] = [
     label: "Deposit",
   },
   {
-    value: "login",
+    value: "withdraw",
     icon: StarIcon,
     label: "Withdraw",
   },
   {
-    value: "login",
+    value: "transaction-history",
     icon: StarIcon,
     label: "Transaction History",
   },

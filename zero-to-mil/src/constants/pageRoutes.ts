@@ -9,6 +9,8 @@ export const PageRoutes = {
   deposit: "/deposit",
   withdraw: "/withdraw",
   verify: "/verify",
+  "account-setting": "/account-setting",
+  "transaction-history": "/transaction-history",
 };
 
 export type PageRoutesType = keyof typeof PageRoutes;
