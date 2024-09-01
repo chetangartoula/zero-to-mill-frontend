@@ -6,34 +6,19 @@ import { Button } from "@/components/ui/button";
 import Text from "@/components/ui/text";
 import AuthWrapper from "@/components/wrapper/authWrapper";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
+import { useAppMutation } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { LoginSchema } from "@/schemas/auth";
-import LoginUser from "@/store/actions/login";
 import { LoginDTO } from "@/types/base";
 import { getPageRoutes } from "@/utils/getRoutes";
-import { setAccessToken } from "@/utils/token";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { toast } from "sonner";
 
 function Login() {
   const router = useRouter();
 
-  const handleSubmit = async (data: LoginDTO) => {
-    try {
-      const response = await LoginUser(data);
-      if (response instanceof Error) {
-        toast.error(response.message);
-        return;
-      } else {
-        setAccessToken(response.access);
-        router.push(getPageRoutes("dashboard"));
-      }
-    } catch (error) {
-      console.error("Login failed", error);
-    }
-  };
+  const { mutate } = useAppMutation("login");
 
   return (
     <AuthWrapper
@@ -45,7 +30,7 @@ function Login() {
       <AppForm<LoginDTO>
         defaultValues={{ username: "", password: "" }}
         schema={LoginSchema}
-        onSubmit={handleSubmit}
+        onSubmit={(data) => mutate(data)}
       >
         <FormContentWrapper>
           <InputFormField name="username" label="Username" />

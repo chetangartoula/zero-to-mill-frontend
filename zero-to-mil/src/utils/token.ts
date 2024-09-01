@@ -1,23 +1,23 @@
 import { axiosInstance } from "@/lib/axios";
 import { isSSR } from "./ssr";
 
-export const setAccessToken = (accessToken: string) => {
+export const setRefreshToken = (accessToken: string) => {
   const isServer = isSSR();
   console.log("isServer", isServer);
 
   if (isServer) {
     throw new Error("This function should not be called on the server");
   }
-  sessionStorage.setItem("accessToken", accessToken);
+  localStorage.setItem("token", accessToken);
 };
 
-export const getAccessToken = () => {
+export const getRefreshToken = () => {
   const isServer = isSSR();
 
   if (isServer) {
     throw new Error("This function should not be called on the server");
   }
-  return sessionStorage.getItem("accessToken");
+  return localStorage.getItem("token");
 };
 
 export const setAxiosAuthTokens = ({
