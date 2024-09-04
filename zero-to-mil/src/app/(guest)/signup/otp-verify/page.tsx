@@ -11,6 +11,9 @@ import { getPageRoutes } from "@/utils/getRoutes";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
+import Login from "../../login/page";
+import LoginUser from "@/store/actions/login";
+import { useAppStore } from "@/store";
 
 function OTPVerification({
   searchParams,
@@ -22,9 +25,25 @@ function OTPVerification({
   };
 }) {
   const router = useRouter();
-  const { mutate, error } = useAppMutation("otp", {
-    onSuccess: () => {
-      router.push(getPageRoutes("login"));
+  const {
+    setAccessToken,
+    username: storeUsername,
+    password,
+  } = useAppStore((state) => state);
+  const { mutate } = useAppMutation("otp", {
+    onSuccess: async () => {
+      const response = await LoginUser({
+        username: storeUsername,
+        password: password,
+      });
+      if (response instanceof Error) {
+        router.push(getPageRoutes("login"));
+        toast.error(response.message);
+        return;
+      } else {
+        setAccessToken(response.access);
+        router.push(getPageRoutes("dashboard"));
+      }
       toast.success("OTP verification successful");
     },
   });

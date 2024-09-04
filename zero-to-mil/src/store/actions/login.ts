@@ -3,6 +3,7 @@
 import { axiosInstance } from "@/lib/axios";
 import { LoginDTO, LoginResponse } from "@/types/base";
 import { AxiosResponse, isAxiosError } from "axios";
+import { isString } from "lodash";
 import { cookies } from "next/headers";
 
 export default async function LoginUser(data: LoginDTO) {
@@ -12,6 +13,7 @@ export default async function LoginUser(data: LoginDTO) {
       name: "login",
       data,
     });
+    console.log(response, "response");
     if (response.status === 200) {
       cookies().set("refreshToken", response.data.refresh, {
         httpOnly: true,
@@ -21,14 +23,13 @@ export default async function LoginUser(data: LoginDTO) {
       });
       return response.data as LoginResponse;
     } else {
-      throw new Error();
+      return response as AxiosResponse;
     }
   } catch (error) {
-    if (isAxiosError(error)) {
-      console.log(error, "error");
-      return new Error(error.response?.data.message || "An error occurred");
-    } else {
-      return new Error("An unexpected error occurred");
+    if (isString(error)) {
+      return error;
+    } else if (isAxiosError(error)) {
+      return error.response?.data;
     }
   }
 }
