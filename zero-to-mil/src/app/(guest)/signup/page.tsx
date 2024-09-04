@@ -14,15 +14,20 @@ import { LoginDTO, RegisterDTO } from "@/types/base";
 import { toast } from "sonner";
 import { BaseApiResponse } from "@/types/global";
 import { useRouter } from "next/navigation";
+import { useAppStore } from "@/store";
 
 function SignUp() {
   const router = useRouter();
+  const { setLoginState } = useAppStore((state) => state);
   const { mutate } = useAppMutation("register", {
     onSuccess: (
       data: BaseApiResponse<{ otp: string; responseData: string }>,
       variables: RegisterDTO
     ) => {
-      console.log("data", data);
+      setLoginState({
+        username: variables.username,
+        password: variables.password,
+      });
       toast.success("Account created successfully");
       const otpVerificationUrl = getPageRoutes(
         "otp-verification",
@@ -33,7 +38,6 @@ function SignUp() {
           username: decodeURIComponent(variables.username),
         }
       );
-      console.log("Navigating to:", otpVerificationUrl);
       try {
         router.push(decodeURIComponent(otpVerificationUrl));
       } catch (error) {

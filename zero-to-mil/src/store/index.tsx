@@ -3,8 +3,10 @@ import { createContext, useContext, useRef } from "react";
 import { create, StoreApi, useStore } from "zustand";
 import { Store } from "./store";
 import { createAuthStore } from "./slices/accessToken";
+import { createLoginStore } from "./slices/login";
 
 const appStore = create<Store>()((...set) => ({
+  ...createLoginStore(...set),
   ...createAuthStore(...set),
 }));
 

@@ -17,9 +17,9 @@ function ProtectedLayout({ children }: PropsWithChildren) {
         console.error("Failed to fetch access token:", error);
       }
     };
+    if (!accessToken) fetchAccessToken();
+  }, [accessToken, setAccessToken]);
 
-    fetchAccessToken();
-  }, [setAccessToken]);
   return (
     <div>
       {children}

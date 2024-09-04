@@ -12,9 +12,9 @@ import { toast } from "sonner";
 function MobileMenuPage() {
   const router = useRouter();
   const handleLogout = async () => {
-    const { status, message } = await logout();
-    if (status === 200) {
-      toast.success(message || "Logout successful");
+    const res = await logout();
+    if (res.status === 200) {
+      toast.success(res.message || "Logout successful");
       router.push(getPageRoutes("login"));
     }
   };
