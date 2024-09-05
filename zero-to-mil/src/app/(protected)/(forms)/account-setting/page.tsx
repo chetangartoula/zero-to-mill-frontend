@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import DetailWrapper from "@/components/wrapper/detailWrapper";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { AccountSettingsSchema } from "@/schemas/account-settings";
+import { useLayoutStore } from "@/store/slices/layoutState";
 import React from "react";
 
 function AccountSetting() {
@@ -13,6 +14,8 @@ function AccountSetting() {
     password: "",
     username: "",
   };
+  const { width, isMobile } = useLayoutStore((state) => state);
+  console.log("width", width, isMobile);
   return (
     <DetailWrapper title="Account Settings" navigationLink={"test"}>
       <AppForm
