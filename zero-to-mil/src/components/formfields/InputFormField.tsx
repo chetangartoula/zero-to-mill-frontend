@@ -9,6 +9,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { get } from "lodash";
+import { PasswordInput } from "../ui/password-input";
 
 export interface InputFieldProps {
   name: string;
@@ -39,19 +40,30 @@ function InputFormField({
         <FormItem>
           <FormLabel {...formLabelProps}>{label}</FormLabel>
           <FormControl {...formControlProps}>
-            <Input
-              {...field}
-              type={type ?? "text"}
-              disabled={isDisabled}
-              placeholder={placeholder ?? `Please enter the ${label}`}
-              {...(type === "number" && {
-                inputMode: "numeric",
-                onChange: (e) => {
-                  const value = get(e, "target.value", "0");
-                  field.onChange(parseInt(value, 10));
-                },
-              })}
-            />
+            {type === "password" ? (
+              <PasswordInput
+                {...field}
+                disabled={isDisabled}
+                placeholder={placeholder ?? `Please enter the ${label}`}
+                onChange={(e) => {
+                  field.onChange(e.target.value);
+                }}
+              />
+            ) : (
+              <Input
+                {...field}
+                type={type ?? "text"}
+                disabled={isDisabled}
+                placeholder={placeholder ?? `Please enter the ${label}`}
+                {...(type === "number" && {
+                  inputMode: "numeric",
+                  onChange: (e) => {
+                    const value = get(e, "target.value", "0");
+                    field.onChange(parseInt(value, 10));
+                  },
+                })}
+              />
+            )}
           </FormControl>
           <FormMessage />
         </FormItem>

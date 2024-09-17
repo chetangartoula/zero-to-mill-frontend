@@ -12,7 +12,6 @@ function ProtectedLayout({ children }: PropsWithChildren) {
       try {
         const response = await getAccessToken();
         setAccessToken(response);
-        console.log(response);
       } catch (error) {
         console.error("Failed to fetch access token:", error);
       }
