@@ -4,7 +4,6 @@ import "./globals.css";
 import { AppProvider } from "./provider";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ui/theme-provider";
-import { useLayoutStore } from "@/store/slices/layoutState";
 
 const inter = Inter({ subsets: ["latin"] });
 
