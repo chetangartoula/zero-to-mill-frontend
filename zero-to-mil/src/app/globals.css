@@ -31,7 +31,7 @@
     --chart-5: 27 87% 67%;
   }
 
-  @media (prefers-color-scheme: dark) {
+  /* @media (prefers-color-scheme: dark) {
     :root {
       --background: 226 68% 17%;
       --foreground: 0 0% 100%;
@@ -64,7 +64,7 @@
       --chart-4: 280 65% 60%;
       --chart-5: 340 75% 55%;
     }
-  }
+  } */
 
   /* :root[data-theme="dark"] {
     --background: 226 68% 17%;
@@ -99,7 +99,7 @@
     --chart-5: 340 75% 55%;
   } */
 
-  /* .dark {
+  .dark {
     --background: 226 68% 17%;
     --foreground: 0 0% 100%;
     --card: 222.2 84% 4.9%;
@@ -130,7 +130,7 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-  } */
+  }
 }
 
 @layer base {
