@@ -24,7 +24,7 @@ export function AppProvider({
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} position="top" />
+      {/* <ReactQueryDevtools initialIsOpen={false} position="top" /> */}
       <AppStoreProvider>{children}</AppStoreProvider>
       <Toaster richColors position="top-right" />
     </QueryClientProvider>

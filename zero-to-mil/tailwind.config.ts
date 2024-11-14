@@ -27,6 +27,7 @@ const config = {
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
+        subinput: "hsl(var(--subinput))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -73,6 +74,10 @@ const config = {
         haravara: {
           DEFAULT: "hsl(var(--haravara))",
           foreground: "hsl(var(--haravara-foreground))",
+        },
+        navbackground: {
+          DEFAULT: "hsl(var(--navbackground))",
+          foreground: "hsl(var(--navbackground-foreground))",
         },
       },
       borderRadius: {
