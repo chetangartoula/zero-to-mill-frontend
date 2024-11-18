@@ -42,19 +42,29 @@ AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
 
 const BetAccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ className, title, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
+    title?: string;
+    dualTitle?: { firstTeam: string; secondTeam: string };
+  }
+>(({ className, title, dualTitle, children, ...props }, ref) => (
   <AccordionPrimitive.Header className="flex">
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "flex-column w-full items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
+        "flex-column w-full items-center text-s text-white justify-between py-4 transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
         className
       )}
       {...props}
     >
       <div className="flex justify-between items-center w-full">
-        <div className="mx-3">{title}</div>
+        {title && <div className="mx-3">{title}</div>}
+        {dualTitle && (
+          <div className="flex gap-2 justify-between w-full px-4">
+            <div>{dualTitle.firstTeam}</div>
+            <div>VS</div>
+            <div>{dualTitle.secondTeam}</div>
+          </div>
+        )}
         <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
       </div>
       <div>{children}</div>

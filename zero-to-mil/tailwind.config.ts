@@ -28,6 +28,7 @@ const config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         subinput: "hsl(var(--subinput))",
+        cardtitle: "hsl(var(--cardtitle))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -120,8 +121,9 @@ const config = {
         bold: "700",
       },
       fontSize: {
-        "2xs": "0.625rem",
-        "3xs": "0.5rem",
+        // 12px
+        "2xs": "0.625rem", // 10px
+        "3xs": "0.5rem", // 8px
       },
       height: {
         17: "4.25rem", // 68px

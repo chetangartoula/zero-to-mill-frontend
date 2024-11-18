@@ -13,7 +13,7 @@ function page() {
       <div className="w-full p-2 bg-navbackground">
         <NavCarousel data={carouseldata} />
       </div>
-      <div>
+      <div className="">
         <BetCard />
       </div>
     </div>

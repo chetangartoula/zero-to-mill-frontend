@@ -32,7 +32,8 @@
   }
 
   .dark {
-    --background: 226 68% 17%;
+    --background: 226 68% 7%;
+    --cardtitle: 225 16% 61%;
     --foreground: 0 0% 100%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -67,11 +68,21 @@
   }
 }
 
+@font-face {
+  font-family: "Segoe UI";
+  src: url("/fonts/segoe-ui.woff2") format("woff2"),
+    url("/fonts/segoe-ui.woff") format("woff"),
+    url("/fonts/segoe-ui.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 @layer base {
   * {
     @apply border-border;
   }
   body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     @apply bg-background text-foreground;
   }
 }
