@@ -15,7 +15,7 @@ import React from "react";
 const BetItem = ({ title }: { title: string }) => (
   <div className="bg-input p-2" onClick={(e) => e.stopPropagation()}>
     {title && <p>{title}</p>}
-    <div className={cn("flex justify-between align-center gap-6 pl-2")}>
+    <div className={cn("flex justify-between align-center gap-6 pl-2 text-s")}>
       <div className={cn("flex-column text-center w-full")}>
         <p className="p-2">1</p>
         <p className="bg-subinput py-3 rounded">8.55</p>
