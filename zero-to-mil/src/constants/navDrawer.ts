@@ -13,11 +13,6 @@ export const NavDrawerItem: Omit<Route, "special">[] = [
     label: "Notifications",
   },
   {
-    value: "verify",
-    icon: StarIcon,
-    label: "Verify",
-  },
-  {
     value: "deposit",
     icon: StarIcon,
     label: "Deposit",
