@@ -17,8 +17,10 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
+    // console.log("config", config);
     if (config.name) {
-      config.url = getApiRoutes(config.name ?? "", config.modifier);
+      config.url =
+        config.url ?? getApiRoutes(config.name ?? "", config.modifier);
     }
     return config;
   },
