@@ -1,26 +1,26 @@
 "use server";
 import { axiosInstance } from "@/lib/axios";
 import { cookies } from "next/headers";
-import { isAxiosError } from "axios";
 
 export default async function getAccessToken(): Promise<any> {
-  const Token = cookies().get("refreshToken")?.value;
-
-  if (!Token) {
+  const refresh = cookies().get("refreshToken")?.value;
+  if (!refresh) {
     throw new Error("No refresh token found");
   }
 
   try {
-    const response = await axiosInstance({
+    const response = await axiosInstance<{
+      access: string;
+    }>({
       method: "POST",
-      url: "access-token",
+      url: "/auth/token/access/",
       data: {
-        Token,
+        refresh,
       },
     });
 
     if (response.status === 200) {
-      return response.data;
+      return response.data.access;
     } else {
       throw new Error("Failed to get access token");
     }

@@ -20,11 +20,7 @@ export const getAccessToken = () => {
   return sessionStorage.getItem("accessToken");
 };
 
-export const setAxiosAuthTokens = ({
-  accessToken,
-}: {
-  accessToken: string;
-}) => {
+export const setAxiosAuthTokens = (accessToken: string) => {
   axiosInstance.defaults.headers.common[
     "Authorization"
   ] = `Bearer ${accessToken}`;
