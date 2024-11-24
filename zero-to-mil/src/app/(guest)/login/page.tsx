@@ -8,10 +8,11 @@ import AuthWrapper from "@/components/wrapper/authWrapper";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { cn } from "@/lib/utils";
 import { LoginSchema } from "@/schemas/auth";
+import { useAppStore } from "@/store";
 import LoginUser from "@/store/actions/login";
 import { LoginDTO } from "@/types/base";
 import { getPageRoutes } from "@/utils/getRoutes";
-import { setAccessToken } from "@/utils/token";
+import { setAxiosAuthTokens } from "@/utils/token";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -19,6 +20,7 @@ import { toast } from "sonner";
 
 function Login() {
   const router = useRouter();
+  const { setAccessToken } = useAppStore((state) => state);
 
   const handleSubmit = async (data: LoginDTO) => {
     try {
@@ -28,6 +30,7 @@ function Login() {
         return;
       } else {
         setAccessToken(response.access);
+        setAxiosAuthTokens(response.access);
         router.push(getPageRoutes("dashboard"));
       }
     } catch (error) {

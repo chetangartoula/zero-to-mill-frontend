@@ -1,8 +1,8 @@
 "use client";
 import BottomBar from "@/components/navigation/BottomBar";
-import MobileTopNav from "@/components/navigation/MobileTopnav";
 import { useAppStore } from "@/store";
 import getAccessToken from "@/store/actions/getAccessToken";
+import { setAxiosAuthTokens } from "@/utils/token";
 import React, { PropsWithChildren, useEffect } from "react";
 
 function ProtectedLayout({ children }: PropsWithChildren) {
@@ -12,6 +12,7 @@ function ProtectedLayout({ children }: PropsWithChildren) {
       try {
         const response = await getAccessToken();
         setAccessToken(response);
+        setAxiosAuthTokens(response);
       } catch (error) {
         console.error("Failed to fetch access token:", error);
       }
