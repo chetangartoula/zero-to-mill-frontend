@@ -6,6 +6,7 @@ import SelectFormField from "@/components/formfields/SelectFormField";
 import { Button } from "@/components/ui/button";
 import DetailWrapper from "@/components/wrapper/detailWrapper";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
+import { useAppMutation } from "@/lib/api";
 import { WithDrawSchema } from "@/schemas/withdraw";
 import React from "react";
 import { useFormContext } from "react-hook-form";
@@ -17,6 +18,12 @@ function Withdraw() {
     email: "",
     amount: 0,
   };
+
+  const { mutate } = useAppMutation("withdraw", {
+    onSuccess: async () => {
+      console.log("Withdraw successful");
+    },
+  });
   return (
     <DetailWrapper title="Withdraw" navigationLink={"test"}>
       <AppForm
