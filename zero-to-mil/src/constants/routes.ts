@@ -15,18 +15,18 @@ export const routes: Route[] = [
     label: "Sports",
   },
   {
-    value: "login",
+    value: "deposit",
     icon: StarIcon,
     label: "Favorites",
   },
   {
-    value: "login",
+    value: "betslip",
     icon: ReceiptIcon,
     label: "Bet slip",
     special: true,
   },
   {
-    value: "login",
+    value: "history",
     icon: ClockIcon,
     label: "History",
   },

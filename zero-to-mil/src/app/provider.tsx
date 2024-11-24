@@ -14,13 +14,13 @@ export function AppProvider({
 }: {
   children: React.ReactNode;
 }): ReactElement {
-  const { setWidth } = useLayoutStore();
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [setWidth]);
+  // const { setWidth } = useLayoutStore();
+  // useEffect(() => {
+  //   const handleResize = () => setWidth(window.innerWidth);
+  //   handleResize();
+  //   window.addEventListener("resize", handleResize);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, [setWidth]);
 
   return (
     <QueryClientProvider client={queryClient}>

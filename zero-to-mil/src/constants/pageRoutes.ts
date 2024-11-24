@@ -6,6 +6,8 @@ export const PageRoutes = {
   "new-password": "/new-password",
   dashboard: "/dashboard",
   menu: "/menu",
+  betslip: "/betslip",
+  history: "/transaction-history",
   deposit: "/deposit",
   withdraw: "/withdraw",
   verify: "/verify",
