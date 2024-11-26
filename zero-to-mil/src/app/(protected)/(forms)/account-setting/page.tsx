@@ -7,6 +7,7 @@ import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { useAppMutation } from "@/lib/api";
 import { AccountSettingsSchema } from "@/schemas/account-settings";
 import { useLayoutStore } from "@/store/slices/layoutState";
+import { getPageRoutes } from "@/utils/getRoutes";
 import React from "react";
 import { toast } from "sonner";
 
@@ -24,7 +25,10 @@ function AccountSetting() {
     },
   });
   return (
-    <DetailWrapper title="Account Settings" navigationLink={"menu"}>
+    <DetailWrapper
+      title="Account Settings"
+      navigationLink={getPageRoutes("menu")}
+    >
       <AppForm
         defaultValues={initialValues}
         schema={AccountSettingsSchema}

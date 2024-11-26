@@ -6,15 +6,16 @@ import SelectFormField from "@/components/formfields/SelectFormField";
 import { Button } from "@/components/ui/button";
 import DetailWrapper from "@/components/wrapper/detailWrapper";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
+import { deposit_methods } from "@/constants/data";
 import { useAppMutation } from "@/lib/api";
 import { WithDrawSchema } from "@/schemas/withdraw";
+import { getPageRoutes } from "@/utils/getRoutes";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 
 function Withdraw() {
   const initialValue = {
-    currency: "USD",
-    deposit_method: "Paypal",
+    withdraw_method: "cash",
     email: "",
     amount: 0,
   };
@@ -25,25 +26,20 @@ function Withdraw() {
     },
   });
   return (
-    <DetailWrapper title="Withdraw" navigationLink={"test"}>
+    <DetailWrapper title="Withdraw" navigationLink={getPageRoutes("menu")}>
       <AppForm
         defaultValues={initialValue}
         schema={WithDrawSchema}
-        onSubmit={(data) => console.log("data", data)}
+        onSubmit={(data) => mutate(data)}
       >
         {(form) => (
           <>
             <FormContentWrapper>
               <InputFormField name="email" label="Email" />
               <SelectFormField
-                name="deposit_method"
+                name="withdraw_method"
                 label="WithDraw Method"
-                options={[
-                  {
-                    label: "John Doe",
-                    value: "John Doe",
-                  },
-                ]}
+                options={deposit_methods}
               />
               <InputFormField name="amount" label="Amount" type="number" />
               <NumberCarousel

@@ -5,4 +5,5 @@ export const DepositSchema = z.object({
   deposit_method: z.string(),
   user_identity: z.string(),
   amount: z.number(),
+  remarks: z.string(),
 });

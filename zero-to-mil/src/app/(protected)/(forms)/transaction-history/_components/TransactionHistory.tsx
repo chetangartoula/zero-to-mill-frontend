@@ -1,8 +1,14 @@
+import { cn } from "@/lib/utils";
 import React from "react";
 
-function TransactionHistory() {
+export interface TransactionHistoryProps {
+  className?: string;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+}
+
+function TransactionHistory({ className, onClick }: TransactionHistoryProps) {
   return (
-    <div className="bg-input p-4">
+    <div className={cn("bg-input p-4", className)} onClick={onClick}>
       <div>
         <p>test</p>
       </div>

@@ -10,14 +10,16 @@ import { currency, deposit_methods } from "@/constants/data";
 import { useAppMutation } from "@/lib/api";
 import { DepositSchema } from "@/schemas/deposit";
 import { DepositDTO } from "@/types/base/deposit";
+import { getPageRoutes } from "@/utils/getRoutes";
 import React from "react";
 
 function Deposit() {
   const initialValues: DepositDTO = {
     currency: "USD",
-    deposit_method: "Paypal",
+    deposit_method: "cash",
     user_identity: "",
     amount: 0,
+    remarks: "",
   };
 
   const { mutate } = useAppMutation("deposit", {
@@ -27,7 +29,7 @@ function Deposit() {
   });
 
   return (
-    <DetailWrapper title="Deposit" navigationLink={"menu"}>
+    <DetailWrapper title="Deposit" navigationLink={getPageRoutes("menu")}>
       <AppForm
         defaultValues={initialValues}
         schema={DepositSchema}
@@ -51,6 +53,7 @@ function Deposit() {
                 label="Request To (Username)"
               />
               <InputFormField name="amount" label="Amount" type="number" />
+              <InputFormField name="remarks" label="Remarks" />
               <NumberCarousel
                 onClick={(value) =>
                   form.setValue(
