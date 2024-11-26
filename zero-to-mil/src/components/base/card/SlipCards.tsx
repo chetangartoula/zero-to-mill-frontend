@@ -1,10 +1,11 @@
 import DynamicIcon from "@/components/utils/DynamicIcon";
+import { cn } from "@/lib/utils";
 import { StarIcon } from "lucide-react";
 import React from "react";
 
-function SlipCards() {
+function SlipCards({ className }: { className?: string }) {
   return (
-    <div className="p-4  bg-menu">
+    <div className={cn("p-4  bg-menu", className)}>
       <div className="flex justify-between">
         <div className="flex">
           <DynamicIcon IconComponent={StarIcon} className={"text-cardtitle"} />

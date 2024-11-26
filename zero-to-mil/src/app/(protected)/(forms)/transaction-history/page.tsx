@@ -31,7 +31,13 @@ function TransactionHistoryList() {
       <div className="">
         <TransactionHistory
           className="border rounded-xl"
-          onClick={() => router.push(getPageRoutes("menu"))}
+          onClick={() =>
+            router.push(
+              getPageRoutes("transaction-detail", {
+                TransactionHistoryId: "1",
+              })
+            )
+          }
         />
       </div>
     </DetailWrapper>

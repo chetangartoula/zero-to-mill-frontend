@@ -13,6 +13,7 @@ export const PageRoutes = {
   verify: "/verify",
   "account-setting": "/account-setting",
   "transaction-history": "/transaction-history",
+  "transaction-detail": "/transaction-history/:TransactionId",
 };
 
 export type PageRoutesType = keyof typeof PageRoutes;
