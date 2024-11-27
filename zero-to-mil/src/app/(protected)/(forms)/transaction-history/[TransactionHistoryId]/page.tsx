@@ -1,8 +1,8 @@
 import React from "react";
-import TransactionHistory from "../_components/TransactionHistory";
 import SlipCards from "@/components/base/card/SlipCards";
 import DetailWrapper from "@/components/wrapper/detailWrapper";
 import { getPageRoutes } from "@/utils/getRoutes";
+import { TransactionHistory } from "@/components/custom/transaction";
 
 function TransactionHistoryDetails() {
   return (

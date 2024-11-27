@@ -1,49 +1,42 @@
 "use client";
-import AppForm from "@/components/base/form/AppForm";
-import InputFormField from "@/components/formfields/InputFormField";
-import { Button } from "@/components/ui/button";
-import DetailWrapper from "@/components/wrapper/detailWrapper";
-import FormContentWrapper from "@/components/wrapper/formContentWrapper";
-import { useAppMutation } from "@/lib/api";
-import { AccountSettingsSchema } from "@/schemas/account-settings";
+import {
+  ChangeMPINForm,
+  ChangePasswordFrom,
+  SetMPINForm,
+} from "@/components/custom/accountSetting";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLayoutStore } from "@/store/slices/layoutState";
-import { getPageRoutes } from "@/utils/getRoutes";
 import React from "react";
-import { toast } from "sonner";
 
 function AccountSetting() {
-  const initialValues = {
-    email: "",
-    password: "",
-    username: "",
-  };
   const { width, isMobile } = useLayoutStore((state) => state);
   console.log("width", width, isMobile);
-  const { mutate } = useAppMutation("accountSettings", {
-    onSuccess: async () => {
-      toast.success("OTP verification successful");
-    },
-  });
+
   return (
-    <DetailWrapper
-      title="Account Settings"
-      navigationLink={getPageRoutes("menu")}
-    >
-      <AppForm
-        defaultValues={initialValues}
-        schema={AccountSettingsSchema}
-        onSubmit={(data) => mutate(data)}
-      >
-        <FormContentWrapper>
-          <InputFormField name="email" label="Email" />
-          <InputFormField name="password" label="Password" />
-          <InputFormField name="username" label="Username" />
-          <Button type="submit" size={"full"}>
-            Submit
-          </Button>
-        </FormContentWrapper>
-      </AppForm>
-    </DetailWrapper>
+    <Tabs defaultValue="password" className="relative mr-auto w-full">
+      <TabsList className="w-full flex justify-start rounded-none border-b bg-transparent p-0 ">
+        <TabsTrigger
+          value="password"
+          className="relative flex-grow rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none focus-visible:ring-0 data-[state=active]:border-b-haravara data-[state=active]:text-foreground data-[state=active]:shadow-none "
+        >
+          Change Password
+        </TabsTrigger>
+        <TabsTrigger
+          value="mpin"
+          className="relative flex-grow rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none focus-visible:ring-0 data-[state=active]:border-b-haravara data-[state=active]:text-foreground data-[state=active]:shadow-none "
+        >
+          Change MPIN
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value="password">
+        <div>
+          <ChangePasswordFrom />
+        </div>
+      </TabsContent>
+      <TabsContent value="mpin">
+        {true ? <ChangeMPINForm /> : <SetMPINForm />}
+      </TabsContent>
+    </Tabs>
   );
 }
 

@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import TransactionHistory from "./_components/TransactionHistory";
 import DetailWrapper from "@/components/wrapper/detailWrapper";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { getPageRoutes } from "@/utils/getRoutes";
+import { TransactionHistory } from "@/components/custom/transaction";
 
 function TransactionHistoryList() {
   const router = useRouter();

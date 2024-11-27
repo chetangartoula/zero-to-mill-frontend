@@ -35,7 +35,7 @@ function WithDrawVerify({}: Props) {
             }}
           >
             <div className="flex justify-center">
-              <OTPFormField name="otp_code" length={4} />
+              <OTPFormField name="otp_code" length={4} fullWidth />
             </div>
 
             <Button

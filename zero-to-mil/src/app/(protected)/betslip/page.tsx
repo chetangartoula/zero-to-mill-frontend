@@ -1,6 +1,6 @@
 import SlipCards from "@/components/base/card/SlipCards";
+import OddList from "@/components/custom/betSlip/OddList";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import OddList from "./_components/OddList";
 
 export default function TabsDemo() {
   return (
