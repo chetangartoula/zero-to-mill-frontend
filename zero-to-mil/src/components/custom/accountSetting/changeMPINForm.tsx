@@ -2,14 +2,16 @@ import AppForm from "@/components/base/form/AppForm";
 import OTPFormField from "@/components/formfields/OTPFormField";
 import { Button } from "@/components/ui/button";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
+import { useAppMutation } from "@/lib/api";
 import { ChangeMPINSchema } from "@/schemas/account-settings";
 import React from "react";
 
 function ChangeMPINForm() {
+  const { mutate } = useAppMutation("changeMPIN", {});
   const initialValues = {
-    old_mpin: "",
-    new_mpin: "",
-    confirm_mpin: "",
+    old_pin_code: "",
+    pin_code: "",
+    confirm_pin_code: "",
   };
   return (
     <AppForm

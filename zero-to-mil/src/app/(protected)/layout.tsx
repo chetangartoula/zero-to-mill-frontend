@@ -1,5 +1,7 @@
 "use client";
 import BottomBar from "@/components/navigation/BottomBar";
+import MPINWrapper from "@/components/wrapper/mpinwrapper";
+import { useAppMutation } from "@/lib/api";
 import { useAppStore } from "@/store";
 import getAccessToken from "@/store/actions/getAccessToken";
 import { setAxiosAuthTokens } from "@/utils/token";
@@ -7,6 +9,7 @@ import React, { PropsWithChildren, useEffect } from "react";
 
 function ProtectedLayout({ children }: PropsWithChildren) {
   const { accessToken, setAccessToken } = useAppStore((state) => state);
+
   useEffect(() => {
     const fetchAccessToken = async () => {
       try {
@@ -20,8 +23,10 @@ function ProtectedLayout({ children }: PropsWithChildren) {
     if (!accessToken) fetchAccessToken();
   }, [accessToken, setAccessToken]);
 
+  if (!accessToken) return <p>Loading</p>;
+
   return (
-    <div>
+    <MPINWrapper>
       {children}
       <div
         style={{
@@ -33,7 +38,7 @@ function ProtectedLayout({ children }: PropsWithChildren) {
       >
         <BottomBar />
       </div>
-    </div>
+    </MPINWrapper>
   );
 }
 

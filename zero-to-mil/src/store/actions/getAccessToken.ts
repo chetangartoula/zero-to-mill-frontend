@@ -9,7 +9,7 @@ export default async function getAccessToken(): Promise<any> {
   }
 
   try {
-    const response = await axiosInstance<{
+    const { data, status } = await axiosInstance<{
       access: string;
     }>({
       method: "POST",
@@ -19,12 +19,13 @@ export default async function getAccessToken(): Promise<any> {
       },
     });
 
-    if (response.status === 200) {
-      return response.data.access;
+    if (status === 200) {
+      return data.access;
     } else {
       throw new Error("Failed to get access token");
     }
   } catch (error) {
+    console.log("test", error);
     return error;
   }
 }

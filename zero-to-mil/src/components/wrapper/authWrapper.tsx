@@ -7,6 +7,7 @@ export interface AuthWrapperProps {
   includeLogo?: boolean;
   logoSrc?: string;
   wrapperProps?: React.ComponentProps<"div">;
+  titleProp?: string;
 }
 
 function AuthWrapper({
@@ -17,6 +18,7 @@ function AuthWrapper({
   wrapperProps = {
     className: "h-screen",
   },
+  titleProp = "text-center",
 }: AuthWrapperProps & PropsWithChildren) {
   return (
     <div className={cn("mx-4", wrapperProps?.className)}>
@@ -26,7 +28,12 @@ function AuthWrapper({
         </div>
       )}
 
-      <h1 className="font-switzer font-semibold text-2xl leading-5 text-center">
+      <h1
+        className={cn(
+          "font-switzer font-semibold text-2xl leading-5",
+          titleProp
+        )}
+      >
         {title}
       </h1>
       {children}

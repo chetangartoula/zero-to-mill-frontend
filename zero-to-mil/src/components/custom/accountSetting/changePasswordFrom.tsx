@@ -2,6 +2,7 @@ import AppForm from "@/components/base/form/AppForm";
 import InputFormField from "@/components/formfields/InputFormField";
 import { Button } from "@/components/ui/button";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
+import { useAppMutation } from "@/lib/api";
 import { ChangePasswordSchema } from "@/schemas/account-settings";
 import React from "react";
 
@@ -13,6 +14,7 @@ function ChangePasswordFrom({}: Props) {
     new_password: "",
     confirm_password: "",
   };
+  const { mutate } = useAppMutation("changePassword", {});
   return (
     <AppForm
       defaultValues={initialData}

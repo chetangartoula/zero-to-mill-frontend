@@ -1,3 +1,5 @@
+import { get, set } from "lodash";
+
 export const apiRoutes = {
   login: "/auth/user-login/",
   register: "/auth/register/",
@@ -7,9 +9,18 @@ export const apiRoutes = {
   "set-up-pin": "/auth/me/setup-pin/",
   //re-verify
   forgotPassword: "/forgot-password/",
+  changePassword: "/auth/me/change-password/",
   resetPassword: "/reset-password/",
   verifyEmail: "/verify-email/",
   accountSettings: "/account-settings/",
+
+  //mpin
+  getMPIN: "/config/gurd-verification/",
+  setMPIN: "/auth/me/setup-pin/",
+  changeMPIN: "/auth/me/change-pin/",
+
+  //options
+  "cash-options": "/config/cash-options/",
 
   // transaction
   deposit: "/transaction/request/load/",
