@@ -3,7 +3,6 @@ import { SetMPINForm } from "../custom/accountSetting";
 import AuthWrapper from "./authWrapper";
 import Text from "../ui/text";
 import { useAppMutation, useAppQuery } from "@/lib/api";
-import { initial } from "lodash";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -40,8 +39,8 @@ function MPINWrapper({ children }: PropsWithChildren) {
     }
   );
   const { intial_sign_up, display_every_render, is_mpin_set } = data || {
-    intial_sign_up: true,
-    display_every_render: true,
+    intial_sign_up: false,
+    display_every_render: false,
     is_mpin_set: true,
   };
 
