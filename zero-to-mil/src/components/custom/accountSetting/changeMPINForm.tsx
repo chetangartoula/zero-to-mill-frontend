@@ -7,7 +7,9 @@ import { ChangeMPINSchema } from "@/schemas/account-settings";
 import React from "react";
 
 function ChangeMPINForm() {
-  const { mutate } = useAppMutation("changeMPIN", {});
+  const { mutate } = useAppMutation("changeMPIN", {
+    onSuccess: async () => {},
+  });
   const initialValues = {
     old_pin_code: "",
     pin_code: "",
@@ -17,7 +19,7 @@ function ChangeMPINForm() {
     <AppForm
       defaultValues={initialValues}
       schema={ChangeMPINSchema}
-      onSubmit={(data) => console.log(data)}
+      onSubmit={(data) => mutate(data)}
     >
       <FormContentWrapper className="p-4 ">
         <div className="flex justify-center">

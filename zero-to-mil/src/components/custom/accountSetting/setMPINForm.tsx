@@ -8,7 +8,7 @@ import { SetMPINSchema } from "@/schemas/account-settings";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
-import { QueryClient, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 export interface SetMPINFormProps {
   displaySkip?: boolean;

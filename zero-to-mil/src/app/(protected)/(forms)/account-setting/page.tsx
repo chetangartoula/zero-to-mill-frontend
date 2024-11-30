@@ -6,13 +6,14 @@ import {
 } from "@/components/custom/accountSetting";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DetailWrapper from "@/components/wrapper/detailWrapper";
+import { useAppStore } from "@/store";
 import { useLayoutStore } from "@/store/slices/layoutState";
 import { getPageRoutes } from "@/utils/getRoutes";
 import React from "react";
 
 function AccountSetting() {
-  const { width, isMobile } = useLayoutStore((state) => state);
-  console.log("width", width, isMobile);
+  // const { width, isMobile } = useLayoutStore((state) => state);
+  const { is_mpin_set } = useAppStore((state) => state);
 
   return (
     <DetailWrapper
@@ -41,7 +42,7 @@ function AccountSetting() {
           </div>
         </TabsContent>
         <TabsContent value="mpin">
-          {true ? <ChangeMPINForm /> : <SetMPINForm />}
+          {is_mpin_set ? <ChangeMPINForm /> : <SetMPINForm />}
         </TabsContent>
       </Tabs>
     </DetailWrapper>

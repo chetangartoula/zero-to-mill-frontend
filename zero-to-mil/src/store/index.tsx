@@ -4,10 +4,12 @@ import { create, StoreApi, useStore } from "zustand";
 import { Store } from "./store";
 import { createAuthStore } from "./slices/accessToken";
 import { createLoginStore } from "./slices/login";
+import { createMPINStore } from "./slices/mpin";
 
 const appStore = create<Store>()((...set) => ({
   ...createLoginStore(...set),
   ...createAuthStore(...set),
+  ...createMPINStore(...set),
 }));
 
 export const AppStoreContext = createContext<StoreApi<Store>>(null!);

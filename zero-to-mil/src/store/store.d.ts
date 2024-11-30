@@ -1,1 +1,1 @@
-export type Store = any;
+export type Store = MPINGState & LoginState & AccessTokenState;

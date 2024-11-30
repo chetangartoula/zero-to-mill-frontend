@@ -5,6 +5,7 @@ import Text from "../ui/text";
 import { useAppMutation, useAppQuery } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+import { useAppStore } from "@/store";
 
 export interface MPINWrapperProps {
   initialSignup?: boolean;
@@ -20,6 +21,7 @@ export interface MPINProps {
 function MPINWrapper({ children }: PropsWithChildren) {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const { setMPINState } = useAppStore((state) => state);
   const { data } = useAppQuery<MPINProps>({
     routeName: "getMPIN",
     queryKey: ["getMPIN"],
@@ -29,7 +31,8 @@ function MPINWrapper({ children }: PropsWithChildren) {
   const { mutate } = useAppMutation(
     "getMPIN",
     {
-      onSuccess: async () => {
+      onSuccess: async (data) => {
+        setMPINState(data);
         queryClient.invalidateQueries({ queryKey: ["getMPIN"] });
         router.push("/dashboard");
       },

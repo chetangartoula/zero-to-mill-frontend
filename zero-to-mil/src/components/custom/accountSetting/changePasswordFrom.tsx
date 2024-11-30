@@ -19,7 +19,7 @@ function ChangePasswordFrom({}: Props) {
     <AppForm
       defaultValues={initialData}
       schema={ChangePasswordSchema}
-      onSubmit={(data) => console.log(data)}
+      onSubmit={(data) => mutate(data)}
     >
       <FormContentWrapper className="p-4">
         <InputFormField name="old_password" label="Old Password" />
