@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import DetailWrapper from "@/components/wrapper/detailWrapper";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { deposit_methods } from "@/constants/data";
-import { useAppMutation } from "@/lib/api";
 import { WithDrawSchema } from "@/schemas/withdraw";
 import { useAppStore } from "@/store";
 import { WithDrawDTO } from "@/types/base";
@@ -15,15 +14,15 @@ import { getPageRoutes } from "@/utils/getRoutes";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-export const withDrawInitialValue = {
-  withdraw_method: "cash",
-  email: "",
-  amount: 0,
-};
-
 function Withdraw() {
   const router = useRouter();
   const { setWithdrawState } = useAppStore((state) => state);
+
+  const withDrawInitialValue = {
+    withdraw_method: "cash",
+    email: "",
+    amount: 0,
+  };
 
   return (
     <DetailWrapper title="Withdraw" navigationLink={getPageRoutes("menu")}>

@@ -1,8 +1,16 @@
+"use client";
 import SlipCards from "@/components/base/card/SlipCards";
 import OddList from "@/components/custom/betSlip/OddList";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAppQuery } from "@/lib/api";
 
 export default function TabsDemo() {
+  const { data } = useAppQuery({
+    routeName: "getMPIN",
+    queryKey: ["getMPIN"],
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
   return (
     <div className="flex flex-col min-h-screen ">
       <Tabs defaultValue="single" className="relative mr-auto w-full">

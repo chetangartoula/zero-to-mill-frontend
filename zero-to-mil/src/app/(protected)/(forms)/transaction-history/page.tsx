@@ -5,9 +5,16 @@ import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { getPageRoutes } from "@/utils/getRoutes";
 import { TransactionHistory } from "@/components/custom/transaction";
+import { useAppQuery } from "@/lib/api";
 
 function TransactionHistoryList() {
   const router = useRouter();
+  const { data } = useAppQuery({
+    routeName: "getTransactionHistory",
+    queryKey: ["getTransactionHistory"],
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
   return (
     <DetailWrapper
       title="Transaction History"

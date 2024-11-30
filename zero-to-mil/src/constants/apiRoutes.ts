@@ -26,6 +26,10 @@ export const apiRoutes = {
   deposit: "/transaction/request/load/",
   withdraw: "/transaction/request/unload/",
   "load-money": "/transaction/load-admin/",
+  getTransactionHistory: "/transaction/history/",
+
+  //bet slip
+  getBetSlip: "/betslip/",
 };
 
 export type ApiRoutes = keyof typeof apiRoutes;
