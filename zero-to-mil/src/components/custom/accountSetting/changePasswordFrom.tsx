@@ -4,11 +4,10 @@ import { Button } from "@/components/ui/button";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { useAppMutation } from "@/lib/api";
 import { ChangePasswordSchema } from "@/schemas/account-settings";
+import { ChangePasswordDTO } from "@/types/base";
 import React from "react";
 
-type Props = {};
-
-function ChangePasswordFrom({}: Props) {
+function ChangePasswordFrom() {
   const initialData = {
     old_password: "",
     new_password: "",
@@ -16,7 +15,7 @@ function ChangePasswordFrom({}: Props) {
   };
   const { mutate } = useAppMutation("changePassword", {});
   return (
-    <AppForm
+    <AppForm<ChangePasswordDTO>
       defaultValues={initialData}
       schema={ChangePasswordSchema}
       onSubmit={(data) => mutate(data)}

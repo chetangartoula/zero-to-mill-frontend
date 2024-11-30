@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
+import { SetMPINDTO } from "@/types/base";
 
 export interface SetMPINFormProps {
   displaySkip?: boolean;
@@ -28,7 +29,7 @@ function SetMPINForm({ displaySkip = false, onSkip }: SetMPINFormProps) {
     },
   });
   return (
-    <AppForm
+    <AppForm<SetMPINDTO>
       defaultValues={initialValues}
       schema={SetMPINSchema}
       onSubmit={({ pin_code }) =>

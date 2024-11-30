@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { useAppMutation } from "@/lib/api";
 import { ChangeMPINSchema } from "@/schemas/account-settings";
+import { ChangeMPINDTO } from "@/types/base";
 import React from "react";
 
 function ChangeMPINForm() {
@@ -16,19 +17,29 @@ function ChangeMPINForm() {
     confirm_pin_code: "",
   };
   return (
-    <AppForm
+    <AppForm<ChangeMPINDTO>
       defaultValues={initialValues}
       schema={ChangeMPINSchema}
-      onSubmit={(data) => mutate(data)}
+      onSubmit={(data) =>
+        mutate({
+          old_pin_code: data.old_pin_code,
+          pin_code: data.pin_code,
+        })
+      }
     >
       <FormContentWrapper className="p-4 ">
         <div className="flex justify-center">
-          <OTPFormField name="old_mpin" length={4} label="Old MPIN" fullWidth />
+          <OTPFormField
+            name="old_pin_code"
+            length={4}
+            label="Old MPIN"
+            fullWidth
+          />
         </div>
 
-        <OTPFormField name="new_mpin" length={4} label="New MPIN" fullWidth />
+        <OTPFormField name="pin_code" length={4} label="New MPIN" fullWidth />
         <OTPFormField
-          name="confirm_mpin"
+          name="confirm_pin_code"
           length={4}
           label="Confirm MPIN"
           fullWidth
