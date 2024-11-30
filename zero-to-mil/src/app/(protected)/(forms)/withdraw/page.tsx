@@ -9,28 +9,32 @@ import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { deposit_methods } from "@/constants/data";
 import { useAppMutation } from "@/lib/api";
 import { WithDrawSchema } from "@/schemas/withdraw";
+import { useAppStore } from "@/store";
+import { WithDrawDTO } from "@/types/base";
 import { getPageRoutes } from "@/utils/getRoutes";
+import { useRouter } from "next/navigation";
 import React from "react";
-import { useFormContext } from "react-hook-form";
+
+export const withDrawInitialValue = {
+  withdraw_method: "cash",
+  email: "",
+  amount: 0,
+};
 
 function Withdraw() {
-  const initialValue = {
-    withdraw_method: "cash",
-    email: "",
-    amount: 0,
-  };
+  const router = useRouter();
+  const { setWithdrawState } = useAppStore((state) => state);
 
-  const { mutate } = useAppMutation("withdraw", {
-    onSuccess: async () => {
-      console.log("Withdraw successful");
-    },
-  });
   return (
     <DetailWrapper title="Withdraw" navigationLink={getPageRoutes("menu")}>
-      <AppForm
-        defaultValues={initialValue}
+      <AppForm<WithDrawDTO>
+        defaultValues={withDrawInitialValue}
         schema={WithDrawSchema}
-        onSubmit={(data) => mutate(data)}
+        onSubmit={async (data) => {
+          console.log("withdrawData", data);
+          await setWithdrawState(data);
+          router.push(getPageRoutes("withdraw-verify"));
+        }}
       >
         {(form) => (
           <>

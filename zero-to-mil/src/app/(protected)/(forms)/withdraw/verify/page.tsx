@@ -5,12 +5,19 @@ import { Button } from "@/components/ui/button";
 import Text from "@/components/ui/text";
 import AuthWrapper from "@/components/wrapper/authWrapper";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
-import { otpVerificationSchema } from "@/schemas/auth";
+import { useAppMutation } from "@/lib/api";
+import { WithDrawVerifySchema } from "@/schemas/withdraw";
+import { useAppStore } from "@/store";
+import { WithDrawVerifyDTO } from "@/types/base";
 import React from "react";
 
-type Props = {};
-
-function WithDrawVerify({}: Props) {
+function WithDrawVerify() {
+  const { withdraw_method, email, amount } = useAppStore((state) => state);
+  const { mutate } = useAppMutation("withdraw", {
+    onSuccess: async () => {
+      console.log("Withdraw successful");
+    },
+  });
   return (
     <AuthWrapper
       title="Enter your MPIN"
@@ -23,10 +30,17 @@ function WithDrawVerify({}: Props) {
         text={`Enter your 4 digit PIN code to continue`}
         className="my-2 text-center"
       />
-      <AppForm
-        defaultValues={{ otp_code: "" }}
-        schema={otpVerificationSchema}
-        onSubmit={(data) => console.log("data", data)}
+      <AppForm<WithDrawVerifyDTO>
+        defaultValues={{ mpin: "" }}
+        schema={WithDrawVerifySchema}
+        onSubmit={(data) =>
+          mutate({
+            withdraw_method,
+            email,
+            amount,
+            ...data,
+          })
+        }
       >
         {(form) => (
           <FormContentWrapper
@@ -35,14 +49,12 @@ function WithDrawVerify({}: Props) {
             }}
           >
             <div className="flex justify-center">
-              <OTPFormField name="otp_code" length={4} fullWidth />
+              <OTPFormField name="mpin" length={4} fullWidth />
             </div>
 
             <Button
               size={"full"}
-              variant={
-                form.watch("otp_code").length === 4 ? "default" : "disabled"
-              }
+              variant={form.watch("mpin").length === 4 ? "default" : "disabled"}
             >
               Verify
             </Button>

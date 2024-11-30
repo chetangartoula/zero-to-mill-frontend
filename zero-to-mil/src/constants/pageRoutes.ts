@@ -10,6 +10,7 @@ export const PageRoutes = {
   history: "/transaction-history",
   deposit: "/deposit",
   withdraw: "/withdraw",
+  "withdraw-verify": "/withdraw/verify",
   verify: "/verify",
   "account-setting": "/account-setting",
   "transaction-history": "/transaction-history",
