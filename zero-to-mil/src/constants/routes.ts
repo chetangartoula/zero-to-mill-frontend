@@ -15,7 +15,7 @@ export const routes: Route[] = [
     label: "Sports",
   },
   {
-    value: "deposit",
+    value: "favourites",
     icon: StarIcon,
     label: "Favorites",
   },

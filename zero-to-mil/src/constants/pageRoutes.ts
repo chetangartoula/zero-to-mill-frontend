@@ -12,6 +12,7 @@ export const PageRoutes = {
   withdraw: "/withdraw",
   "withdraw-verify": "/withdraw/verify",
   verify: "/verify",
+  favourites: "/favourites",
   "account-setting": "/account-setting",
   "transaction-history": "/transaction-history",
   "transaction-detail": "/transaction-history/:TransactionId",
