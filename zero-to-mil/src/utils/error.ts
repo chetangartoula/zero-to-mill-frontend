@@ -4,25 +4,27 @@ import { error } from "console";
 interface ErrorResponse {
   detail?: string;
   error?: string;
+  error_message?: string;
   message?: string;
   errors?: Record<string, string[]>;
 }
 
 export function handleApiError(error: unknown): string {
+  console.log("error", error);
   if (axios.isAxiosError(error)) {
     const axiosError = error as AxiosError<ErrorResponse>;
 
     if (axiosError.response) {
       const { data } = axiosError.response;
-
+      if (data?.error_message) return data.error_message;
       if (data?.detail) return data.detail;
       if (data?.error) return data.error;
       if (data?.message) return data.message;
       if (data?.errors) return handleValidationError(data);
 
       switch (axiosError.response.status) {
-        case 400:
-          return "Invalid request. Please check your input and try again.";
+        // case 400:
+        //   return "Invalid request. Please check your input and try again.";
         case 401:
           return "Authentication failed. Please log in again.";
         case 403:
