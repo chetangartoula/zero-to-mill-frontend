@@ -23,8 +23,8 @@ export function handleApiError(error: unknown): string {
       if (data?.errors) return handleValidationError(data);
 
       switch (axiosError.response.status) {
-        // case 400:
-        //   return "Invalid request. Please check your input and try again.";
+        case 400:
+          return "Invalid request. Please check your input and try again.";
         case 401:
           return "Authentication failed. Please log in again.";
         case 403:

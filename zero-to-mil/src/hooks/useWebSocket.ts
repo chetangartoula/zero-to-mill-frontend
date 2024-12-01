@@ -1,3 +1,4 @@
+import { useAppStore } from "@/store";
 import { useEffect, useRef, useState } from "react";
 
 interface WebSocketOptions {
@@ -5,15 +6,20 @@ interface WebSocketOptions {
   onClose?: (event: CloseEvent) => void;
   onMessage?: (event: MessageEvent) => void;
   onError?: (event: Event) => void;
+  headers?: Record<string, string>;
 }
 
 export const useWebSocket = (url: string, options?: WebSocketOptions) => {
+  const { accessToken } = useAppStore((state) => state);
   const [isConnected, setIsConnected] = useState(false);
   const [messages, setMessages] = useState<string[]>([]);
   const socketRef = useRef<WebSocket | null>(null);
+  console.log("accessTokenfrom socket", accessToken);
 
   useEffect(() => {
-    const socket = new WebSocket(url);
+    const socket = new WebSocket(
+      `${process.env.NEXT_PUBLIC_WS_URL}/${url}?token=${accessToken}`
+    );
     socketRef.current = socket;
 
     socket.onopen = (event) => {
