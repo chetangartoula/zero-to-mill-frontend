@@ -27,7 +27,7 @@ export default async function LoginUser(data: LoginDTO) {
     }
   } catch (error) {
     if (isString(error)) {
-      return error;
+      return { error };
     } else if (isAxiosError(error)) {
       return error.response?.data;
     }

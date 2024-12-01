@@ -28,6 +28,9 @@ function Login() {
       if (response instanceof Error) {
         toast.error(response.message);
         return;
+      } else if (response.error) {
+        toast.error(response.error);
+        return;
       } else {
         setAccessToken(response.access);
         setAxiosAuthTokens(response.access);
