@@ -7,6 +7,7 @@ import { getPageRoutes } from "@/utils/getRoutes";
 import { TransactionHistory } from "@/components/custom/history";
 import { useAppQuery } from "@/lib/api";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import MobileTopNav from "@/components/navigation/MobileTopnav";
 
 function TransactionHistoryList() {
   const router = useRouter();
@@ -17,11 +18,9 @@ function TransactionHistoryList() {
     refetchOnWindowFocus: false,
   });
   return (
-    <DetailWrapper
-      title="Transaction History"
-      navigationLink={getPageRoutes("menu")}
-    >
-      <div className="flex justify-between gap-1">
+    <>
+      <MobileTopNav />
+      {/* <div className="flex justify-between gap-1">
         <div className="flex-1">
           <p className="text-sm text-cardtitle text-start">Available</p>
           <p className="text-primary text-xl text-start">${455}</p>
@@ -35,9 +34,8 @@ function TransactionHistoryList() {
           <p className="text-xl text-end">${55}</p>
         </div>
       </div>
-      <Separator className="my-2" />
-
-      <Tabs defaultValue="bet_history" className="relative mr-auto w-full">
+      <Separator className="my-2" /> */}
+      <Tabs defaultValue="bet_history" className="relative mr-auto w-full mt-1">
         <TabsList className="w-full flex justify-start rounded-none border-b bg-transparent p-0 ">
           <TabsTrigger
             value="bet_history"
@@ -64,7 +62,7 @@ function TransactionHistoryList() {
             }
           />
         </TabsContent>
-        <TabsContent value="transaction_history">
+        <TabsContent value="transaction_history" className="p-4">
           {" "}
           <TransactionHistory
             className="border rounded-xl"
@@ -78,7 +76,7 @@ function TransactionHistoryList() {
           />
         </TabsContent>
       </Tabs>
-    </DetailWrapper>
+    </>
   );
 }
 

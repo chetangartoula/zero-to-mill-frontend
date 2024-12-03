@@ -19,7 +19,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         ghostprimary:
           "hover:bg-primary hover:text-primary-foreground text-primary",
-        link: "text-primary underline-offset-4 hover:underline",
+        link: "text-white",
         muted: "bg-muted text-muted-foreground hover:bg-muted/90",
         disabled: "bg-disabled text-disabled-foreground",
       },
@@ -29,6 +29,7 @@ const buttonVariants = cva(
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
         full: "w-full h-10",
+        nav: "p-2",
       },
     },
     defaultVariants: {
