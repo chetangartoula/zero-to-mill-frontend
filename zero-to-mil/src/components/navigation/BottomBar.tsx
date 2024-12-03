@@ -5,9 +5,6 @@ import { routes } from "@/constants/routes";
 import DynamicIcon from "../utils/DynamicIcon";
 import { usePathname, useRouter } from "next/navigation";
 import { getPageRoutes } from "@/utils/getRoutes";
-import { MenuIcon } from "lucide-react";
-import NavDrawer from "./NavDrawer";
-import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
 
 function normalizePath(path: string): string {
   return path.replace(/^\/+/, "./");
@@ -31,6 +28,11 @@ function BottomBar() {
                     IconComponent={item.icon}
                     className="text-white "
                   />
+                  {/* {item.count && (
+                    <div className="absolute -bottom-1 -right-0 bg-white text-primary text-xs rounded-full w-4 h-4 flex items-center justify-center z-10">
+                      {item.count}
+                    </div>
+                  )} */}
                 </div>
               ) : (
                 <DynamicIcon
