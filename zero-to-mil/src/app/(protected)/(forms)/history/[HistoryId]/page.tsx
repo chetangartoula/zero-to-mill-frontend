@@ -2,7 +2,7 @@ import React from "react";
 import SlipCards from "@/components/base/card/SlipCards";
 import DetailWrapper from "@/components/wrapper/detailWrapper";
 import { getPageRoutes } from "@/utils/getRoutes";
-import { TransactionHistory } from "@/components/custom/transaction";
+import { TransactionHistory } from "@/components/custom/history";
 
 function TransactionHistoryDetails() {
   return (
