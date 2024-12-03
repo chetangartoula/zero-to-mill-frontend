@@ -7,13 +7,14 @@ export const PageRoutes = {
   dashboard: "/dashboard",
   menu: "/menu",
   betslip: "/betslip",
-  history: "/transaction-history",
+  history: "/history",
   deposit: "/deposit",
   withdraw: "/withdraw",
   "withdraw-verify": "/withdraw/verify",
   verify: "/verify",
   favourites: "/favourites",
   "account-setting": "/account-setting",
+
   "transaction-history": "/transaction-history",
   "transaction-detail": "/transaction-history/:TransactionId",
 };
