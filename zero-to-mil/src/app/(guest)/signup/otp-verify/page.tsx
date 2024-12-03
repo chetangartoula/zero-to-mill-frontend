@@ -80,7 +80,7 @@ function OTPVerification({
               <Text className="text-center">Didn&apos;t receive code?</Text>
               {true ? (
                 <Text className="text-center">
-                  You can receive teh code in 10 sec
+                  You can receive the code in 10 sec
                 </Text>
               ) : (
                 <Text variant="primary" className="text-center m-0">

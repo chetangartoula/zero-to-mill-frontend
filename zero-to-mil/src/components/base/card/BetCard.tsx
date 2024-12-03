@@ -5,7 +5,6 @@ import {
   AccordionItem,
   BetAccordionTrigger,
 } from "@/components/ui/accordion";
-import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import DynamicIcon from "@/components/utils/DynamicIcon";
 import { cn } from "@/lib/utils";

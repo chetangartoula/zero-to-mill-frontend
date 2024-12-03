@@ -2,6 +2,7 @@ import { StarIcon } from "lucide-react";
 
 export const carouseldata: {
   name: string;
+  imageUrl?: string;
   icon: React.ComponentType<{ className?: string }>;
   value: string;
 }[] = [
@@ -11,47 +12,12 @@ export const carouseldata: {
     value: "dashboard",
   },
   {
-    name: "Explore",
+    name: "Live",
     icon: StarIcon,
     value: "login",
   },
   {
-    name: "Notifications",
-    icon: StarIcon,
-    value: "login",
-  },
-  {
-    name: "Messages",
-    icon: StarIcon,
-    value: "login",
-  },
-  {
-    name: "Messages",
-    icon: StarIcon,
-    value: "login",
-  },
-  {
-    name: "Messages",
-    icon: StarIcon,
-    value: "login",
-  },
-  {
-    name: "Messages",
-    icon: StarIcon,
-    value: "login",
-  },
-  {
-    name: "Messages",
-    icon: StarIcon,
-    value: "login",
-  },
-  {
-    name: "Messages",
-    icon: StarIcon,
-    value: "login",
-  },
-  {
-    name: "Messages",
+    name: "Today",
     icon: StarIcon,
     value: "login",
   },
