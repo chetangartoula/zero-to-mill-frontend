@@ -6,55 +6,68 @@ import {
   BetAccordionTrigger,
 } from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator";
-import DynamicIcon from "@/components/utils/DynamicIcon";
 import { cn } from "@/lib/utils";
-import { StarIcon } from "lucide-react";
+import { OddList, Outcome, TabData } from "@/types/base";
+import { capitalize } from "lodash";
+import Image from "next/image";
 import React from "react";
 
-const BetItem = ({ title }: { title: string }) => (
+const BetItem = ({
+  title,
+  betData,
+}: {
+  title: string;
+  betData?: Outcome[];
+}) => (
   <div className="bg-input p-2" onClick={(e) => e.stopPropagation()}>
     {title && <p>{title}</p>}
+
     <div className={cn("flex justify-between align-center gap-6 pl-2 text-s")}>
-      <div className={cn("flex-column text-center w-full")}>
-        <p className="p-2">1</p>
-        <p className="bg-subinput py-3 rounded">8.55</p>
-      </div>
-      <div className={cn("flex-column text-center w-full")}>
-        <p className="p-2">x</p>
-        <p className="bg-subinput py-3 rounded">8.55</p>
-      </div>
-      <div className={cn("flex-column text-center w-full")}>
-        <p className="p-2">2</p>
-        <p className="bg-subinput py-3 rounded">8.55</p>
-      </div>
+      {betData?.map((item) => (
+        <div className={cn("flex-column text-center w-full")}>
+          <p className="p-2">{item.name}</p>
+          <p
+            className="bg-subinput py-3 rounded"
+            onClick={() => console.log("points", item.point)}
+          >
+            {item.point ?? item.price}
+          </p>
+        </div>
+      ))}
     </div>
   </div>
 );
 
-function BetCard() {
+function BetCard({ data, title }: { data: OddList; title: TabData }) {
   return (
     <div className="bg-menu p-4 mt-4">
       <div className="flex">
-        <DynamicIcon IconComponent={StarIcon} className={"text-cardtitle"} />
-        <p className="ml-2 text-s text-cardtitle">Football</p>
+        <Image src={title.imageUrl} alt="title" fill sizes="16px" />
+        <p className="ml-2 text-s text-cardtitle">{title.title}</p>
       </div>
       <Separator className="bg-muted mt-4" />
       <Accordion type="multiple">
         <AccordionItem
-          value="match-winners"
+          value={data.sport_key}
           className="bg-input rounded mt-4 pr-4"
         >
           <BetAccordionTrigger
             dualTitle={{
-              firstTeam: "Team A",
-              secondTeam: "Team B",
+              firstTeam: data.home_team,
+              secondTeam: data.away_team,
             }}
           >
-            <BetItem title="" />
+            {data.bookmakers && (
+              <BetItem title="" betData={data.bookmakers.markets[0].outcomes} />
+            )}
           </BetAccordionTrigger>
           <AccordionContent>
-            <Separator className="bg-muted mt-4" />
-            <BetItem title="Match Winner" />
+            {data.bookmakers.markets.slice(1).map((item) => (
+              <>
+                <Separator className="bg-muted mt-4" />
+                <BetItem title={capitalize(item.key)} betData={item.outcomes} />
+              </>
+            ))}
           </AccordionContent>
         </AccordionItem>
       </Accordion>

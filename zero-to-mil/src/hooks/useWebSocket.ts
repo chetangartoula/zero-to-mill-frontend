@@ -17,7 +17,6 @@ export const useWebSocket = <T = unknown>(
   const [isConnected, setIsConnected] = useState(false);
   const [messages, setMessages] = useState<T[]>([]);
   const socketRef = useRef<WebSocket | null>(null);
-  console.log("accessTokenfrom socket", accessToken);
 
   useEffect(() => {
     const socket = new WebSocket(
@@ -67,8 +66,6 @@ export const useWebSocket = <T = unknown>(
       socketRef.current.send(message);
     }
   };
-
-  console.log("messages", messages);
 
   return { isConnected, messages, sendMessage };
 };
