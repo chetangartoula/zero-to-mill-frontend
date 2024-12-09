@@ -6,7 +6,7 @@ interface WebSocketOptions<T> {
   onClose?: (event: CloseEvent) => void;
   onMessage?: (event: T) => void;
   onError?: (event: Event) => void;
-  headers?: Record<string, string>;
+  filters?: Record<string, string | number | boolean>;
 }
 
 export const useWebSocket = <T = unknown>(
@@ -15,15 +15,24 @@ export const useWebSocket = <T = unknown>(
 ) => {
   const { accessToken } = useAppStore((state) => state);
   const [isConnected, setIsConnected] = useState(false);
-  const [messages, setMessages] = useState<T[]>([]);
+  const [messages, setMessages] = useState<T>({} as T);
   const socketRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
+    const params = new URLSearchParams({
+      token: `Bearer ${accessToken}`,
+    });
+
+    if (options?.filters) {
+      Object.entries(options.filters).forEach(([key, value]) => {
+        params.append(key, String(value));
+      });
+    }
+
     const socket = new WebSocket(
-      `${process.env.NEXT_PUBLIC_WS_URL}${url}?token=${`Bearer ${accessToken}`}`
+      `${process.env.NEXT_PUBLIC_WS_URL}${url}?${params.toString()}`
     );
     socketRef.current = socket;
-
     socket.onopen = (event) => {
       setIsConnected(true);
       if (options?.onOpen) {
@@ -41,7 +50,7 @@ export const useWebSocket = <T = unknown>(
     socket.onmessage = (event) => {
       try {
         const parsedData = JSON.parse(event.data) as T;
-        setMessages((prevMessages) => [...prevMessages, parsedData]);
+        setMessages(parsedData);
         if (options?.onMessage) {
           options.onMessage(parsedData);
         }
@@ -60,6 +69,8 @@ export const useWebSocket = <T = unknown>(
       socket.close();
     };
   }, [url, options, accessToken]);
+
+  // console.log("messages", messages);
 
   const sendMessage = (message: string) => {
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {

@@ -22,6 +22,9 @@ export const apiRoutes = {
   //options
   "cash-options": "/config/cash-options/",
 
+  //nav list
+  "menu-items": "/menu-items",
+
   // transaction
   deposit: "/transaction/request/load/",
   withdraw: "/transaction/request/unload/",

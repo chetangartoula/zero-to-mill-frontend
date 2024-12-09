@@ -22,5 +22,5 @@ export interface OddList {
   commence_time: string;
   home_team: string;
   away_team: string;
-  bookmakers: Bookmaker;
+  bookmaker: Bookmaker;
 }

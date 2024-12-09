@@ -1,3 +1,4 @@
+import { TabData } from "@/types/base";
 import { StarIcon } from "lucide-react";
 
 export const carouseldata: {

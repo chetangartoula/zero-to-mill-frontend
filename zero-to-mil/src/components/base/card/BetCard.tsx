@@ -38,13 +38,15 @@ const BetItem = ({
   </div>
 );
 
-function BetCard({ data, title }: { data: OddList; title: TabData }) {
+function BetCard({ data, title }: { data: OddList; title?: TabData }) {
   return (
     <div className="bg-menu p-4 mt-4">
-      <div className="flex">
-        <Image src={title.imageUrl} alt="title" fill sizes="16px" />
-        <p className="ml-2 text-s text-cardtitle">{title.title}</p>
-      </div>
+      {title && (
+        <div className="flex">
+          <Image src={title.imageUrl} alt="title" fill sizes="16px" />
+          <p className="ml-2 text-s text-cardtitle">{title.title}</p>
+        </div>
+      )}
       <Separator className="bg-muted mt-4" />
       <Accordion type="multiple">
         <AccordionItem
@@ -57,12 +59,12 @@ function BetCard({ data, title }: { data: OddList; title: TabData }) {
               secondTeam: data.away_team,
             }}
           >
-            {data.bookmakers && (
-              <BetItem title="" betData={data.bookmakers.markets[0].outcomes} />
+            {data.bookmaker && (
+              <BetItem title="" betData={data.bookmaker.markets[0].outcomes} />
             )}
           </BetAccordionTrigger>
           <AccordionContent>
-            {data.bookmakers.markets.slice(1).map((item) => (
+            {data?.bookmaker?.markets?.slice(1)?.map((item) => (
               <>
                 <Separator className="bg-muted mt-4" />
                 <BetItem title={capitalize(item.key)} betData={item.outcomes} />

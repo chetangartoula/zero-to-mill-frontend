@@ -36,6 +36,11 @@ function MPINWrapper({ children }: PropsWithChildren) {
         queryClient.invalidateQueries({ queryKey: ["getMPIN"] });
         router.push("/dashboard");
       },
+      onError: (error) => {
+        console.error("Failed to fetch MPIN:", error);
+        queryClient.invalidateQueries({ queryKey: ["getMPIN"] });
+        router.push("/dashboard");
+      },
     },
     {
       method: "PATCH",
