@@ -23,7 +23,7 @@ export const apiRoutes = {
   "cash-options": "/config/cash-options/",
 
   //nav list
-  "menu-items": "/menu-items",
+  "menu-items": "/sports/menu-items/",
 
   // transaction
   deposit: "/transaction/request/load/",
