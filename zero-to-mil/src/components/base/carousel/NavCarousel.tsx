@@ -20,9 +20,8 @@ function NavCarousel({
   isactive = "dashboard",
   onClick,
 }: NavCarouselProps) {
-  const isActive = (path: string) => {
-    return path === isactive;
-  };
+  const isActive = (path: string) => path === isactive;
+  console.log("is_active", isactive);
   return (
     <Carousel className="w-full max-w">
       <CarouselContent className="-ml-1">
@@ -30,10 +29,11 @@ function NavCarousel({
           <CarouselItem key={index} className="pl-1 basis-1/8 h-16.5">
             {(rest.logo_url || Icon) && (
               <Card
-                className="w-20 bg-accent"
-                onClick={(e) => onClick && onClick(rest)}
+                className="w-20 h-17.5 bg-accent"
+                onClick={() => onClick && onClick(rest)}
+                title={rest.name}
               >
-                <CardContent className="flex flex-col aspect-square items-center justify-center p-3">
+                <CardContent className="flex flex-col aspect-square items-center justify-center p-2">
                   <div className="p-1">
                     {rest.logo_url ? (
                       <Image
@@ -60,7 +60,7 @@ function NavCarousel({
                   <p
                     className={`text-xs ${
                       isActive(rest.value) ? "text-white" : "text-icon"
-                    } font-medium`}
+                    } font-medium text-center align-center`}
                   >
                     {rest.name}
                   </p>

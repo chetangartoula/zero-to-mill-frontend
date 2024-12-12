@@ -18,9 +18,23 @@ export const useWebSocket = <T = unknown>(
   const [messages, setMessages] = useState<T>({} as T);
   const socketRef = useRef<WebSocket | null>(null);
 
+  console.log("isConnected", isConnected);
+
   useEffect(() => {
+    if (options?.filters) {
+      const hasUndefinedValue = Object.values(options.filters).some(
+        (value) => value === undefined
+      );
+      if (hasUndefinedValue) {
+        console.warn(
+          "WebSocket connection aborted due to undefined filter value"
+        );
+        return;
+      }
+    }
+
     const params = new URLSearchParams({
-      token: `Bearer ${accessToken}`,
+      token: `${accessToken}`,
     });
 
     if (options?.filters) {
@@ -29,9 +43,16 @@ export const useWebSocket = <T = unknown>(
       });
     }
 
+    // const socket = new WebSocket(
+    //   `${process.env.NEXT_PUBLIC_WS_URL}${url}?${params.toString()}`
+    // );
+
     const socket = new WebSocket(
-      `${process.env.NEXT_PUBLIC_WS_URL}${url}?${params.toString()}`
+      "ws://ba5.zerotomil.com:8005/ws/odds_list?sport_key=american_football"
     );
+
+    console.log("socket", socket);
+
     socketRef.current = socket;
     socket.onopen = (event) => {
       setIsConnected(true);
@@ -41,6 +62,7 @@ export const useWebSocket = <T = unknown>(
     };
 
     socket.onclose = (event) => {
+      console.log("WebSocket closed:", event.code, event, event.reason);
       setIsConnected(false);
       if (options?.onClose) {
         options.onClose(event);
@@ -60,6 +82,7 @@ export const useWebSocket = <T = unknown>(
     };
 
     socket.onerror = (event) => {
+      console.error("WebSocket error:", event);
       if (options?.onError) {
         options.onError(event);
       }
@@ -70,7 +93,7 @@ export const useWebSocket = <T = unknown>(
     };
   }, [url, options, accessToken]);
 
-  // console.log("messages", messages);
+  console.log("messages", messages);
 
   const sendMessage = (message: string) => {
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
