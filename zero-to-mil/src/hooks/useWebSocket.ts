@@ -18,7 +18,7 @@ export const useWebSocket = <T = unknown>(
   const [messages, setMessages] = useState<T>({} as T);
   const socketRef = useRef<WebSocket | null>(null);
 
-  console.log("isConnected", isConnected);
+  // console.log("isConnected", isConnected);
 
   useEffect(() => {
     if (options?.filters) {
@@ -43,9 +43,14 @@ export const useWebSocket = <T = unknown>(
       });
     }
 
+    // const socket = new WebSocket(
+    //   `${process.env.NEXT_PUBLIC_WS_URL}${url}?${params.toString()}`
+    // );
+
     const socket = new WebSocket(
-      `${process.env.NEXT_PUBLIC_WS_URL}${url}?${params.toString()}`
+      "wss://ba5.zerotomil.com/ws/odds_list?sport_key=americanfootball_ncaaf"
     );
+    console.log("socket", socket);
 
     socketRef.current = socket;
     socket.onopen = (event) => {

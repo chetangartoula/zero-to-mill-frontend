@@ -14,6 +14,12 @@ import React, { useEffect, useMemo, useState } from "react";
 import AccordionList from "./_component/AccordionList";
 
 function DashBoard() {
+  const { messages: oddList } = useWebSocket<OddList>("odds_list", {
+    filters: { sport_key: "americanfootball_ncaaf" },
+  });
+
+  console.log("oddList", oddList);
+
   const { data: sportsLists } = useAppQuery<
     MenuItemsSuccessResponse["responseData"]
   >({
@@ -44,26 +50,12 @@ function DashBoard() {
     if (sportsKey === null) setSportsKey(finalTabData[0]?.key);
   }, [finalTabData, sportsKey]);
 
-  // const { messages: oddList } = useWebSocket<OddList>("odds_list", {
-  //   filters: { sport_key: sportsKey || "" },
-  // });
-
-  // console.log("oddList", oddList);
   console.log("sportsLists", sportsLists);
 
   const betList = useMemo(
     () => sportsLists?.find((item) => item.sport_key === sportsKey),
     [sportsLists, sportsKey]
   );
-
-  // const betList = [
-  //   {
-  //     name: "Test",
-  //     title: "Champions League",
-  //     key: "Test",
-  //     logo_url: "https://placehold.co/16X16.png",
-  //   },
-  // ];
 
   return (
     <div>
