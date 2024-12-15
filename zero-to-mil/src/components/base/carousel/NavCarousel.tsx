@@ -21,7 +21,7 @@ function NavCarousel({
   onClick,
 }: NavCarouselProps) {
   const isActive = (path: string) => path === isactive;
-  console.log("is_active", isactive);
+  // console.log("is_active", isactive);
   return (
     <Carousel className="w-full max-w">
       <CarouselContent className="-ml-1">

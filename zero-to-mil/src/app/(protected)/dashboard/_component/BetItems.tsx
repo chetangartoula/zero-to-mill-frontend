@@ -3,10 +3,10 @@ import { cn } from "@/lib/utils";
 import { OddList } from "@/types/base";
 import React from "react";
 
-function BetItems({ key }: { key: string }) {
-  // const { messages: oddList } = useWebSocket<OddList>("odds_list", {
-  //   filters: { sport_key: "americanfootball_ncaaf" },
-  // });
+function BetItems({ itemKey }: { itemKey: string }) {
+  //   const { messages: oddList } = useWebSocket<OddList>("odds_list", {
+  //     filters: { sport_key: "americanfootball_ncaaf" },
+  //   });
 
   const oddList = {
     sport_key: "americanfootball_ncaaf",
@@ -75,15 +75,18 @@ function BetItems({ key }: { key: string }) {
         <p className="text-center mt-2 text-s text-greyf">
           {oddList.commence_time}
         </p>
-        {oddList.bookmaker?.markets?.map((item) => (
+        {oddList.bookmaker?.markets?.map((item, index) => (
           <div
             className={cn(
               "flex justify-between align-center gap-6 pl-2 text-s"
             )}
-            key={item.key}
+            key={`${item.key}_${index}`}
           >
-            {item.outcomes?.map((outcome) => (
-              <div className={cn("flex-column text-center w-full")} key={1}>
+            {item.outcomes?.map((outcome, index) => (
+              <div
+                className={cn("flex-column text-center w-full")}
+                key={`${outcome.name}_${index}`}
+              >
                 <p className="p-2">{outcome.name}</p>
                 <p className="bg-subinput py-3 rounded">{outcome.point}</p>
               </div>

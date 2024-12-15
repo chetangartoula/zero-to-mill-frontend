@@ -1,5 +1,7 @@
+"use client";
+
 import { useAppStore } from "@/store";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface WebSocketOptions<T> {
   onOpen?: (event: Event) => void;
@@ -7,6 +9,7 @@ interface WebSocketOptions<T> {
   onMessage?: (event: T) => void;
   onError?: (event: Event) => void;
   filters?: Record<string, string | number | boolean>;
+  reconnectTimeout?: number;
 }
 
 export const useWebSocket = <T = unknown>(
@@ -15,21 +18,27 @@ export const useWebSocket = <T = unknown>(
 ) => {
   const { accessToken } = useAppStore((state) => state);
   const [isConnected, setIsConnected] = useState(false);
-  const [messages, setMessages] = useState<T>({} as T);
+  const [messages, setMessages] = useState<T | null>(null);
   const socketRef = useRef<WebSocket | null>(null);
+  const [isAttemptingConnection, setIsAttemptingConnection] = useState(false);
 
-  // console.log("isConnected", isConnected);
+  const createWebSocket = () => {
+    let newSocket: WebSocket | null = null;
 
-  useEffect(() => {
+    if (isAttemptingConnection || isConnected) {
+      console.warn("WebSocket connection already in progress or established");
+      return null;
+    }
     if (options?.filters) {
       const hasUndefinedValue = Object.values(options.filters).some(
         (value) => value === undefined
       );
+
       if (hasUndefinedValue) {
         console.warn(
           "WebSocket connection aborted due to undefined filter value"
         );
-        return;
+        return null;
       }
     }
 
@@ -43,56 +52,68 @@ export const useWebSocket = <T = unknown>(
       });
     }
 
-    // const socket = new WebSocket(
-    //   `${process.env.NEXT_PUBLIC_WS_URL}${url}?${params.toString()}`
-    // );
+    const fullUrl = `${
+      process.env.NEXT_PUBLIC_WS_URL
+    }${url}?${params.toString()}`;
 
-    const socket = new WebSocket(
-      "wss://ba5.zerotomil.com/ws/odds_list?sport_key=americanfootball_ncaaf"
-    );
-    console.log("socket", socket);
+    console.log("WebSocket full URL:", fullUrl);
+    setIsAttemptingConnection(true);
 
-    socketRef.current = socket;
-    socket.onopen = (event) => {
+    newSocket = new WebSocket(fullUrl);
+
+    newSocket.onopen = (event) => {
       setIsConnected(true);
-      if (options?.onOpen) {
-        options.onOpen(event);
-      }
+      setIsAttemptingConnection(false);
+      options?.onOpen?.(event);
     };
 
-    socket.onclose = (event) => {
-      console.log("WebSocket closed:", event.code, event, event.reason);
+    newSocket.onclose = (event) => {
+      console.log("WebSocket closed:", event.code, event);
       setIsConnected(false);
-      if (options?.onClose) {
-        options.onClose(event);
-      }
+      setIsAttemptingConnection(false);
+      options?.onClose?.(event);
     };
 
-    socket.onmessage = (event) => {
+    newSocket.onmessage = (event) => {
       try {
         const parsedData = JSON.parse(event.data) as T;
         setMessages(parsedData);
-        if (options?.onMessage) {
-          options.onMessage(parsedData);
-        }
+        console.log("messgae", parsedData);
+        options?.onMessage?.(parsedData);
       } catch (error) {
-        console.error("Failed to parse websocket message:", error);
+        console.error("Failed to parse WebSocket message:", error);
+      }
+      return false;
+    };
+
+    newSocket.onerror = (event) => {
+      console.error("WebSocket error:", event);
+      setIsAttemptingConnection(false);
+      options?.onError?.(event);
+    };
+
+    socketRef.current = newSocket;
+    return newSocket;
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+    const connectWebSocket = () => {
+      if (isMounted && !isConnected && !isAttemptingConnection) {
+        createWebSocket();
       }
     };
 
-    socket.onerror = (event) => {
-      console.error("WebSocket error:", event);
-      if (options?.onError) {
-        options.onError(event);
-      }
-    };
+    connectWebSocket();
 
     return () => {
-      socket.close();
+      isMounted = false;
+      if (socketRef.current) {
+        socketRef.current.close();
+        socketRef.current = null;
+      }
     };
-  }, [url, options, accessToken]);
-
-  console.log("messages", messages);
+  }, [url, accessToken, JSON.stringify(options?.filters)]);
 
   const sendMessage = (message: string) => {
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
@@ -100,5 +121,10 @@ export const useWebSocket = <T = unknown>(
     }
   };
 
-  return { isConnected, messages, sendMessage };
+  return {
+    isConnected,
+    isAttemptingConnection,
+    messages,
+    sendMessage,
+  };
 };

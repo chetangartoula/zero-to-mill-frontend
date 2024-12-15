@@ -45,7 +45,7 @@ function AccordionList({ data }: { data: MenuItems["data"] }) {
                 </div>
               </BetAccordionTrigger>
               <AccordionContent>
-                {item.key && <BetItems key={item.key} />}
+                {item.key && <BetItems itemKey={item.key} />}
               </AccordionContent>
             </AccordionItem>
           ))}

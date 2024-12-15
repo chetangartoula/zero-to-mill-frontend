@@ -17,9 +17,6 @@ function DashBoard() {
   const { messages: oddList } = useWebSocket<OddList>("odds_list", {
     filters: { sport_key: "americanfootball_ncaaf" },
   });
-
-  console.log("oddList", oddList);
-
   const { data: sportsLists } = useAppQuery<
     MenuItemsSuccessResponse["responseData"]
   >({
@@ -47,8 +44,10 @@ function DashBoard() {
   );
 
   useEffect(() => {
-    if (sportsKey === null) setSportsKey(finalTabData[0]?.key);
-  }, [finalTabData, sportsKey]);
+    if (sportsKey === null && finalTabData[0]?.key) {
+      setSportsKey(finalTabData[0]?.key);
+    }
+  }, [finalTabData]);
 
   console.log("sportsLists", sportsLists);
 
