@@ -43,15 +43,9 @@ export const useWebSocket = <T = unknown>(
       });
     }
 
-    // const socket = new WebSocket(
-    //   `${process.env.NEXT_PUBLIC_WS_URL}${url}?${params.toString()}`
-    // );
-
     const socket = new WebSocket(
-      "ws://ba5.zerotomil.com:8005/ws/odds_list?sport_key=american_football"
+      `${process.env.NEXT_PUBLIC_WS_URL}${url}?${params.toString()}`
     );
-
-    console.log("socket", socket);
 
     socketRef.current = socket;
     socket.onopen = (event) => {

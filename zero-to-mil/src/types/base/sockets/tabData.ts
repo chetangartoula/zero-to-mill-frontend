@@ -16,8 +16,16 @@ export interface CarouselData {
   value: string;
 }
 
-export type MenuItems = Omit<CarouselData, "icon" | "key"> & {
+export interface MenuItems {
+  name: string;
   sport_key: string;
-};
+  logo_url: string;
+  data: {
+    name: string;
+    title: string;
+    key: string;
+    logo_url: string;
+  }[];
+}
 
 export type MenuItemsSuccessResponse = BaseApiResponse<MenuItems[]>;

@@ -24,14 +24,9 @@ const BetItem = ({
 
     <div className={cn("flex justify-between align-center gap-6 pl-2 text-s")}>
       {betData?.map((item) => (
-        <div className={cn("flex-column text-center w-full")}>
+        <div className={cn("flex-column text-center w-full")} key={item.name}>
           <p className="p-2">{item.name}</p>
-          <p
-            className="bg-subinput py-3 rounded"
-            onClick={() => console.log("points", item.point)}
-          >
-            {item.point ?? item.price}
-          </p>
+          <p className="bg-subinput py-3 rounded">{item.point ?? item.price}</p>
         </div>
       ))}
     </div>
@@ -53,12 +48,7 @@ function BetCard({ data, title }: { data: OddList; title?: TabData }) {
           value={data.sport_key}
           className="bg-input rounded mt-4 pr-4"
         >
-          <BetAccordionTrigger
-            dualTitle={{
-              firstTeam: data.home_team,
-              secondTeam: data.away_team,
-            }}
-          >
+          <BetAccordionTrigger>
             {data.bookmaker && (
               <BetItem title="" betData={data.bookmaker.markets[0].outcomes} />
             )}

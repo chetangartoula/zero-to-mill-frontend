@@ -4,8 +4,14 @@ import NavCarousel from "@/components/base/carousel/NavCarousel";
 import MobileTopNav from "@/components/navigation/MobileTopnav";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { useAppQuery } from "@/lib/api";
-import { CarouselData, MenuItemsSuccessResponse, OddList } from "@/types/base";
+import {
+  CarouselData,
+  MenuItems,
+  MenuItemsSuccessResponse,
+  OddList,
+} from "@/types/base";
 import React, { useEffect, useMemo, useState } from "react";
+import AccordionList from "./_component/AccordionList";
 
 function DashBoard() {
   const { data: sportsLists } = useAppQuery<
@@ -38,11 +44,26 @@ function DashBoard() {
     if (sportsKey === null) setSportsKey(finalTabData[0]?.key);
   }, [finalTabData, sportsKey]);
 
-  const { messages: oddList } = useWebSocket<OddList>("odds_list", {
-    filters: { sport_key: sportsKey || "" },
-  });
+  // const { messages: oddList } = useWebSocket<OddList>("odds_list", {
+  //   filters: { sport_key: sportsKey || "" },
+  // });
 
-  console.log("oddList", oddList);
+  // console.log("oddList", oddList);
+  console.log("sportsLists", sportsLists);
+
+  const betList = useMemo(
+    () => sportsLists?.find((item) => item.sport_key === sportsKey),
+    [sportsLists, sportsKey]
+  );
+
+  // const betList = [
+  //   {
+  //     name: "Test",
+  //     title: "Champions League",
+  //     key: "Test",
+  //     logo_url: "https://placehold.co/16X16.png",
+  //   },
+  // ];
 
   return (
     <div>
@@ -56,7 +77,7 @@ function DashBoard() {
           isactive={sportsKey || ""}
         />
       </div>
-      <BetCard data={oddList} />
+      <AccordionList data={betList?.data as MenuItems["data"]} />
     </div>
   );
 }

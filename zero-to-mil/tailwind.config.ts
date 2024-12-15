@@ -26,6 +26,8 @@ const config = {
     extend: {
       colors: {
         border: "hsl(var(--border))",
+        betcard: "hsl(var(--betcard))",
+        greyf: "hsl(var(--greyf))",
         input: "hsl(var(--input))",
         subinput: "hsl(var(--subinput))",
         cardtitle: "hsl(var(--cardtitle))",
