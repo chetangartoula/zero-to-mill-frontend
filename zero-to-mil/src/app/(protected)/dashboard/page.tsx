@@ -10,17 +10,14 @@ import {
   MenuItemsSuccessResponse,
   OddList,
 } from "@/types/base";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import AccordionList from "./_component/AccordionList";
 import { useAppStore } from "@/store";
 
 function DashBoard() {
-  const { activeTabKey, setActiveTabKey } = useAppStore((state) => state);
-
-  // const { messages: oddList } = useWebSocket<OddList>("odds_list", {
-  //   filters: { sport_key: activeTabKey },
-  // });
-  // console.log("oddList", oddList);
+  const { activeTabKey, setActiveTabKey, activeSportKey } = useAppStore(
+    (state) => state
+  );
 
   const { data: sportsLists } = useAppQuery<
     MenuItemsSuccessResponse["responseData"]
@@ -48,7 +45,7 @@ function DashBoard() {
     if (activeTabKey === null && finalTabData[0]?.key) {
       setActiveTabKey(finalTabData[0]?.key);
     }
-  }, [finalTabData]);
+  }, [finalTabData, activeTabKey, setActiveTabKey]);
 
   const betList = useMemo(
     () => sportsLists?.find((item) => item.sport_key === activeTabKey),

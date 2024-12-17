@@ -3,10 +3,16 @@ import SlipCards from "@/components/base/card/SlipCards";
 import OddList from "@/components/custom/betSlip/OddList";
 import MobileTopNav from "@/components/navigation/MobileTopnav";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useWebSocket } from "@/hooks/useWebSocket";
+import { useAppQuery } from "@/lib/api";
+import { BetListProps } from "@/store/slices/betList";
 
-export default function TabsDemo() {
-  const { messages: data = [] } = useWebSocket<any[]>("odds_list");
+export default function BetSlip() {
+  const { data = [] } = useAppQuery<BetListProps[]>({
+    routeName: "getBetSlip",
+    queryKey: ["getBetSlip"],
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <div className="flex flex-col min-h-screen ">

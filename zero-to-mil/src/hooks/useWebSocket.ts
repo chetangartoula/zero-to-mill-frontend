@@ -74,6 +74,7 @@ export const useWebSocket = <T = unknown>(
     };
 
     newSocket.onmessage = (event) => {
+      console.log("WebSocket message received:", event.data);
       try {
         const parsedData = JSON.parse(event.data) as T;
         setMessages(parsedData);
@@ -111,14 +112,7 @@ export const useWebSocket = <T = unknown>(
         socketRef.current = null;
       }
     };
-  }, [
-    url,
-    accessToken,
-    options?.filters,
-    createWebSocket,
-    isConnected,
-    isAttemptingConnection,
-  ]);
+  }, [url, accessToken]);
 
   const sendMessage = (message: string) => {
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {

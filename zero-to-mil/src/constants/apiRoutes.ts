@@ -32,7 +32,7 @@ export const apiRoutes = {
   getTransactionHistory: "/transaction/history/",
 
   //bet slip
-  getBetSlip: "/betslip/",
+  getBetSlip: "/slip/",
 };
 
 export type ApiRoutes = keyof typeof apiRoutes;

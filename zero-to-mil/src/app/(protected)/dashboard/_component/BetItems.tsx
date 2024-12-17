@@ -7,7 +7,6 @@ function BetItems({ itemKey }: { itemKey: string }) {
   const { messages: oddList } = useWebSocket<OddList[]>("odds_list", {
     filters: { sport_key: itemKey },
   });
-
   return (
     <div onClick={(e) => e.stopPropagation()}>
       {oddList &&
@@ -39,7 +38,9 @@ function BetItems({ itemKey }: { itemKey: string }) {
                     key={`${outcome.name}_${index}`}
                   >
                     <p className="p-2">{outcome.name}</p>
-                    <p className="bg-subinput py-3 rounded">{outcome.point}</p>
+                    <p className="bg-subinput py-3 rounded">
+                      {outcome.point || outcome.price}
+                    </p>
                   </div>
                 ))}
               </div>
