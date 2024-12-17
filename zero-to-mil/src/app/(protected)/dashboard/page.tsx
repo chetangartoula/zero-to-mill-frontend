@@ -12,11 +12,16 @@ import {
 } from "@/types/base";
 import React, { useEffect, useMemo, useState } from "react";
 import AccordionList from "./_component/AccordionList";
+import { useAppStore } from "@/store";
 
 function DashBoard() {
-  const { messages: oddList } = useWebSocket<OddList>("odds_list", {
-    filters: { sport_key: "americanfootball_ncaaf" },
-  });
+  const { activeTabKey, setActiveTabKey } = useAppStore((state) => state);
+
+  // const { messages: oddList } = useWebSocket<OddList>("odds_list", {
+  //   filters: { sport_key: activeTabKey },
+  // });
+  // console.log("oddList", oddList);
+
   const { data: sportsLists } = useAppQuery<
     MenuItemsSuccessResponse["responseData"]
   >({
@@ -25,10 +30,6 @@ function DashBoard() {
     retry: false,
     refetchOnWindowFocus: false,
   });
-
-  const [sportsKey, setSportsKey] = useState<string | null>(
-    "american_football"
-  );
 
   const finalTabData = useMemo(
     () =>
@@ -44,16 +45,14 @@ function DashBoard() {
   );
 
   useEffect(() => {
-    if (sportsKey === null && finalTabData[0]?.key) {
-      setSportsKey(finalTabData[0]?.key);
+    if (activeTabKey === null && finalTabData[0]?.key) {
+      setActiveTabKey(finalTabData[0]?.key);
     }
   }, [finalTabData]);
 
-  console.log("sportsLists", sportsLists);
-
   const betList = useMemo(
-    () => sportsLists?.find((item) => item.sport_key === sportsKey),
-    [sportsLists, sportsKey]
+    () => sportsLists?.find((item) => item.sport_key === activeTabKey),
+    [sportsLists, activeTabKey]
   );
 
   return (
@@ -64,8 +63,8 @@ function DashBoard() {
       <div className="w-full p-2 bg-navbackground">
         <NavCarousel
           data={finalTabData as CarouselData[]}
-          onClick={(data) => setSportsKey(data.key)}
-          isactive={sportsKey || ""}
+          onClick={(data) => setActiveTabKey(data.key)}
+          isactive={activeTabKey || ""}
         />
       </div>
       <AccordionList data={betList?.data as MenuItems["data"]} />

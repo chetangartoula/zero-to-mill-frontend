@@ -9,30 +9,37 @@ import { AccordionContent } from "@radix-ui/react-accordion";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import BetItems from "./BetItems";
+import { useAppStore } from "@/store";
 
 function AccordionList({ data }: { data: MenuItems["data"] }) {
   const defaultValue = data?.[0]?.key || "";
-  const [value, setValue] = useState(defaultValue);
-
+  const { activeSportKey, setActiveSportKey } = useAppStore((state) => state);
   const handleValueChange = (newValue: string) => {
-    setValue(newValue || defaultValue);
+    setActiveSportKey(newValue || defaultValue);
   };
 
   useEffect(() => {
-    setValue(defaultValue);
+    setActiveSportKey(defaultValue);
   }, [defaultValue]);
   return (
     <>
       {defaultValue && (
         <Accordion
           type="single"
-          value={value}
+          value={activeSportKey}
           className="border rounded mt-4 bg-menu"
           defaultValue={defaultValue}
           onValueChange={handleValueChange}
         >
           {data?.map((item) => (
-            <AccordionItem key={item.key} value={item.key} className="pr-4">
+            <AccordionItem
+              key={item.key}
+              value={item.key}
+              className="pr-4"
+              onClick={() => {
+                setActiveSportKey(item.key);
+              }}
+            >
               <BetAccordionTrigger>
                 <div className="flex px-4">
                   <Image

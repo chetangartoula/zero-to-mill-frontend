@@ -2,23 +2,16 @@
 import SlipCards from "@/components/base/card/SlipCards";
 import OddList from "@/components/custom/betSlip/OddList";
 import MobileTopNav from "@/components/navigation/MobileTopnav";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useAppQuery } from "@/lib/api";
+import { useWebSocket } from "@/hooks/useWebSocket";
 
 export default function TabsDemo() {
-  // const { data } = useAppQuery({
-  //   routeName: "getMPIN",
-  //   queryKey: ["getMPIN"],
-  //   retry: false,
-  //   refetchOnWindowFocus: false,
-  // });
-  const data = [];
+  const { messages: data = [] } = useWebSocket<any[]>("odds_list");
 
   return (
     <div className="flex flex-col min-h-screen ">
       <MobileTopNav />
-      {data?.length < 1 ? (
+      {data.length < 1 ? (
         <div className="flex-1 flex justify-center items-center">
           <div className="p-2">
             <p className="text-sm text-red-500 text-center">

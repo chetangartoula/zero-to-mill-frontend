@@ -7,6 +7,7 @@ import { createLoginStore } from "./slices/login";
 import { createMPINStore } from "./slices/mpin";
 import { createWithdrawStore } from "./slices/withdraw";
 import { createBetSlipStore } from "./slices/betSlip";
+import { createBetListStore } from "./slices/betList";
 
 const appStore = create<Store>()((...set) => ({
   ...createLoginStore(...set),
@@ -14,6 +15,7 @@ const appStore = create<Store>()((...set) => ({
   ...createMPINStore(...set),
   ...createWithdrawStore(...set),
   ...createBetSlipStore(...set),
+  ...createBetListStore(...set),
 }));
 
 export const AppStoreContext = createContext<StoreApi<Store>>(null!);

@@ -1,7 +1,7 @@
 "use client";
 
 import { useAppStore } from "@/store";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 interface WebSocketOptions<T> {
   onOpen?: (event: Event) => void;
@@ -18,11 +18,11 @@ export const useWebSocket = <T = unknown>(
 ) => {
   const { accessToken } = useAppStore((state) => state);
   const [isConnected, setIsConnected] = useState(false);
-  const [messages, setMessages] = useState<T | null>(null);
+  const [messages, setMessages] = useState<T | []>([]);
   const socketRef = useRef<WebSocket | null>(null);
   const [isAttemptingConnection, setIsAttemptingConnection] = useState(false);
 
-  const createWebSocket = () => {
+  const createWebSocket = useCallback(() => {
     let newSocket: WebSocket | null = null;
 
     if (isAttemptingConnection || isConnected) {
@@ -56,7 +56,6 @@ export const useWebSocket = <T = unknown>(
       process.env.NEXT_PUBLIC_WS_URL
     }${url}?${params.toString()}`;
 
-    console.log("WebSocket full URL:", fullUrl);
     setIsAttemptingConnection(true);
 
     newSocket = new WebSocket(fullUrl);
@@ -78,7 +77,6 @@ export const useWebSocket = <T = unknown>(
       try {
         const parsedData = JSON.parse(event.data) as T;
         setMessages(parsedData);
-        console.log("messgae", parsedData);
         options?.onMessage?.(parsedData);
       } catch (error) {
         console.error("Failed to parse WebSocket message:", error);
@@ -94,7 +92,7 @@ export const useWebSocket = <T = unknown>(
 
     socketRef.current = newSocket;
     return newSocket;
-  };
+  }, [accessToken, isConnected, isAttemptingConnection, options, url]);
 
   useEffect(() => {
     let isMounted = true;
@@ -113,7 +111,14 @@ export const useWebSocket = <T = unknown>(
         socketRef.current = null;
       }
     };
-  }, [url, accessToken, JSON.stringify(options?.filters)]);
+  }, [
+    url,
+    accessToken,
+    options?.filters,
+    createWebSocket,
+    isConnected,
+    isAttemptingConnection,
+  ]);
 
   const sendMessage = (message: string) => {
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
