@@ -1,12 +1,25 @@
 import { useWebSocket } from "@/hooks/useWebSocket";
+import { useAppMutation } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { OddList } from "@/types/base";
+import { BetSlipProps } from "@/types/base/betslip";
+import { isString } from "lodash";
 import React from "react";
+import { toast } from "sonner";
 
 function BetItems({ itemKey }: { itemKey: string }) {
   const { messages: oddList } = useWebSocket<OddList[]>("odds_list", {
     filters: { sport_key: itemKey },
   });
+  const { mutate } = useAppMutation<BetSlipProps>("getBetSlip", {
+    onSuccess: (data) => {
+      toast.success("Bet added to slip");
+    },
+    onError: (error) => {
+      isString(error) && toast.error(error);
+    },
+  });
+
   return (
     <div onClick={(e) => e.stopPropagation()}>
       {oddList &&
@@ -36,6 +49,19 @@ function BetItems({ itemKey }: { itemKey: string }) {
                   <div
                     className={cn("flex-column text-center w-full")}
                     key={`${outcome.name}_${index}`}
+                    onClick={() =>
+                      mutate({
+                        sport_id: odds.id,
+                        sport_key: odds.sport_key,
+                        sport_title: odds.sport_title,
+                        home_team: odds.home_team,
+                        away_team: odds.away_team,
+                        bookmaker_key: odds.bookmaker?.key,
+                        selected_team: outcome.name,
+                        odds: outcome.point || outcome.price,
+                        market_key: item.key,
+                      })
+                    }
                   >
                     <p className="p-2">{outcome.name}</p>
                     <p className="bg-subinput py-3 rounded">

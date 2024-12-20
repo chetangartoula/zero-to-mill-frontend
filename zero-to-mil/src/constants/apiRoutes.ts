@@ -1,5 +1,3 @@
-import { get, set } from "lodash";
-
 export const apiRoutes = {
   login: "/auth/user-login/",
   register: "/auth/register/",
@@ -7,6 +5,7 @@ export const apiRoutes = {
   "access-token": "/auth/token/access/",
   "user-profile": "/auth/me/profile/",
   "set-up-pin": "/auth/me/setup-pin/",
+
   //re-verify
   forgotPassword: "/forgot-password/",
   changePassword: "/auth/me/change-password/",
@@ -33,6 +32,7 @@ export const apiRoutes = {
 
   //bet slip
   getBetSlip: "/slip/",
+  deleteBet: "/slip/remove/:id",
 };
 
 export type ApiRoutes = keyof typeof apiRoutes;

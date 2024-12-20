@@ -1,3 +1,5 @@
+import { BaseApiResponse } from "@/types/global";
+
 export interface BetSlipProps {
   sport_id: string;
   sport_key: string;
@@ -7,5 +9,7 @@ export interface BetSlipProps {
   bookmaker_key: string;
   selected_team: string;
   odds: number;
-  markret_key: string;
+  market_key: string;
 }
+
+export type BetSlpPropSuccessResponse = BaseApiResponse<BetSlipProps>;
