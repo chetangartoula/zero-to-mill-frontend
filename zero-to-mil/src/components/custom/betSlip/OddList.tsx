@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
 
-function OddList() {
+export interface OddListProps {
+  isDisabled?: boolean;
+  onClick?: () => void;
+}
+function OddList({ isDisabled, onClick }: OddListProps) {
   return (
     <div className="sticky bottom-0 pb-8 mb-11 mx-4">
       <div className="flex justify-between mb-3 text-lg">
@@ -21,7 +25,12 @@ function OddList() {
         <div className="font-semibold">Possible Return</div>
         <p>$1400</p>
       </div>
-      <Button variant="secondary" className="w-full mb-4">
+      <Button
+        variant="secondary"
+        className="w-full mb-4"
+        disabled={isDisabled}
+        onClick={onClick}
+      >
         Place Bet
       </Button>
     </div>

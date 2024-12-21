@@ -4,17 +4,16 @@ import OddList from "@/components/custom/betSlip/OddList";
 import MobileTopNav from "@/components/navigation/MobileTopnav";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAppQuery } from "@/lib/api";
-import { BetListProps } from "@/store/slices/betList";
 import { BetSlipProps } from "@/types/base/betslip";
 
+const defaultData = {
+  slip_type: "",
+  slips: [],
+  total_odds: 0,
+};
+
 export default function BetSlip() {
-  const {
-    data = {
-      slip_type: "",
-      slips: [],
-      total_odds: 0,
-    },
-  } = useAppQuery<{
+  const { data = defaultData } = useAppQuery<{
     slip_type: string;
     slips: BetSlipProps[];
     total_odds: number;
@@ -46,21 +45,21 @@ export default function BetSlip() {
             <TabsTrigger
               value="single"
               className="relative flex-grow rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none focus-visible:ring-0 data-[state=active]:border-b-haravara data-[state=active]:text-foreground data-[state=active]:shadow-none "
-              disabled={data?.slips.length === 1}
+              disabled={data?.slips.length < 1}
             >
               Single
             </TabsTrigger>
             <TabsTrigger
               value="multiple"
               className="relative flex-grow rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none focus-visible:ring-0 data-[state=active]:border-b-haravara data-[state=active]:text-foreground data-[state=active]:shadow-none "
-              disabled={data?.slips.length > 1}
+              disabled={data?.slips.length >= 1}
             >
               Multiple
             </TabsTrigger>
           </TabsList>
           <TabsContent value="single">
             <>
-              <SlipCards />
+              <SlipCards data={data?.slips[0] as BetSlipProps} />
             </>
           </TabsContent>
           <TabsContent value="multiple">

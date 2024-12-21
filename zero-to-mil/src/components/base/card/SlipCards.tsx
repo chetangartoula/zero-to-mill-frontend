@@ -30,10 +30,10 @@ function SlipCards({
 
       <div className="flex items-center pt-2">
         <div className=" min-w-12 min-h-11 rounded bg-input text-center flex justify-center  items-center ">
-          <p className="fw-normal">{data.odds}</p>
+          <p className="fw-normal">{data?.odds}</p>
         </div>
         <div className="ml-2 text-xs">
-          <p>{data.selected_team}</p>
+          <p>{data?.selected_team}</p>
           <p className="text-muted pt-2">1x2</p>
         </div>
       </div>

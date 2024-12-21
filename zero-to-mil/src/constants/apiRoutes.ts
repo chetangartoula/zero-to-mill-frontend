@@ -28,8 +28,8 @@ export const apiRoutes = {
   deposit: "/transaction/request/load/",
   withdraw: "/transaction/request/unload/",
   "load-money": "/transaction/load-admin/",
-  getTransactionHistory: "me/transactions/",
-  getBetHistory: "/me/bets/",
+  getTransactionHistory: "/me/transactions/",
+  getBetHistory: "/slip/betslip/",
   getBalance: "/me/balance/",
 
   //bet slip
