@@ -1,22 +1,23 @@
 "use client";
 import BottomBar from "@/components/navigation/BottomBar";
 import MPINWrapper from "@/components/wrapper/mpinwrapper";
-import { useAppMutation, useAppQuery } from "@/lib/api";
+import { useAppQuery } from "@/lib/api";
 import { useAppStore } from "@/store";
 import getAccessToken from "@/store/actions/getAccessToken";
 import { setAxiosAuthTokens } from "@/utils/token";
 import React, { PropsWithChildren, useEffect, useRef } from "react";
 
 function ProtectedLayout({ children }: PropsWithChildren) {
-  const { accessToken, setAccessToken } = useAppStore((state) => state);
+  const { accessToken, setAccessToken, setBalance } = useAppStore(
+    (state) => state
+  );
   const fetchingRef = useRef(false);
-  const { data } = useAppQuery({
+  const { data: BalanceData } = useAppQuery({
     routeName: "getBalance",
-    queryKey: ["/me/balance"],
-    retry: false,
+    queryKey: ["getBalance"],
     refetchOnWindowFocus: false,
+    enabled: !!accessToken,
   });
-  // const { mutate } = useAppMutation("access-token", {});
 
   useEffect(() => {
     const fetchAccessToken = async () => {
@@ -34,6 +35,12 @@ function ProtectedLayout({ children }: PropsWithChildren) {
     };
     if (!accessToken) fetchAccessToken();
   }, [accessToken, setAccessToken]);
+
+  useEffect(() => {
+    if (BalanceData) {
+      setBalance(BalanceData);
+    }
+  }, [BalanceData, setBalance]);
 
   if (!accessToken) return <p>Loading</p>;
 

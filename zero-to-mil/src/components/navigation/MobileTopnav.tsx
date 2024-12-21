@@ -10,6 +10,9 @@ import {
 import { Button } from "../ui/button";
 import { SelectSeparator } from "../ui/select";
 import { Separator } from "../ui/separator";
+import { useAppStore } from "@/store";
+import { useRouter } from "next/navigation";
+import { getPageRoutes } from "@/utils/getRoutes";
 
 export interface MobileTopNavProps {
   logoSrc?: string;
@@ -21,6 +24,8 @@ function MobileTopNav({
   amount = 120,
 }: MobileTopNavProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const { lein, main, stake } = useAppStore((state) => state);
+  const router = useRouter();
   return (
     <div className="flex justify-between p-3 bg-gray-800">
       <div className="flex justify-start border items-center">
@@ -48,25 +53,26 @@ function MobileTopNav({
                   <DynamicIcon
                     IconComponent={Plus}
                     className="text-background bg-white rounded-full"
+                    onClick={() => router.push(getPageRoutes("deposit"))}
                   />
-                  <p>{amount}$</p>
+                  <p>{main}$</p>
                 </div>
               </Button>
             </HoverCardTrigger>
             <HoverCardContent className="w-60 mr-2 rounded-lg" sideOffset={5}>
               <div className="flex justify-between">
                 <p className="text-sm text-start">Available</p>
-                <p className="text-primary text-lg">${455}</p>
+                <p className="text-primary text-lg">${main}</p>
               </div>
               <Separator className="my-2" />
               <div className="flex justify-between">
                 <p className="text-sm text-center">On Stake</p>
-                <p className="text-primary text-lg">${455}</p>
+                <p className="text-primary text-lg">${stake}</p>
               </div>
               <Separator className="my-2" />
               <div className="flex justify-between">
                 <p className="text-sm text-end">Lein</p>
-                <p className="text-primary text-lg">${455}</p>
+                <p className="text-primary text-lg">${lein}</p>
               </div>
             </HoverCardContent>
           </HoverCard>

@@ -1,11 +1,15 @@
 import { StateCreator } from "zustand";
 
 export interface BalanceState {
-  numberOfSlips: number;
-  setBalance: (numberOfSlips: number) => void;
+  lein: number;
+  main: number;
+  stake: number;
+  setBalance: (balance: Omit<BalanceState, "setBalance">) => void;
 }
 
-export const createBetSlipStore: StateCreator<BalanceState> = (set) => ({
-  numberOfSlips: 0,
-  setBalance: (numberOfSlips: number) => set({ numberOfSlips }),
+export const createBalanceStore: StateCreator<BalanceState> = (set) => ({
+  lein: 0,
+  main: 0,
+  stake: 0,
+  setBalance: (balance) => set(balance),
 });

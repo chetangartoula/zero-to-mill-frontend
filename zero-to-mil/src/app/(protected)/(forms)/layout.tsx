@@ -4,7 +4,7 @@ import React, { PropsWithChildren } from "react";
 function FormLayout({ children }: PropsWithChildren) {
   return (
     <>
-      <div className="md:hidden w-full flex flex-col relative top-20 px-4 min-h-[calc(100vh-5rem)]">
+      <div className="md:hidden w-full flex flex-col relative min-h-[calc(100vh-5rem)]">
         {children}
       </div>
       <div className="hidden md:flex justify-center w-full h-screen mt-4">
