@@ -1,40 +1,37 @@
 "use client";
 import React from "react";
-import DetailWrapper from "@/components/wrapper/detailWrapper";
-import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { getPageRoutes } from "@/utils/getRoutes";
 import { TransactionHistory } from "@/components/custom/history";
 import { useAppQuery } from "@/lib/api";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MobileTopNav from "@/components/navigation/MobileTopnav";
+import { TransactionHistoryApiProps } from "@/types/base/history";
+import TransactionHistorySkeleton from "@/components/custom/history/Skeleton";
+import { BetHistoryApiProps } from "@/types/base/history/betHistory";
 
 function TransactionHistoryList() {
   const router = useRouter();
-  const { data } = useAppQuery({
-    routeName: "getTransactionHistory",
-    queryKey: ["getTransactionHistory"],
+  const { data: transactionHistory, isLoading: isTransactionHistoryLoading } =
+    useAppQuery<TransactionHistoryApiProps[]>({
+      routeName: "getTransactionHistory",
+      queryKey: ["getTransactionHistory"],
+      retry: false,
+      refetchOnWindowFocus: false,
+    });
+
+  const { data: betHistory, isLoading: isBetHistoryLoading } = useAppQuery<
+    BetHistoryApiProps[]
+  >({
+    routeName: "getBetHistory",
+    queryKey: ["getBetHistory"],
     retry: false,
     refetchOnWindowFocus: false,
   });
+
   return (
     <>
       <MobileTopNav />
-      {/* <div className="flex justify-between gap-1">
-        <div className="flex-1">
-          <p className="text-sm text-cardtitle text-start">Available</p>
-          <p className="text-primary text-xl text-start">${455}</p>
-        </div>
-        <div className="flex-1 text-cardtitle">
-          <p className="text-sm text-center">On Stake</p>
-          <p className="text-xl text-center">${55}</p>
-        </div>
-        <div className="flex-1 text-cardtitle">
-          <p className="text-sm text-end">Lein</p>
-          <p className="text-xl text-end">${55}</p>
-        </div>
-      </div>
-      <Separator className="my-2" /> */}
       <Tabs defaultValue="bet_history" className="relative mr-auto w-full mt-1">
         <TabsList className="w-full flex justify-start rounded-none border-b bg-transparent p-0 ">
           <TabsTrigger
@@ -51,29 +48,51 @@ function TransactionHistoryList() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="bet_history">
-          <TransactionHistory
-            className="border rounded-xl"
-            onClick={() =>
-              router.push(
-                getPageRoutes("transaction-detail", {
-                  TransactionHistoryId: "1",
-                })
-              )
-            }
-          />
+          {" "}
+          {isBetHistoryLoading && (
+            <>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <TransactionHistorySkeleton key={index} className="mb-4" />
+              ))}
+            </>
+          )}
+          {betHistory?.length === 0 && (
+            <div className="flex justify-center items-center">
+              <p className="text-sm text-red-500 text-center">
+                No transaction history yet
+              </p>
+            </div>
+          )}
         </TabsContent>
         <TabsContent value="transaction_history" className="p-4">
-          {" "}
-          <TransactionHistory
-            className="border rounded-xl"
-            onClick={() =>
-              router.push(
-                getPageRoutes("transaction-detail", {
-                  TransactionHistoryId: "1",
-                })
-              )
-            }
-          />
+          {isTransactionHistoryLoading && (
+            <>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <TransactionHistorySkeleton key={index} className="mb-4" />
+              ))}
+            </>
+          )}
+          {transactionHistory?.length === 0 && (
+            <div className="flex justify-center items-center">
+              <p className="text-sm text-red-500 text-center">
+                No transaction history yet
+              </p>
+            </div>
+          )}
+          {transactionHistory?.map((history) => (
+            <TransactionHistory
+              key={history.txn_id}
+              className="border rounded-xl"
+              data={history || {}}
+              onClick={() =>
+                router.push(
+                  getPageRoutes("transaction-detail", {
+                    TransactionHistoryId: "1",
+                  })
+                )
+              }
+            />
+          ))}
         </TabsContent>
       </Tabs>
     </>
