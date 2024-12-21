@@ -19,7 +19,7 @@ function MenuCards({
 }: PropsWithChildren<MenuCardProps>) {
   return (
     <Card
-      className={cn(" bg-input", cardProps?.className)}
+      className={cn(" bg-input rounded", cardProps?.className)}
       onClick={onClick}
       {...cardProps}
     >
