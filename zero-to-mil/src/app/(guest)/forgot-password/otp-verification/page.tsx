@@ -12,7 +12,14 @@ import React from "react";
 function OTPVerification() {
   const { mutate } = useAppMutation("otp");
   return (
-    <AuthWrapper title="OTP code verification" includeLogo={false}>
+    <AuthWrapper
+      title="OTP code verification"
+      wrapperProps={{
+        className:
+          "relative sm:top-20 md:top-20 lg:top-0 xl:top-0 2xl:top-0 m-4",
+      }}
+      includeLogo={false}
+    >
       <Text
         text="We have sent an OTP to your email  address ramxxxXgmail.com. Enter the code below to verify"
         className="my-2"

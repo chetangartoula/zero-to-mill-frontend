@@ -14,7 +14,8 @@ function NewPasswordSetUp() {
     <AuthWrapper
       title="Set New Password"
       wrapperProps={{
-        className: "relative top-20",
+        className:
+          "relative sm:top-20 md:top-20 lg:top-0 xl:top-0 2xl:top-0 m-4",
       }}
     >
       <AppForm
