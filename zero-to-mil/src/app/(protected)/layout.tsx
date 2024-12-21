@@ -1,7 +1,7 @@
 "use client";
 import BottomBar from "@/components/navigation/BottomBar";
 import MPINWrapper from "@/components/wrapper/mpinwrapper";
-import { useAppMutation } from "@/lib/api";
+import { useAppMutation, useAppQuery } from "@/lib/api";
 import { useAppStore } from "@/store";
 import getAccessToken from "@/store/actions/getAccessToken";
 import { setAxiosAuthTokens } from "@/utils/token";
@@ -10,6 +10,12 @@ import React, { PropsWithChildren, useEffect, useRef } from "react";
 function ProtectedLayout({ children }: PropsWithChildren) {
   const { accessToken, setAccessToken } = useAppStore((state) => state);
   const fetchingRef = useRef(false);
+  const { data } = useAppQuery({
+    routeName: "getBalance",
+    queryKey: ["/me/balance"],
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
   // const { mutate } = useAppMutation("access-token", {});
 
   useEffect(() => {

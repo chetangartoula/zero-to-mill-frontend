@@ -15,7 +15,7 @@ export interface NavCarouselProps {
   onClick?: (value: Omit<CarouselData, "icon">) => void;
 }
 
-function NavCarousel({
+export function NavCarousel({
   data,
   isactive = "dashboard",
   onClick,
@@ -73,5 +73,3 @@ function NavCarousel({
     </Carousel>
   );
 }
-
-export default NavCarousel;

@@ -7,8 +7,8 @@ import { useAppQuery } from "@/lib/api";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MobileTopNav from "@/components/navigation/MobileTopnav";
 import { TransactionHistoryApiProps } from "@/types/base/history";
-import TransactionHistorySkeleton from "@/components/custom/history/Skeleton";
 import { BetHistoryApiProps } from "@/types/base/history/betHistory";
+import { TransactionHistorySkeleton } from "@/components/skeletons";
 
 function TransactionHistoryList() {
   const router = useRouter();

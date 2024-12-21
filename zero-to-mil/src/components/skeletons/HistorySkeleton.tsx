@@ -1,7 +1,11 @@
 import { cn } from "@/lib/utils";
 import React from "react";
 
-function TransactionHistorySkeleton({ className }: { className?: string }) {
+export function TransactionHistorySkeleton({
+  className,
+}: {
+  className?: string;
+}) {
   return (
     <div className={cn("bg-input p-4 animate-pulse", className)}>
       <div className="h-4 bg-gray-300 rounded w-3/4 mb-4"></div>
@@ -28,5 +32,3 @@ function TransactionHistorySkeleton({ className }: { className?: string }) {
     </div>
   );
 }
-
-export default TransactionHistorySkeleton;

@@ -4,13 +4,12 @@ import {
   AccordionItem,
   BetAccordionTrigger,
 } from "@/components/ui/accordion";
-import { MenuItems, OddList } from "@/types/base";
+import { MenuItems } from "@/types/base";
 import { AccordionContent } from "@radix-ui/react-accordion";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import BetItems from "./BetItems";
 import { useAppStore } from "@/store";
-import { useWebSocket } from "@/hooks/useWebSocket";
 
 function AccordionList({ data }: { data: MenuItems["data"] }) {
   const defaultValue = data?.[0]?.key || "";

@@ -30,6 +30,7 @@ export const apiRoutes = {
   "load-money": "/transaction/load-admin/",
   getTransactionHistory: "me/transactions/",
   getBetHistory: "/me/bets/",
+  getBalance: "/me/balance/",
 
   //bet slip
   getBetSlip: "/slip/",
