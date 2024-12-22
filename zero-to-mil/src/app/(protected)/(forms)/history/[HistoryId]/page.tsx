@@ -12,7 +12,7 @@ function TransactionHistoryDetails() {
       enablePadding={false}
     >
       <div>
-        <TransactionHistory />
+        {/* <TransactionHistory /> */}
         <div className="mt-4 mx-4">
           <SlipCards className={"rounded"} />
         </div>
