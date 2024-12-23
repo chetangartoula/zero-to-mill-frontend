@@ -92,7 +92,7 @@ export default function BetSlip() {
       <div className="flex-grow"></div>
 
       <div className="bg-menu pt-4 sticky bottom-0">
-        <OddList />
+        <OddList total_odds={data.total_odds} />
       </div>
     </div>
   );

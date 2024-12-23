@@ -51,7 +51,12 @@ function OddList({ isDisabled, onClick, total_odds = 0 }: OddListProps) {
           />
           <div className="flex justify-between pb-4 mt-3 text-lg">
             <div className="font-semibold">Possible Return</div>
-            <p>$1400</p>
+            <p>
+              $
+              {(
+                Math.ceil(form.watch("amount") * total_odds * 100) / 100
+              ).toFixed(2)}
+            </p>
           </div>
           <Button
             variant="secondary"
