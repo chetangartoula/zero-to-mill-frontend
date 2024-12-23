@@ -29,9 +29,7 @@ export default function BetSlip() {
     {},
     {
       method: "DELETE",
-      modifier: (data) => {
-        return { id: data.id };
-      },
+      modifier: (data) => data,
     }
   );
 
@@ -93,7 +91,7 @@ export default function BetSlip() {
 
       <div className="flex-grow"></div>
 
-      <div className="bg-menu pt-4">
+      <div className="bg-menu pt-4 sticky bottom-0">
         <OddList />
       </div>
     </div>

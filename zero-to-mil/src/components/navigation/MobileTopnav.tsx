@@ -27,7 +27,7 @@ function MobileTopNav({
   const { lein, main, stake } = useAppStore((state) => state);
   const router = useRouter();
   return (
-    <div className="flex justify-between p-3 bg-gray-800">
+    <div className="flex justify-between p-3 bg-gray-800 sticky top-0 z-50">
       <div className="flex justify-start border items-center">
         <div className="flex justify-start h-6 fit-content m-0 mx-2">
           <Image src={logoSrc} alt={"logo"} width={24} height={24} priority />
