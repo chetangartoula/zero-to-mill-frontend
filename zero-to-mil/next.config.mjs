@@ -3,7 +3,6 @@ const nextConfig = {
     reactStrictMode: false,
     images: {
         dangerouslyAllowSVG: true,
-        domains: ['placehold.co'],
         contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
         remotePatterns: [
             {

@@ -10,7 +10,7 @@ function SlipCards({
 }: {
   className?: string;
   data?: any;
-  onCancel?: () => void;
+  onCancel: (data: any) => void;
 }) {
   return (
     <div className={cn("p-4  bg-menu", className)}>
@@ -23,7 +23,7 @@ function SlipCards({
             <div className="text-end">{data?.away_team}</div>
           </div>
         </div>
-        <div className="text-muted" onClick={onCancel}>
+        <div className="text-muted" onClick={() => onCancel(data)}>
           X
         </div>
       </div>

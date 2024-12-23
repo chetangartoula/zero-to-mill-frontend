@@ -6,7 +6,7 @@ import axios from "axios";
 declare module "axios" {
   interface AxiosRequestConfig {
     name?: keyof typeof apiRoutes;
-    modifier?: Record<string, string>;
+    modifier?: Record<string, string> | ((data: any) => Record<string, string>);
   }
 }
 
@@ -17,10 +17,12 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    // console.log("config", config);
     if (config.name) {
-      config.url =
-        config.url ?? getApiRoutes(config.name ?? "", config.modifier);
+      const modifier =
+        typeof config.modifier === "function"
+          ? config.modifier(config.data)
+          : config.modifier;
+      config.url = config.url ?? getApiRoutes(config.name, modifier);
     }
     return config;
   },

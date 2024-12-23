@@ -29,12 +29,12 @@ export const apiRoutes = {
   withdraw: "/transaction/request/unload/",
   "load-money": "/transaction/load-admin/",
   getTransactionHistory: "/me/transactions/",
-  getBetHistory: "/slip/betslip/",
   getBalance: "/me/balance/",
 
   //bet slip
-  getBetSlip: "/slip/",
-  deleteBet: "/slip/remove/:id",
+  betSlip: "/slip/", //get, post(for amount)
+  placeBet: "/slip/betslip/", //(send overall list (overall payload {amount})) //get method provides transaction history
+  deleteBet: "/slip/remove/id",
 };
 
 export type ApiRoutes = keyof typeof apiRoutes;

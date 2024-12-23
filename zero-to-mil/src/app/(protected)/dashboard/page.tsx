@@ -59,19 +59,23 @@ function DashBoard() {
         <MobileTopNav />
       </div>
       <div className="w-full p-2 bg-navbackground">
-        {(isSportsLoading || isSportsFetching) && <NavCarouselSkeleton />}
-        <NavCarousel
-          data={finalTabData as CarouselData[]}
-          onClick={(data) => setActiveTabKey(data.key)}
-          isactive={activeTabKey || ""}
-        />
+        {isSportsLoading || isSportsFetching ? (
+          <NavCarouselSkeleton />
+        ) : (
+          <NavCarousel
+            data={finalTabData as CarouselData[]}
+            onClick={(data) => setActiveTabKey(data.key)}
+            isactive={activeTabKey || ""}
+          />
+        )}
       </div>
-      {(isSportsLoading || isSportsFetching) && (
+      {isSportsLoading || isSportsFetching ? (
         <div className="pt-4">
           <AccordionListSkeleton />
         </div>
+      ) : (
+        <AccordionList data={betList?.data as MenuItems["data"]} />
       )}
-      <AccordionList data={betList?.data as MenuItems["data"]} />
     </div>
   );
 }

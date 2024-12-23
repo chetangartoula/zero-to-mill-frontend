@@ -1,11 +1,8 @@
 "use client";
 import { Toaster } from "@/components/ui/sonner";
 import { AppStoreProvider } from "@/store";
-import { useLayoutStore } from "@/store/slices/layoutState";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ReactElement } from "react";
-import { useEffect } from "react";
 
 const queryClient = new QueryClient();
 

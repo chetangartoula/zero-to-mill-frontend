@@ -23,8 +23,8 @@ function TransactionHistoryList() {
   const { data: betHistory, isLoading: isBetHistoryLoading } = useAppQuery<
     BetHistoryApiProps[]
   >({
-    routeName: "getBetHistory",
-    queryKey: ["getBetHistory"],
+    routeName: "placeBet",
+    queryKey: ["placeBet"],
     retry: false,
     refetchOnWindowFocus: false,
   });

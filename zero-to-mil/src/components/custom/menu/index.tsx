@@ -4,12 +4,13 @@ import { NavDrawerItem } from "@/constants/navDrawer";
 import logout from "@/store/actions/logout";
 import { getPageRoutes } from "@/utils/getRoutes";
 import { StarIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
 
 function MenuComponent() {
   const router = useRouter();
+  const pathname = usePathname();
   const handleLogout = async () => {
     const res = await logout();
     if (res.status === 200) {
@@ -24,6 +25,7 @@ function MenuComponent() {
           key={`${label}.${index}`}
           title={label}
           icon={icon}
+          isActive={pathname === getPageRoutes(value)}
           onClick={() => router.push(getPageRoutes(value))}
         />
       ))}

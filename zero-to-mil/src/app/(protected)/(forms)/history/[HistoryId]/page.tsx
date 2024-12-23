@@ -14,7 +14,7 @@ function TransactionHistoryDetails() {
       <div>
         {/* <TransactionHistory /> */}
         <div className="mt-4 mx-4">
-          <SlipCards className={"rounded"} />
+          {/* <SlipCards className={"rounded"} /> */}
         </div>
       </div>
     </DetailWrapper>

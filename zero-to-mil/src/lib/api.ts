@@ -88,8 +88,6 @@ export function useAppMutation<ResponseData, Values = FieldValues, E = Error>(
         name: routeName,
         data: value,
       });
-
-      // console.log(data);
       return data;
     },
   });

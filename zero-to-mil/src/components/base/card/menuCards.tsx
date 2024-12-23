@@ -8,6 +8,7 @@ export interface MenuCardProps {
   onClick?: () => void;
   cardProps?: React.HTMLProps<HTMLDivElement>;
   textProps?: React.HTMLProps<HTMLParagraphElement>;
+  isActive?: boolean;
 }
 function MenuCards({
   children,
@@ -16,10 +17,18 @@ function MenuCards({
   onClick,
   cardProps,
   textProps,
+  isActive,
 }: PropsWithChildren<MenuCardProps>) {
   return (
     <Card
-      className={cn(" bg-input rounded", cardProps?.className)}
+      className={cn(
+        " rounded",
+        {
+          "bg-input": !isActive,
+          "bg-haravara": isActive,
+        },
+        cardProps?.className
+      )}
       onClick={onClick}
       {...cardProps}
     >
