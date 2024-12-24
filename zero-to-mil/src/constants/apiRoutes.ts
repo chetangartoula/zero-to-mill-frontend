@@ -26,7 +26,7 @@ export const apiRoutes = {
 
   // transaction
   deposit: "/transaction/request/load/",
-  withdraw: "/transaction/request/unload/",
+  withdraw: "/transaction/request/withdraw/",
   "load-money": "/transaction/load-admin/",
   getTransactionHistory: "/me/transactions/",
   getBalance: "/me/balance/",
