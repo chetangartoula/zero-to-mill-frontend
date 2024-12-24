@@ -2,13 +2,14 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { getPageRoutes } from "@/utils/getRoutes";
-import { TransactionHistory } from "@/components/custom/history";
+import { BetHistory, TransactionHistory } from "@/components/custom/history";
 import { useAppQuery } from "@/lib/api";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MobileTopNav from "@/components/navigation/MobileTopnav";
 import { TransactionHistoryApiProps } from "@/types/base/history";
 import { BetHistoryApiProps } from "@/types/base/history/betHistory";
 import { TransactionHistorySkeleton } from "@/components/skeletons";
+import { isArray } from "lodash";
 
 function TransactionHistoryList() {
   const router = useRouter();
@@ -63,6 +64,21 @@ function TransactionHistoryList() {
               </p>
             </div>
           )}
+          {isArray(betHistory) &&
+            betHistory?.map((history) => (
+              <BetHistory
+                key="1"
+                className="border rounded-xl"
+                data={history || {}}
+                onClick={() =>
+                  router.push(
+                    getPageRoutes("transaction-detail", {
+                      BetHistoryId: "1",
+                    })
+                  )
+                }
+              />
+            ))}
         </TabsContent>
         <TabsContent value="transaction_history" className="p-4">
           {isTransactionHistoryLoading && (

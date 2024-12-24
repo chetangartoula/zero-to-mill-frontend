@@ -4,7 +4,9 @@ import InputFormField from "@/components/formfields/InputFormField";
 import { Button } from "@/components/ui/button";
 import { useAppMutation } from "@/lib/api";
 import { oddListSchema } from "@/schemas/oddList";
+import { useQueryClient } from "@tanstack/react-query";
 import React from "react";
+import { toast } from "sonner";
 
 export interface OddListProps {
   isDisabled?: boolean;
@@ -12,9 +14,15 @@ export interface OddListProps {
   onClick?: () => void;
 }
 function OddList({ isDisabled, onClick, total_odds = 0 }: OddListProps) {
+  const queryClient = useQueryClient();
   const { mutate } = useAppMutation("placeBet", {
     onSuccess: async () => {
-      console.log("Bet successful");
+      await queryClient.invalidateQueries({ queryKey: ["betSlip"] });
+      toast.success("Bet placed successfully");
+    },
+    onError: async (data) => {
+      await queryClient.invalidateQueries({ queryKey: ["betSlip"] });
+      toast.error(data.message);
     },
   });
   return (
