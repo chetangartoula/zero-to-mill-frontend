@@ -1,7 +1,6 @@
 "use client";
 import { createContext, useContext, useRef } from "react";
 import { create, StoreApi, useStore } from "zustand";
-import { Store } from "./store";
 import { createAuthStore } from "./slices/accessToken";
 import { createLoginStore } from "./slices/login";
 import { createMPINStore } from "./slices/mpin";
@@ -9,6 +8,7 @@ import { createWithdrawStore } from "./slices/withdraw";
 import { createBetSlipStore } from "./slices/betSlip";
 import { createBetListStore } from "./slices/betList";
 import { createBalanceStore } from "./slices/balance";
+import type { Store } from "./store.d.ts";
 
 const appStore = create<Store>()((...set) => ({
   ...createLoginStore(...set),

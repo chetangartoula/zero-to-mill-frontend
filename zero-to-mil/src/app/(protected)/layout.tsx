@@ -1,18 +1,19 @@
 "use client";
-import BottomBar from "@/components/navigation/BottomBar";
+import { BottomBar } from "@/components/navigation/BottomBar";
 import MPINWrapper from "@/components/wrapper/mpinwrapper";
 import { useAppQuery } from "@/lib/api";
 import { useAppStore } from "@/store";
 import getAccessToken from "@/store/actions/getAccessToken";
+import { BalanceState } from "@/store/slices/balance";
 import { setAxiosAuthTokens } from "@/utils/token";
-import React, { PropsWithChildren, useEffect, useRef } from "react";
+import React, { PropsWithChildren, Suspense, useEffect, useRef } from "react";
 
 function ProtectedLayout({ children }: PropsWithChildren) {
   const { accessToken, setAccessToken, setBalance } = useAppStore(
     (state) => state
   );
   const fetchingRef = useRef(false);
-  const { data: BalanceData } = useAppQuery({
+  const { data: BalanceData } = useAppQuery<BalanceState>({
     routeName: "getBalance",
     queryKey: ["getBalance"],
     refetchOnWindowFocus: false,
@@ -45,19 +46,21 @@ function ProtectedLayout({ children }: PropsWithChildren) {
   if (!accessToken) return <p>Loading</p>;
 
   return (
-    <MPINWrapper>
-      {children}
-      <div
-        style={{
-          position: "fixed",
-          bottom: 0,
-          width: "100%",
-          zIndex: 1000,
-        }}
-      >
-        <BottomBar />
-      </div>
-    </MPINWrapper>
+    <Suspense fallback={<p>Loading...</p>}>
+      <MPINWrapper>
+        {children}
+        <div
+          style={{
+            position: "fixed",
+            bottom: 0,
+            width: "100%",
+            zIndex: 1000,
+          }}
+        >
+          <BottomBar />
+        </div>
+      </MPINWrapper>
+    </Suspense>
   );
 }
 

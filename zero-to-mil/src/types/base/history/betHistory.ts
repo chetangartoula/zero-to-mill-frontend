@@ -1,4 +1,5 @@
 export interface BetHistoryApiProps {
+  created_date: string;
   bet_amount: string;
   bet_status: string;
   is_active: boolean;

@@ -8,7 +8,6 @@ import {
   HoverCardTrigger,
 } from "../ui/hover-card";
 import { Button } from "../ui/button";
-import { SelectSeparator } from "../ui/select";
 import { Separator } from "../ui/separator";
 import { useAppStore } from "@/store";
 import { useRouter } from "next/navigation";
@@ -24,7 +23,7 @@ function MobileTopNav({
   amount = 120,
 }: MobileTopNavProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const { lein, main, stake } = useAppStore((state) => state);
+  const { lien, main, stake } = useAppStore((state) => state);
   const router = useRouter();
   return (
     <div className="flex justify-between p-3 bg-gray-800 sticky top-0 z-50">
@@ -71,8 +70,8 @@ function MobileTopNav({
               </div>
               <Separator className="my-2" />
               <div className="flex justify-between">
-                <p className="text-sm text-end">Lein</p>
-                <p className="text-primary text-lg">${lein}</p>
+                <p className="text-sm text-end">Lien</p>
+                <p className="text-primary text-lg">${lien}</p>
               </div>
             </HoverCardContent>
           </HoverCard>

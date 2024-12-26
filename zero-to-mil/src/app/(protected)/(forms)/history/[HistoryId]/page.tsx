@@ -8,7 +8,7 @@ function TransactionHistoryDetails() {
   return (
     <DetailWrapper
       title="Bet Details"
-      navigationLink={getPageRoutes("transaction-history")}
+      navigationLink={getPageRoutes("history")}
       enablePadding={false}
     >
       <div>

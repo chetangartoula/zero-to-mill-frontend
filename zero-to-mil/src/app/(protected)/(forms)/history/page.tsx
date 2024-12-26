@@ -64,21 +64,23 @@ function TransactionHistoryList() {
               </p>
             </div>
           )}
-          {isArray(betHistory) &&
-            betHistory?.map((history) => (
-              <BetHistory
-                key="1"
-                className="border rounded-xl"
-                data={history || {}}
-                onClick={() =>
-                  router.push(
-                    getPageRoutes("transaction-detail", {
-                      BetHistoryId: "1",
-                    })
-                  )
-                }
-              />
-            ))}
+          <div className="gap-4 p-4">
+            {isArray(betHistory) &&
+              betHistory?.map((history) => (
+                <BetHistory
+                  key="1"
+                  className="border rounded-xl"
+                  data={history || {}}
+                  onClick={() =>
+                    router.push(
+                      getPageRoutes("bet-detail", {
+                        HistoryId: "1",
+                      })
+                    )
+                  }
+                />
+              ))}
+          </div>
         </TabsContent>
         <TabsContent value="transaction_history" className="p-4">
           {isTransactionHistoryLoading && (
@@ -100,13 +102,6 @@ function TransactionHistoryList() {
               key={history.txn_id}
               className="border rounded-xl"
               data={history || {}}
-              onClick={() =>
-                router.push(
-                  getPageRoutes("transaction-detail", {
-                    TransactionHistoryId: "1",
-                  })
-                )
-              }
             />
           ))}
         </TabsContent>

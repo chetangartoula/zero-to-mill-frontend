@@ -11,6 +11,8 @@ function BetItems({ itemKey }: { itemKey: string }) {
   const { messages: oddList } = useWebSocket<OddList[]>("odds_list", {
     filters: { sport_key: itemKey },
   });
+
+  console.log("oddList", oddList);
   const { mutate } = useAppMutation<BetSlipProps>("betSlip", {
     onSuccess: (data) => {
       toast.success("Bet added to slip");

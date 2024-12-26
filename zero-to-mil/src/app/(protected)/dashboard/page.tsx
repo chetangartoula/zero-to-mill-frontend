@@ -5,6 +5,7 @@ import {
   CarouselData,
   MenuItems,
   MenuItemsSuccessResponse,
+  OddList,
 } from "@/types/base";
 import React, { useEffect, useMemo } from "react";
 import AccordionList from "./_component/AccordionList";
@@ -12,12 +13,17 @@ import { useAppStore } from "@/store";
 import { NavCarousel } from "@/components/base/carousel";
 import { NavCarouselSkeleton } from "@/components/skeletons/NavCarouselSkeleton";
 import { AccordionListSkeleton } from "@/components/skeletons";
+import { useWebSocket } from "@/hooks/useWebSocket";
 
 function DashBoard() {
+  console.log("test");
+  // const { messages: oddList } = useWebSocket<OddList[]>("odds_list", {
+  //   filters: { sport_key: "americanfootball_ncaaf" },
+  // });
+
   const { activeTabKey, setActiveTabKey, activeSportKey } = useAppStore(
     (state) => state
   );
-
   const {
     data: sportsLists,
     isLoading: isSportsLoading,
@@ -46,6 +52,7 @@ function DashBoard() {
     if (activeTabKey === null && finalTabData[0]?.key) {
       setActiveTabKey(finalTabData[0]?.key);
     }
+    return;
   }, [finalTabData, activeTabKey, setActiveTabKey]);
 
   const betList = useMemo(

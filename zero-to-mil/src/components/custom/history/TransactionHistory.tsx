@@ -9,6 +9,15 @@ export interface TransactionHistoryProps {
   data: TransactionHistoryApiProps;
 }
 
+const getTextColor = (status: string) => {
+  switch (status) {
+    case "load":
+      return "text-haravara";
+    default:
+      return "text-destructive";
+  }
+};
+
 function BetHistory({
   className,
   onClick,
@@ -17,8 +26,9 @@ function BetHistory({
 }: TransactionHistoryProps) {
   return (
     <div key={key} className={cn("bg-input p-4", className)} onClick={onClick}>
-      <div>
-        <p>{data.name}</p>
+      <div className="flex justify-between">
+        <p>{data.txn_date.split("T")[0]}</p>
+        <p>${data.amount}</p>
       </div>
       <div className="text-sm space-y-2 border-t border-muted pt-2 mt-2">
         {" "}
@@ -29,15 +39,17 @@ function BetHistory({
         <div className="space-y-2">
           <div className="flex justify-between">
             <p className="text-muted">Method:</p>
-            <p>Manual</p>
+            <p>{data.deposit_method}</p>
           </div>
           <div className="flex justify-between">
-            <p className="text-muted">Email</p>
-            <p>brian@gmail.com</p>
+            <p className="text-muted">Name</p>
+            <p>{data.name}</p>
           </div>
           <div className="flex justify-between">
             <p className="text-muted">Type:</p>
-            <p className="text-destructive">Deposit</p>
+            <p className={`${getTextColor(data.type)}`}>
+              {data.type === "load" ? "Deposit" : "WithDraw"}
+            </p>
           </div>
         </div>
       </div>

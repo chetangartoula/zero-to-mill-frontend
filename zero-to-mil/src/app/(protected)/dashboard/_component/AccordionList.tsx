@@ -23,7 +23,7 @@ function AccordionList({ data }: { data: MenuItems["data"] }) {
   }, [defaultValue, setActiveSportKey]);
   return (
     <>
-      {defaultValue && (
+      {defaultValue && activeSportKey && (
         <Accordion
           type="single"
           value={activeSportKey}

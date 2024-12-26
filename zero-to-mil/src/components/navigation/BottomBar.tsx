@@ -10,7 +10,7 @@ function normalizePath(path: string): string {
   return path.replace(/^\/+/, "./");
 }
 
-function BottomBar() {
+function BBar() {
   const router = useRouter();
   const params = usePathname();
   return (
@@ -68,4 +68,4 @@ function BottomBar() {
   );
 }
 
-export default BottomBar;
+export const BottomBar = React.memo(BBar);

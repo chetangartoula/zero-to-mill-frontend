@@ -1,14 +1,14 @@
 import { StateCreator } from "zustand";
 
 export interface BalanceState {
-  lein: number;
+  lien: number;
   main: number;
   stake: number;
   setBalance: (balance: Omit<BalanceState, "setBalance">) => void;
 }
 
 export const createBalanceStore: StateCreator<BalanceState> = (set) => ({
-  lein: 0,
+  lien: 0,
   main: 0,
   stake: 0,
   setBalance: (balance) => set(balance),

@@ -12,7 +12,7 @@ export interface BetHistoryProps {
 const getTextColor = (status: string) => {
   switch (status) {
     case "Won":
-      return "text-success";
+      return "text-haravara";
     case "Lost":
       return "text-destructive";
     default:
@@ -23,8 +23,11 @@ const getTextColor = (status: string) => {
 function BetHistory({ className, onClick, data, key }: BetHistoryProps) {
   return (
     <div key={key} className={cn("bg-input p-4", className)} onClick={onClick}>
-      <div>
-        <p>test</p>
+      <div className="flex justify-between">
+        <p className="font-bold">
+          {data.slip_type === "single" ? "SINGLE" : "MULTIPLE"}
+        </p>
+        <p className="text-muted">{data.created_date}</p>
       </div>
       <div className="text-sm space-y-2 border-t border-muted pt-2 mt-2">
         {" "}

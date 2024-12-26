@@ -31,7 +31,7 @@ function MPINWrapper({ children }: PropsWithChildren) {
   const { mutate } = useAppMutation(
     "getMPIN",
     {
-      onSuccess: async (data) => {
+      onSuccess: async (data: MPINProps) => {
         setMPINState(data);
         queryClient.invalidateQueries({ queryKey: ["getMPIN"] });
         router.push("/dashboard");
@@ -80,4 +80,4 @@ function MPINWrapper({ children }: PropsWithChildren) {
   return <>{children}</>;
 }
 
-export default MPINWrapper;
+export default React.memo(MPINWrapper);

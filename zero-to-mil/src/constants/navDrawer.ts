@@ -23,7 +23,7 @@ export const NavDrawerItem: Omit<Route, "special">[] = [
     label: "Withdraw",
   },
   {
-    value: "transaction-history",
+    value: "history",
     icon: StarIcon,
     label: "Transaction History",
   },

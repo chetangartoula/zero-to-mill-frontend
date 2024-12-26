@@ -1,4 +1,5 @@
 export interface TransactionHistoryApiProps {
+  txn_date: string;
   name: string;
   amount: number;
   remarks: string;

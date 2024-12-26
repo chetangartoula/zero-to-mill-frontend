@@ -112,6 +112,7 @@ export const useWebSocket = <T = unknown>(
         socketRef.current = null;
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, accessToken]);
 
   const sendMessage = (message: string) => {

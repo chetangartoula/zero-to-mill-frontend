@@ -14,9 +14,7 @@ export const PageRoutes = {
   verify: "/verify",
   favourites: "/favourites",
   "account-setting": "/account-setting",
-
-  "transaction-history": "/transaction-history",
-  "transaction-detail": "/transaction-history/:TransactionId",
+  "bet-detail": "/history/:HistoryId",
 };
 
 export type PageRoutesType = keyof typeof PageRoutes;
