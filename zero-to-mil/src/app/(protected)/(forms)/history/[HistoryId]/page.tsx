@@ -27,11 +27,6 @@ function TransactionHistoryDetails({
     },
   });
 
-  const { bet_slips, ...rest } = useMemo(
-    () => data as BetHistoryDetailsApiProps,
-    [data]
-  );
-
   if (isLoading) return <p>Loading...</p>;
 
   return (
@@ -41,9 +36,12 @@ function TransactionHistoryDetails({
       enablePadding={false}
     >
       <div>
-        <BetHistory data={rest as BetHistoryApiProps} key={rest?.slip_id} />
+        <BetHistory
+          data={data as BetHistoryApiProps}
+          key={data?.slip_id || "bet-history"}
+        />
         <div className="mt-4 mx-4">
-          {bet_slips?.map((slip, index) => (
+          {data?.bet_slips?.map((slip, index) => (
             <SlipCards
               className={"rounded"}
               key={slip.match_title}
