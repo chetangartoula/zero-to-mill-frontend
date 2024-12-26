@@ -8,4 +8,21 @@ export interface BetHistoryApiProps {
   total: number;
   completed: number;
   remaining: number;
+  slip_id: string;
+}
+
+export interface BetSlips {
+  commence_time: string;
+  started: boolean;
+  selected_team: string;
+  odds: number;
+  sports_status: string;
+  home_team: string;
+  away_team: string;
+  identifier: string;
+  match_title: string;
+}
+
+export interface BetHistoryDetailsApiProps extends BetHistoryApiProps {
+  bet_slips: BetSlips[];
 }

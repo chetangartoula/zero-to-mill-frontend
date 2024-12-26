@@ -34,6 +34,7 @@ export const apiRoutes = {
   //bet slip
   betSlip: "/slip/", //get, post(for amount)
   placeBet: "/slip/betslip/", //(send overall list (overall payload {amount})) //get method provides transaction history
+  betDetails: "/slip/betslip/id",
   deleteBet: "/slip/remove/id",
 };
 

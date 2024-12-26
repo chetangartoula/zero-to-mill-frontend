@@ -74,7 +74,7 @@ function TransactionHistoryList() {
                   onClick={() =>
                     router.push(
                       getPageRoutes("bet-detail", {
-                        HistoryId: "1",
+                        HistoryId: history?.slip_id,
                       })
                     )
                   }

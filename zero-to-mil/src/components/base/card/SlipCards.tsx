@@ -1,5 +1,6 @@
 import DynamicIcon from "@/components/utils/DynamicIcon";
 import { cn } from "@/lib/utils";
+import { BetSlips } from "@/types/base/history";
 import { StarIcon } from "lucide-react";
 import React from "react";
 
@@ -9,8 +10,8 @@ function SlipCards({
   onCancel,
 }: {
   className?: string;
-  data?: any;
-  onCancel: (data: any) => void;
+  data?: BetSlips;
+  onCancel?: (data: any) => void;
 }) {
   return (
     <div className={cn("p-4  bg-menu", className)}>
@@ -23,9 +24,11 @@ function SlipCards({
             <div className="text-end">{data?.away_team}</div>
           </div>
         </div>
-        <div className="text-muted" onClick={() => onCancel(data)}>
-          X
-        </div>
+        {onCancel && (
+          <div className="text-muted" onClick={() => onCancel?.(data)}>
+            X
+          </div>
+        )}
       </div>
 
       <div className="flex items-center pt-2">
