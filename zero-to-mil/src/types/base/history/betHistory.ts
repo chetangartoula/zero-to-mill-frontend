@@ -19,7 +19,7 @@ export interface BetSlips {
   sports_status: string;
   home_team: string;
   away_team: string;
-  identifier: string;
+  sports_id: string;
   match_title: string;
 }
 

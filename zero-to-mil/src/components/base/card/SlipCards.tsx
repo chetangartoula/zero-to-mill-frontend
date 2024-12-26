@@ -1,5 +1,6 @@
 import DynamicIcon from "@/components/utils/DynamicIcon";
 import { cn } from "@/lib/utils";
+import { BetSlipProps } from "@/types/base/betslip";
 import { BetSlips } from "@/types/base/history";
 import { StarIcon } from "lucide-react";
 import React from "react";
@@ -10,7 +11,7 @@ function SlipCards({
   onCancel,
 }: {
   className?: string;
-  data?: BetSlips;
+  data?: BetSlips | BetSlipProps;
   onCancel?: (data: any) => void;
 }) {
   return (
