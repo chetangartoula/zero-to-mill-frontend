@@ -20,8 +20,8 @@ export default withSentryConfig(nextConfig, {
 // https://github.com/getsentry/sentry-webpack-plugin#options
 
 org: "ztm",
-project: "ztm-user",
-
+project: "ztm-fe-user",
+authToken: process.env.SENTRY_AUTH_TOKEN,
 // Only print logs for uploading source maps in CI
 silent: !process.env.CI,
 
@@ -35,6 +35,9 @@ widenClientFileUpload: true,
 reactComponentAnnotation: {
 enabled: true,
 },
+sourcemaps: {
+    disable: true,
+  },
 
 // Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
 // This can increase your server load as well as your hosting bill.
@@ -43,7 +46,7 @@ enabled: true,
 tunnelRoute: "/monitoring",
 
 // Hides source maps from generated client bundles
-hideSourceMaps: true,
+hideSourceMaps: false,
 
 // Automatically tree-shake Sentry logger statements to reduce bundle size
 disableLogger: true,
