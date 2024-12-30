@@ -4,15 +4,24 @@ import { cn } from "@/lib/utils";
 import { OddList } from "@/types/base";
 import { BetSlipProps } from "@/types/base/betslip";
 import { isString } from "lodash";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { BetItemsSkeleton } from "./BetItemsSkeleton";
 
 function BetItems({ itemKey }: { itemKey: string }) {
+  const [isLoading, setIsLoading] = useState(true);
   const { messages: oddList } = useWebSocket<OddList[]>("odds_list", {
     filters: { sport_key: itemKey },
   });
 
-  console.log("oddList", oddList);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [itemKey]);
+
   const { mutate } = useAppMutation<BetSlipProps>("betSlip", {
     onSuccess: (data) => {
       toast.success("Bet added to slip");
@@ -21,6 +30,10 @@ function BetItems({ itemKey }: { itemKey: string }) {
       isString(error) && toast.error(error);
     },
   });
+
+  if (isLoading || !oddList || oddList?.length === 0) {
+    return <BetItemsSkeleton />;
+  }
 
   return (
     <div onClick={(e) => e.stopPropagation()}>
