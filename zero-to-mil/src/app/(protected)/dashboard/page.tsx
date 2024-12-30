@@ -61,8 +61,8 @@ function DashBoard() {
   );
 
   return (
-    <div>
-      <div className="w-full">
+    <div className="mb-8 pb-8">
+      <div className="w-full mb-4">
         <MobileTopNav />
       </div>
       <div className="w-full p-2 bg-navbackground">

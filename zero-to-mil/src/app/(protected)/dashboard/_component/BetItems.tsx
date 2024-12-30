@@ -36,7 +36,14 @@ function BetItems({ itemKey }: { itemKey: string }) {
   }
 
   return (
-    <div onClick={(e) => e.stopPropagation()}>
+    <div
+      className={`grid ${
+        oddList.length <= 2
+          ? "grid-cols-1"
+          : "grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"
+      } gap-4`}
+      onClick={(e) => e.stopPropagation()}
+    >
       {oddList &&
         oddList?.map((odds, index) => (
           <div
@@ -45,24 +52,33 @@ function BetItems({ itemKey }: { itemKey: string }) {
             )}
             key={index}
           >
-            <div className="flex gap-2 justify-between w-full px-4">
-              <div className="border">{odds?.home_team}</div>
-              <div className="font-bold">VS</div>
-              <div className="text-end">{odds?.away_team}</div>
-            </div>
+            {odds?.home_team && odds?.away_team && (
+              <div className="grid grid-cols-[1fr,auto,1fr] gap-2 w-full px-2 sm:px-4 items-center">
+                <div className="border rounded p-2 text-sm sm:text-base truncate">
+                  {odds?.home_team}
+                </div>
+                <div className="font-bold text-xs sm:text-sm px-1">VS</div>
+                <div className="border rounded p-2 text-sm sm:text-base truncate text-end">
+                  {odds?.away_team}
+                </div>
+              </div>
+            )}
+
             <p className="text-center mt-2 text-s text-greyf">
               {odds?.commence_time}
             </p>
+
             {odds?.bookmaker?.markets?.map((item, index) => (
               <div
-                className={cn(
-                  "flex justify-between align-center gap-6 pl-2 text-s"
-                )}
+                className="grid auto-cols-fr gap-2 px-2 py-4"
+                style={{
+                  gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, 100px), 1fr))`,
+                }}
                 key={`${item.key}_${index}`}
               >
                 {item.outcomes?.map((outcome, index) => (
                   <div
-                    className={cn("flex-column text-center w-full")}
+                    className="flex flex-col items-center justify-between bg-betcard rounded p-2 hover:bg-opacity-80 transition-all cursor-pointer flex-1"
                     key={`${outcome.name}_${index}`}
                     onClick={() =>
                       mutate({
@@ -78,8 +94,10 @@ function BetItems({ itemKey }: { itemKey: string }) {
                       })
                     }
                   >
-                    <p className="p-2">{outcome.name}</p>
-                    <p className="bg-subinput py-3 rounded">
+                    <p className="text-sm text-center mb-2 break-words w-full">
+                      {outcome.name}
+                    </p>
+                    <p className="bg-subinput py-2 px-4 rounded w-full text-center">
                       {outcome.point || outcome.price}
                     </p>
                   </div>

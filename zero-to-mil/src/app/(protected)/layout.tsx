@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/components/loading";
 import { BottomBar } from "@/components/navigation/BottomBar";
 import MPINWrapper from "@/components/wrapper/mpinwrapper";
 import { useAppQuery } from "@/lib/api";
@@ -43,7 +44,7 @@ function ProtectedLayout({ children }: PropsWithChildren) {
     }
   }, [BalanceData, setBalance]);
 
-  if (!accessToken) return <p>Loading</p>;
+  if (!accessToken) return <Loading />;
 
   return (
     <Suspense fallback={<p>Loading...</p>}>
