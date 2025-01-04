@@ -16,11 +16,6 @@ import { AccordionListSkeleton } from "@/components/skeletons";
 import { useWebSocket } from "@/hooks/useWebSocket";
 
 function DashBoard() {
-  console.log("test");
-  // const { messages: oddList } = useWebSocket<OddList[]>("odds_list", {
-  //   filters: { sport_key: "americanfootball_ncaaf" },
-  // });
-
   const { activeTabKey, setActiveTabKey, activeSportKey } = useAppStore(
     (state) => state
   );

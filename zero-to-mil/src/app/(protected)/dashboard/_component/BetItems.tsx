@@ -14,6 +14,7 @@ function BetItems({ itemKey }: { itemKey: string }) {
     filters: { sport_key: itemKey },
   });
 
+  console.log("oddList", oddList);
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -30,6 +31,10 @@ function BetItems({ itemKey }: { itemKey: string }) {
       isString(error) && toast.error(error);
     },
   });
+
+  console.log("isLoading", isLoading);
+  console.log("oddList", oddList);
+  console.log("oddList?.length", oddList?.length);
 
   if (isLoading || !oddList || oddList?.length === 0) {
     return <BetItemsSkeleton />;
@@ -65,7 +70,7 @@ function BetItems({ itemKey }: { itemKey: string }) {
             )}
 
             <p className="text-center mt-2 text-s text-greyf">
-              {odds?.commence_time}
+              {odds?.bookmaker?.last_update || odds?.commence_time}
             </p>
 
             {odds?.bookmaker?.markets?.map((item, index) => (
