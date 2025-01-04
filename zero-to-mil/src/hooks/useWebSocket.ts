@@ -74,7 +74,7 @@ export const useWebSocket = <T = unknown>(
     };
 
     newSocket.onmessage = (event) => {
-      console.log("WebSocket message received:", event.data);
+      // console.log("WebSocket message received:", event.data);
       try {
         const parsedData = JSON.parse(event.data) as T;
         setMessages(parsedData);
