@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React, { PropsWithChildren } from "react";
+import logo from "../../../public/ZeroToMilLogo.svg";
 
 export interface AuthWrapperProps {
   title: string;
@@ -14,7 +15,7 @@ function AuthWrapper({
   title,
   children,
   includeLogo = true,
-  logoSrc = "/ZeroToMilLogo.svg",
+  logoSrc = logo,
   wrapperProps = {
     className: "h-screen",
   },
