@@ -51,7 +51,13 @@ function OTPVerification({
   const email = searchParams.email || "";
   const username = searchParams.username || "";
   return (
-    <AuthWrapper title="OTP code verification" includeLogo={false}>
+    <AuthWrapper
+      title="OTP code verification"
+      includeLogo={false}
+      wrapperProps={{
+        className: "top-40",
+      }}
+    >
       <Text
         text={`Since this is a test case. Please enter ${otp} as OTP`}
         className="my-2"
