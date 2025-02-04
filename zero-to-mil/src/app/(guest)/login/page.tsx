@@ -78,7 +78,11 @@ function Login() {
         <Button size={"full"}>Login</Button>
         <Text className="text-center mt-3">
           Don&apos;t have an account?{" "}
-          <Link href={getPageRoutes("sign-up")} className="text-primary">
+          <Link
+            href={getPageRoutes("sign-up")}
+            className="text-primary"
+            onClick={(e) => e.stopPropagation()}
+          >
             Sign up
           </Link>
         </Text>

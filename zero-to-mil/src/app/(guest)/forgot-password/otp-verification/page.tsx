@@ -27,7 +27,7 @@ function OTPVerification() {
       <AppForm
         defaultValues={{ otp_code: "" }}
         schema={otpVerificationSchema}
-        onSubmit={(data) => console.log(data)}
+        onSubmit={(data) => mutate(data)}
       >
         {(form) => (
           <FormContentWrapper
