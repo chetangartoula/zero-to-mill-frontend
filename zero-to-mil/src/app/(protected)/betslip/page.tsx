@@ -28,12 +28,12 @@ export default function BetSlip() {
   const { mutate } = useAppMutation(
     "deleteBet",
     {
-      onSuccess: async (data: { message: string }) => {
-        toast.success(data?.message);
+      onSuccess: async (data: { error_message: string }) => {
+        toast.success(data?.error_message);
         await refetch();
       },
-      onError: async (data) => {
-        toast.error(data.message);
+      onError: async (data: string) => {
+        toast.error(data);
         await refetch();
       },
     },
@@ -84,7 +84,7 @@ export default function BetSlip() {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="single">
-            {isMultipleTabDisabled && data.slip_type === "single" && (
+            {/* {isMultipleTabDisabled && data.slip_type === "single" && (
               <div className="flex-1 flex justify-center items-center">
                 <div className="p-2">
                   <p className="text-sm text-red-500 text-center">
@@ -92,7 +92,7 @@ export default function BetSlip() {
                   </p>
                 </div>
               </div>
-            )}
+            )} */}
             {data.slips && (
               <SlipCards
                 data={data?.slips && (data?.slips[0] as BetSlipProps)}
@@ -102,7 +102,7 @@ export default function BetSlip() {
           </TabsContent>
           <TabsContent value="multiple">
             <>
-              {isSingleTabDisabled && data.slip_type === "multiple" && (
+              {/* {isSingleTabDisabled && data.slip_type === "multiple" && (
                 <div className="flex-1 flex justify-center items-center">
                   <div className="p-2">
                     <p className="text-sm text-red-500 text-center">
@@ -110,7 +110,7 @@ export default function BetSlip() {
                     </p>
                   </div>
                 </div>
-              )}
+              )} */}
               {data?.slips &&
                 data.slips.map((slip, index) => (
                   <SlipCards

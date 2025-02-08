@@ -20,9 +20,9 @@ function OddList({ isDisabled, onClick, total_odds = 0 }: OddListProps) {
       await queryClient.invalidateQueries({ queryKey: ["betSlip"] });
       toast.success("Bet placed successfully");
     },
-    onError: async (data) => {
+    onError: async (data: string) => {
       await queryClient.invalidateQueries({ queryKey: ["betSlip"] });
-      toast.error(data.message);
+      toast.error(data);
     },
   });
   return (
