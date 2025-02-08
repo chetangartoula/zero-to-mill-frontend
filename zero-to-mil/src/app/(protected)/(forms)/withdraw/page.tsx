@@ -64,7 +64,7 @@ function Withdraw() {
                 </div>
               </div>
             </FormContentWrapper>
-            <Button size={"full"}>Deposit</Button>
+            <Button size={"full"}>Withdraw</Button>
           </>
         )}
       </AppForm>

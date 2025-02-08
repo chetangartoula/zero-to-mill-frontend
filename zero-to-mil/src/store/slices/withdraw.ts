@@ -2,7 +2,7 @@ import { WithDrawDTO } from "@/types/base";
 import { StateCreator } from "zustand";
 
 export interface WithdrawState {
-  email: string;
+  user_identity: string;
   method: string;
   amount: number;
   withdraw_method: string;
@@ -10,7 +10,7 @@ export interface WithdrawState {
 }
 
 export const createWithdrawStore: StateCreator<WithdrawState> = (set) => ({
-  email: "",
+  user_identity: "",
   method: "",
   withdraw_method: "",
   amount: 0,

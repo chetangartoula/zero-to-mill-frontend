@@ -12,7 +12,9 @@ import { WithDrawVerifyDTO } from "@/types/base";
 import React from "react";
 
 function WithDrawVerify() {
-  const { withdraw_method, email, amount } = useAppStore((state) => state);
+  const { withdraw_method, user_identity, amount } = useAppStore(
+    (state) => state
+  );
   const { mutate } = useAppMutation("withdraw", {
     onSuccess: async () => {
       console.log("Withdraw successful");
@@ -36,7 +38,7 @@ function WithDrawVerify() {
         onSubmit={(data) =>
           mutate({
             withdraw_method,
-            email,
+            user_identity,
             amount,
             ...data,
           })
