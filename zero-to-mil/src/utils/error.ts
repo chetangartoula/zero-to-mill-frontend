@@ -16,6 +16,8 @@ export function handleApiError(error: unknown): string {
 
     if (axiosError.response) {
       const { data } = axiosError.response;
+      if (axiosError.response.status === 500)
+        return "An unexpected server error occurred. Please try again later.";
       if (data?.error_message) return data.error_message;
       if (data?.detail) return data.detail;
       if (data?.error) return data.error;

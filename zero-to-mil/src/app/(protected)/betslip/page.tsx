@@ -39,6 +39,7 @@ export default function BetSlip() {
     },
     {
       modifier: (data) => data,
+      method: "DELETE",
     }
   );
 
@@ -83,7 +84,7 @@ export default function BetSlip() {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="single">
-            {isMultipleTabDisabled && (
+            {isMultipleTabDisabled && data.slip_type === "single" && (
               <div className="flex-1 flex justify-center items-center">
                 <div className="p-2">
                   <p className="text-sm text-red-500 text-center">
@@ -92,14 +93,16 @@ export default function BetSlip() {
                 </div>
               </div>
             )}
-            <SlipCards
-              data={data?.slips && (data?.slips[0] as BetSlipProps)}
-              onCancel={(data) => mutate({ id: data.sport_id })}
-            />
+            {data.slips && (
+              <SlipCards
+                data={data?.slips && (data?.slips[0] as BetSlipProps)}
+                onCancel={(data) => mutate({ id: data.sport_id })}
+              />
+            )}
           </TabsContent>
           <TabsContent value="multiple">
             <>
-              {isSingleTabDisabled && (
+              {isSingleTabDisabled && data.slip_type === "multiple" && (
                 <div className="flex-1 flex justify-center items-center">
                   <div className="p-2">
                     <p className="text-sm text-red-500 text-center">

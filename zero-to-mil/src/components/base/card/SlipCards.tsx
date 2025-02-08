@@ -26,7 +26,13 @@ function SlipCards({
           </div>
         </div>
         {onCancel && (
-          <div className="text-muted" onClick={() => onCancel?.(data)}>
+          <div
+            className="text-muted"
+            onClick={(e) => {
+              e.stopPropagation();
+              onCancel?.(data);
+            }}
+          >
             X
           </div>
         )}

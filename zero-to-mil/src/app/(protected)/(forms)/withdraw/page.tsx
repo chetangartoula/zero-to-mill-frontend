@@ -20,7 +20,7 @@ function Withdraw() {
 
   const withDrawInitialValue = {
     withdraw_method: "cash",
-    email: "",
+    user_identity: "",
     amount: 0,
   };
 
@@ -38,7 +38,7 @@ function Withdraw() {
         {(form) => (
           <>
             <FormContentWrapper>
-              <InputFormField name="email" label="Email" />
+              <InputFormField name="user_identity" label="Username/Email" />
               <SelectFormField
                 name="withdraw_method"
                 label="WithDraw Method"

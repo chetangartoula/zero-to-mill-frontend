@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const WithDrawSchema = z.object({
-  email: z.string().email(),
+  user_identity: z.string(),
   withdraw_method: z.string(),
   amount: z.number(),
 });
