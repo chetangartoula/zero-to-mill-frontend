@@ -45,8 +45,8 @@ export function NavCarousel({
                         height={30}
                         className={`object-contain ${
                           isActive(rest.value)
-                            ? "brightness-0 invert"
-                            : "opacity-50"
+                            ? "brightness-150"
+                            : "opacity-100"
                         }`}
                       />
                     ) : Icon ? (

@@ -25,7 +25,7 @@ function MenuCards({
         " rounded",
         {
           "bg-input": !isActive,
-          "bg-haravara": isActive,
+          "bg-primary": isActive,
         },
         cardProps?.className
       )}
@@ -35,7 +35,12 @@ function MenuCards({
       <CardContent className="flex aspect-square items-center justify-start p-3">
         {Icon && (
           <div className="p-1">
-            <Icon className="text-icon h-4" />
+            <Icon
+              className={cn("h-4", {
+                "text-white": isActive,
+                "text-icon": !isActive,
+              })}
+            />
           </div>
         )}
         <p

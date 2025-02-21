@@ -1,5 +1,6 @@
+"use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import DynamicIcon from "../utils/DynamicIcon";
 import { Plus, Trash2 } from "lucide-react";
 import {
@@ -10,12 +11,18 @@ import {
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { useAppStore } from "@/store";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { getPageRoutes } from "@/utils/getRoutes";
+import { routes } from "@/constants/routes";
+import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 
 export interface MobileTopNavProps {
   logoSrc?: string;
   amount?: number;
+}
+
+function normalizePath(path: string): string {
+  return path.replace(/^\/+/, "./");
 }
 
 function MobileTopNav({
@@ -25,6 +32,7 @@ function MobileTopNav({
   const [isHovered, setIsHovered] = useState(false);
   const { lien, main, stake } = useAppStore((state) => state);
   const router = useRouter();
+  const params = usePathname();
   return (
     <div className="flex justify-between p-3 bg-gray-800 sticky top-0 z-50">
       <div className="flex justify-start border items-center">
@@ -32,6 +40,29 @@ function MobileTopNav({
           <Image src={logoSrc} alt={"logo"} width={24} height={24} priority />
         </div>
         <div className="text-white font-semibold">Zerotomil</div>
+      </div>
+
+      <div className="w-1/2 ">
+        <Menubar className="w-full bg-transaparent flex justify-between items-center rounded-none hidden md:flex">
+          {routes.map((item, index) => (
+            <MenubarMenu key={`${item.value}.${index}`}>
+              <MenubarTrigger
+                className={`flex flex-col items-center py-1 `}
+                onClick={() => router.push(getPageRoutes(item.value))}
+              >
+                <span
+                  className={`text-xs ${
+                    normalizePath(params)?.includes(getPageRoutes(item.value))
+                      ? "text-primary border-b-2 border-primary pb-1"
+                      : "text-gray-400"
+                  } `}
+                >
+                  {item.label}
+                </span>
+              </MenubarTrigger>
+            </MenubarMenu>
+          ))}
+        </Menubar>
       </div>
 
       <div

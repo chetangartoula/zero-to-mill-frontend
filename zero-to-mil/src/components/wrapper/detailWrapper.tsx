@@ -20,17 +20,20 @@ function DetailWrapper({
     <div className={enablePadding ? "mx-3" : "mx-0"}>
       <div
         className={cn(
-          "flex justify-between items-center my-7",
+          "flex sm:justify-between md:justify-start sm:items-center my-7",
           enablePadding ? "mx-0" : "mx-3"
         )}
       >
-        <Link href={navigationLink}>
-          <DynamicIcon IconComponent={ArrowLeft} className="" />
-        </Link>
-        <h1 className="font-switzer font-semibold text-2xl leading-5 text-center flex-grow">
+        <div className="md:hidden">
+          <Link href={navigationLink}>
+            <DynamicIcon IconComponent={ArrowLeft} className="" />
+          </Link>
+        </div>
+
+        <h1 className="font-switzer font-semibold text-2xl leading-5 text-center md:text-start flex-grow ">
           {title}
         </h1>
-        <p className="w-6"></p>
+        <p className="w-6 md:hidden"></p>
       </div>
       {children}
     </div>

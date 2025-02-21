@@ -15,7 +15,7 @@ function BBar() {
   const params = usePathname();
   return (
     <>
-      <Menubar className="fixed bottom-0 w-full bg-accent flex justify-between items-center h-13 rounded-none">
+      <Menubar className="fixed bottom-0 w-full bg-accent flex justify-between items-center h-13 rounded-none md:hidden">
         {routes.map((item, index) => (
           <MenubarMenu key={`${item.value}.${index}`}>
             <MenubarTrigger

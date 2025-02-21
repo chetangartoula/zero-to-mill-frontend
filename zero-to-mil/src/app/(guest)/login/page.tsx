@@ -75,10 +75,13 @@ function Login() {
             </Text>
           </div>
         </FormContentWrapper>
-        <Button size={"full"}>Login</Button>
+        <Button size={"full"} type="submit">
+          Login
+        </Button>
         <Text className="text-center mt-3">
           Don&apos;t have an account?{" "}
           <Link
+            type="button"
             href={getPageRoutes("sign-up")}
             className="text-primary"
             onClick={(e) => e.stopPropagation()}
