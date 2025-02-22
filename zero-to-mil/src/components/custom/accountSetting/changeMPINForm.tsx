@@ -6,10 +6,18 @@ import { useAppMutation } from "@/lib/api";
 import { ChangeMPINSchema } from "@/schemas/account-settings";
 import { ChangeMPINDTO } from "@/types/base";
 import React from "react";
+import { toast } from "sonner";
 
 function ChangeMPINForm() {
   const { mutate } = useAppMutation("changeMPIN", {
-    onSuccess: async () => {},
+    onSuccess: async (data, form) => {
+      toast.success("MPIN changed successfully");
+      form.reset();
+    },
+    onError: (error: string, form) => {
+      toast.error(error.toString());
+      form.reset();
+    },
   });
   const initialValues = {
     old_pin_code: "",

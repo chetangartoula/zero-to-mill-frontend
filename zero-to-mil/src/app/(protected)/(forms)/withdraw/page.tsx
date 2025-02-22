@@ -49,7 +49,8 @@ function Withdraw() {
                 onClick={(value) =>
                   form.setValue(
                     "amount",
-                    form.getValues("amount") + parseInt(value.toString())
+                    // form.getValues("amount") + parseInt(value.toString())
+                    parseInt(value.toString())
                   )
                 }
               />

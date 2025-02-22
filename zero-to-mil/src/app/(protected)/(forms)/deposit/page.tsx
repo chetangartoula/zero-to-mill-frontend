@@ -12,6 +12,7 @@ import { DepositSchema } from "@/schemas/deposit";
 import { DepositDTO } from "@/types/base/deposit";
 import { getPageRoutes } from "@/utils/getRoutes";
 import React from "react";
+import { toast } from "sonner";
 
 function Deposit() {
   const initialValues: DepositDTO = {
@@ -24,6 +25,7 @@ function Deposit() {
 
   const { mutate } = useAppMutation("deposit", {
     onSuccess: async () => {
+      toast.success("Deposit successful");
       console.log("Deposit successful");
     },
   });
@@ -33,7 +35,10 @@ function Deposit() {
       <AppForm
         defaultValues={initialValues}
         schema={DepositSchema}
-        onSubmit={(data) => mutate(data)}
+        onSubmit={(data, form) => {
+          mutate(data);
+          form.reset();
+        }}
       >
         {(form) => (
           <>
@@ -58,7 +63,8 @@ function Deposit() {
                 onClick={(value) =>
                   form.setValue(
                     "amount",
-                    form.getValues("amount") + parseInt(value.toString())
+                    // form.getValues("amount") + parseInt(value.toString())
+                    parseInt(value.toString())
                   )
                 }
               />

@@ -1,11 +1,9 @@
 import AppForm from "@/components/base/form/AppForm";
 import OTPFormField from "@/components/formfields/OTPFormField";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
-import { useAppMutation, useAppQuery } from "@/lib/api";
+import { useAppMutation } from "@/lib/api";
 import { SetMPINSchema } from "@/schemas/account-settings";
-import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";

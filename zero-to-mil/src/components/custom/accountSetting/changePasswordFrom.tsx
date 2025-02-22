@@ -6,6 +6,7 @@ import { useAppMutation } from "@/lib/api";
 import { ChangePasswordSchema } from "@/schemas/account-settings";
 import { ChangePasswordDTO } from "@/types/base";
 import React from "react";
+import { toast } from "sonner";
 
 function ChangePasswordFrom() {
   const initialData = {
@@ -13,7 +14,16 @@ function ChangePasswordFrom() {
     new_password: "",
     confirm_password: "",
   };
-  const { mutate } = useAppMutation("changePassword", {});
+  const { mutate } = useAppMutation("changePassword", {
+    onSuccess: async (data, form) => {
+      toast.success("Password changed successfully");
+      form.reset();
+      console.log("Password changed successfully");
+    },
+    onError: (error: string) => {
+      toast.error(error);
+    },
+  });
   return (
     <AppForm<ChangePasswordDTO>
       defaultValues={initialData}

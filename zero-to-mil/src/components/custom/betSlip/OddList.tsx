@@ -16,9 +16,10 @@ export interface OddListProps {
 function OddList({ isDisabled, onClick, total_odds = 0 }: OddListProps) {
   const queryClient = useQueryClient();
   const { mutate } = useAppMutation("placeBet", {
-    onSuccess: async () => {
+    onSuccess: async (data, form) => {
       await queryClient.invalidateQueries({ queryKey: ["betSlip"] });
       toast.success("Bet placed successfully");
+      form.reset();
     },
     onError: async (data: string) => {
       await queryClient.invalidateQueries({ queryKey: ["betSlip"] });

@@ -10,14 +10,17 @@ import { WithDrawVerifySchema } from "@/schemas/withdraw";
 import { useAppStore } from "@/store";
 import { WithDrawVerifyDTO } from "@/types/base";
 import React from "react";
+import { toast } from "sonner";
 
 function WithDrawVerify() {
   const { withdraw_method, user_identity, amount } = useAppStore(
     (state) => state
   );
   const { mutate } = useAppMutation("withdraw", {
-    onSuccess: async () => {
-      console.log("Withdraw successful");
+    onSuccess: async (data, form) => {
+      toast.success(`WithDraw successful`);
+      form.reset();
+      console.log("data", data);
     },
   });
   return (
