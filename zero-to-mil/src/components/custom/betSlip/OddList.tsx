@@ -51,9 +51,10 @@ function OddList({ isDisabled, onClick, total_odds = 0 }: OddListProps) {
             onClick={(value) =>
               form.setValue(
                 "amount",
-                isNaN(form.getValues("amount"))
-                  ? parseInt(value.toString())
-                  : form.getValues("amount") + parseInt(value.toString())
+                // isNaN(form.getValues("amount"))
+                //   ? parseInt(value.toString())
+                //   : form.getValues("amount") + parseInt(value.toString())
+                parseInt(value.toString())
               )
             }
           />

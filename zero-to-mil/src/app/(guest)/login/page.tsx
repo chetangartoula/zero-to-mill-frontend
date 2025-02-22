@@ -60,6 +60,7 @@ function Login() {
           <div className="flex justify-between">
             <CheckBoxFormField
               name="remember"
+              checked={true}
               label="Remember me"
               formItemProps={{
                 className: cn("flex items-center"),
