@@ -6,10 +6,21 @@ import AuthWrapper from "@/components/wrapper/authWrapper";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { useAppMutation } from "@/lib/api";
 import { forgotPasswordSchema } from "@/schemas/auth";
+import { BaseApiResponse } from "@/types/global";
 import React from "react";
+import { toast } from "sonner";
 
 function ForgotPassword() {
-  const { mutate } = useAppMutation("otp", {});
+  const { mutate } = useAppMutation("otp", {
+    onSuccess: async (data: BaseApiResponse<{ success: string }>) => {
+      toast.success(
+        data?.responseData?.success.toString() || "OTP sent successfully"
+      );
+    },
+    onError: (error: string) => {
+      toast.error(error.toString());
+    },
+  });
   return (
     <AuthWrapper
       title="Forgot Password"
@@ -19,12 +30,15 @@ function ForgotPassword() {
       }}
     >
       <AppForm
-        defaultValues={{ email: "" }}
+        defaultValues={{ user_identity: "" }}
         schema={forgotPasswordSchema}
-        onSubmit={(data) => mutate(data)}
+        onSubmit={(data, form) => {
+          mutate(data);
+          form.reset();
+        }}
       >
         <FormContentWrapper>
-          <InputFormField name="email" label="Email" />
+          <InputFormField name="user_identity" label="Email/Username" />
         </FormContentWrapper>
 
         <Button size={"full"}>Reset Password</Button>

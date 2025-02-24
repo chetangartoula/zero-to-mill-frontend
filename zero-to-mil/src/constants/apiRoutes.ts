@@ -1,15 +1,15 @@
 export const apiRoutes = {
   login: "/auth/user-login/",
   register: "/auth/register/",
-  otp: "/auth/verify-otp/",
+  otp: "/auth/forget/request/password/",
   "access-token": "/auth/token/access/",
   "user-profile": "/auth/me/profile/",
   "set-up-pin": "/auth/me/setup-pin/",
 
   //re-verify
-  forgotPassword: "/forgot-password/",
+  forgotPassword: "/auth/forget-password/",
   changePassword: "/auth/me/change-password/",
-  resetPassword: "/reset-password/",
+  resetPassword: "/auth/reset-password/",
   verifyEmail: "/verify-email/",
   accountSettings: "/account-settings/",
 

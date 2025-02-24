@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const forgotPasswordSchema = z.object({
-  email: z.string().email(),
+  user_identity: z.string().min(1, "Email/Username is required"),
 });
 
 export const otpVerificationSchema = z.object({

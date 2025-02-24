@@ -7,9 +7,20 @@ import { newPasswordSchema } from "@/schemas/auth";
 import AppForm from "@/components/base/form/AppForm";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { useAppMutation } from "@/lib/api";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { getPageRoutes } from "@/utils/getRoutes";
+import { isString } from "lodash";
 
-function NewPasswordSetUp() {
-  const { mutate } = useAppMutation("resetPassword");
+function NewPasswordSetUp({
+  searchParams,
+}: {
+  searchParams: {
+    ssid: string;
+  };
+}) {
+  const router = useRouter();
+  const { mutate } = useAppMutation("forgotPassword");
   return (
     <AuthWrapper
       title="Set New Password"
@@ -24,7 +35,35 @@ function NewPasswordSetUp() {
           passwordConfirmation: "",
         }}
         schema={newPasswordSchema}
-        onSubmit={(data) => mutate(data)}
+        onSubmit={(data, form) =>
+          mutate(
+            {
+              ssid: searchParams.ssid,
+              new_password: data.password,
+              confirm_password: data.passwordConfirmation,
+            },
+            {
+              onSuccess: () => {
+                toast.success("Password reset successfully");
+                router.push(getPageRoutes("login"));
+              },
+              onError: (error: any) => {
+                if (error.response?.data) {
+                  Object.entries(error.response.data).forEach(
+                    ([key, value]) => {
+                      form.setError(key as any, {
+                        type: "manual",
+                        message: value as string,
+                      });
+                    }
+                  );
+                } else {
+                  toast.error(isString(error) ? error : "An error occurred");
+                }
+              },
+            }
+          )
+        }
       >
         <FormContentWrapper>
           {" "}

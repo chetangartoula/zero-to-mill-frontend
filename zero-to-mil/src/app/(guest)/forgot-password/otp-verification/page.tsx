@@ -21,7 +21,7 @@ function OTPVerification() {
       includeLogo={false}
     >
       <Text
-        text="We have sent an OTP to your email  address ramxxxXgmail.com. Enter the code below to verify"
+        text="We have sent an OTP to your email  address . Enter the code below to verify"
         className="my-2"
       />
       <AppForm

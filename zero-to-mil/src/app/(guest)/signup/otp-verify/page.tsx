@@ -58,10 +58,7 @@ function OTPVerification({
         className: "top-40",
       }}
     >
-      <Text
-        text={`Since this is a test case. Please enter ${otp} as OTP`}
-        className="my-2"
-      />
+      <Text text={`Enter the 6 digit code sent to ${email}`} className="my-2" />
       <AppForm
         defaultValues={{ otp_code: "" }}
         schema={otpVerificationSchema}

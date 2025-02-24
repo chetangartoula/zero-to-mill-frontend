@@ -20,7 +20,7 @@ function NumberCarousel({
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => void;
 }) {
-  const [isActive, setIsActive] = useState<number | string>(10);
+  const [isActive, setIsActive] = useState<number | string>(0);
   return (
     <Carousel className="w-full max-w">
       <CarouselContent className="-ml-1">

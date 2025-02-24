@@ -58,7 +58,6 @@ function Deposit() {
                 label="Request To (Username)"
               />
               <InputFormField name="amount" label="Amount" type="number" />
-              <InputFormField name="remarks" label="Remarks" />
               <NumberCarousel
                 onClick={(value) =>
                   form.setValue(
@@ -68,6 +67,8 @@ function Deposit() {
                   )
                 }
               />
+              <InputFormField name="remarks" label="Remarks" />
+
               <div className="border-y p-4 space-y-3 text-2xs font-normal">
                 <div className="flex justify-between">
                   <p className="text-2xs">Amount Fee</p>
