@@ -36,7 +36,7 @@ function DetailWrapper({
         <p className="w-6 md:hidden"></p>
       </div>
       {children}
-      <p className="my-7 py-7"></p>
+      <p className="sm:my-7 sm:py-7"></p>
     </div>
   );
 }
