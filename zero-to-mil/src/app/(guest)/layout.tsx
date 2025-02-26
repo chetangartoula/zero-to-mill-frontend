@@ -5,7 +5,7 @@ interface AuthProps extends PropsWithChildren {}
 function AuthLayout({ children }: AuthProps) {
   return (
     <>
-      <div className="md:hidden w-full flex flex-col relative top-20 px-4 min-h-[calc(100vh-5rem)]">
+      <div className="md:hidden w-full flex flex-col relative top-20 min-h-[calc(100vh-5rem)]">
         {children}
       </div>
       <div className="hidden md:flex w-full h-screen fixed items-center justify-center">

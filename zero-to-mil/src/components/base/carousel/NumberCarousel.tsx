@@ -26,7 +26,7 @@ function NumberCarousel({
       className="w-full max-w"
       opts={{
         align: "start",
-        loop: true,
+        loop: false,
         containScroll: false,
         skipSnaps: false,
         dragFree: true,

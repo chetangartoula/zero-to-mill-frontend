@@ -1,30 +1,36 @@
-import { StarIcon } from "lucide-react";
+import {
+  BellDot,
+  HandCoins,
+  PiggyBank,
+  UserRoundPen,
+  Wallet,
+} from "lucide-react";
 import { Route } from "./routes";
 
 export const NavDrawerItem: Omit<Route, "special">[] = [
   {
     value: "account-setting",
-    icon: StarIcon,
+    icon: UserRoundPen,
     label: "Account Setting",
   },
   {
-    value: "login",
-    icon: StarIcon,
+    value: "notifications",
+    icon: BellDot,
     label: "Notifications",
   },
   {
     value: "deposit",
-    icon: StarIcon,
+    icon: PiggyBank,
     label: "Deposit",
   },
   {
     value: "withdraw",
-    icon: StarIcon,
+    icon: HandCoins,
     label: "Withdraw",
   },
   {
     value: "history",
-    icon: StarIcon,
+    icon: Wallet,
     label: "Transaction History",
   },
 ];

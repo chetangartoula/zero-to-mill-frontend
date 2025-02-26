@@ -46,7 +46,7 @@ function OTPFormField({
                 >
                   <InputOTPSlot
                     index={index}
-                    className={cn("h-12", fullWidth && "w-full")}
+                    className={cn("h-10", fullWidth && "w-full")}
                   />
                 </InputOTPGroup>
               ))}

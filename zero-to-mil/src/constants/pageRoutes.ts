@@ -15,6 +15,7 @@ export const PageRoutes = {
   favourites: "/favourites",
   "account-setting": "/account-setting",
   "bet-detail": "/history/HistoryId",
+  notifications: "/notifications",
 };
 
 export type PageRoutesType = keyof typeof PageRoutes;

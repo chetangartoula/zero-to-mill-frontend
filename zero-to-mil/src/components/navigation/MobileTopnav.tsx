@@ -37,7 +37,7 @@ function MobileTopNav({
     <div className="flex justify-between p-3 bg-gray-800 sticky top-0 z-50">
       <div className="flex justify-start border items-center">
         <div className="flex justify-start h-6 fit-content m-0 mx-2">
-          <Image src={logoSrc} alt={"logo"} width={24} height={24} priority />
+          <Image src={logoSrc} alt={"logo"} width={60} height={60} priority />
         </div>
         <div className="text-white font-semibold">Zerotomil</div>
       </div>

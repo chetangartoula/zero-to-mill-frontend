@@ -10,9 +10,9 @@ function Nosportsfound() {
         width={200}
         height={200}
       />
-      <p className="text-2xl font-semibold pt-4">No Bets Available</p>
+      <p className="text-2xl font-semibold pt-4">No Matches Available</p>
       <span className="text-muted font-light text-sm">
-        There are no bets available
+        Please check other categories
       </span>
     </div>
   );

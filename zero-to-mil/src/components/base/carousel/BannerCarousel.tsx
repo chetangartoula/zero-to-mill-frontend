@@ -40,7 +40,7 @@ export default function BannerCarousel() {
               key={index}
               className="basis-full sm:basis-[48%] lg:basis-[24%]"
             >
-              <Card>
+              <Card className="border-0">
                 <CardContent className="flex aspect-square items-center justify-center p-0">
                   <Image
                     src="/banner.png"

@@ -5,7 +5,7 @@ import { NavDrawerItem } from "@/constants/navDrawer";
 import logout from "@/store/actions/logout";
 import { getPageRoutes } from "@/utils/getRoutes";
 import { clearAxiosAuthTokens } from "@/utils/token";
-import { StarIcon } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
@@ -39,7 +39,7 @@ function MenuComponent() {
       <div className="w-full bg-muted h-1"></div>
       <MenuCards
         title="LogOut"
-        icon={StarIcon}
+        icon={LogOut}
         cardProps={{
           className: "bg-menu border-none",
         }}

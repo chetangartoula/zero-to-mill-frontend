@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAppStore } from "@/store";
 
 function MobileMenuPage() {
-  const { profile_username } = useAppStore((state) => state);
+  const { profile_username, profile_image } = useAppStore((state) => state);
   const getInitials = (username: string) => {
     if (!username) return "";
     return username
@@ -23,18 +23,23 @@ function MobileMenuPage() {
         <div className="flex flex-col items-center justify-center mt-6 mb-2">
           <Avatar>
             <AvatarImage
-              src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
-                profile_username
-              )}&background=f0f0f0&color=000&bold=true&length=2`}
+              // src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
+              //   profile_username
+              // )}&background=random&color=000&bold=true&length=2`}
+              src={profile_image}
               alt={profile_username || "User"}
             />
             <AvatarFallback>
               {getInitials(profile_username) || ""}
             </AvatarFallback>
           </Avatar>
-          <p className="text-white text-base font-bold mt-2">
-            {profile_username}
-          </p>
+          {profile_username === "" ? (
+            <p className="w-1/4 pt-4 h-3 rounded bg-muted animate"></p>
+          ) : (
+            <p className="text-white text-base font-bold mt-2">
+              {profile_username}
+            </p>
+          )}
         </div>
 
         <MenuComponent />
