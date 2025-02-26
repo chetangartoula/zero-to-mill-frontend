@@ -10,7 +10,6 @@ interface ErrorResponse {
 }
 
 export function handleApiError(error: unknown): string {
-  console.log("error", error);
   if (axios.isAxiosError(error)) {
     const axiosError = error as AxiosError<ErrorResponse>;
 

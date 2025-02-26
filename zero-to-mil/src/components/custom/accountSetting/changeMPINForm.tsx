@@ -1,24 +1,15 @@
 import AppForm from "@/components/base/form/AppForm";
 import OTPFormField from "@/components/formfields/OTPFormField";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { useAppMutation } from "@/lib/api";
 import { ChangeMPINSchema } from "@/schemas/account-settings";
 import { ChangeMPINDTO } from "@/types/base";
 import React from "react";
-import { toast } from "sonner";
 
 function ChangeMPINForm() {
-  const { mutate } = useAppMutation("changeMPIN", {
-    onSuccess: async (data, form) => {
-      toast.success("MPIN changed successfully");
-      form.reset();
-    },
-    onError: (error: string, form) => {
-      toast.error(error.toString());
-      form.reset();
-    },
-  });
+  const { mutate } = useAppMutation("changeMPIN");
   const initialValues = {
     old_pin_code: "",
     pin_code: "",
@@ -28,11 +19,30 @@ function ChangeMPINForm() {
     <AppForm<ChangeMPINDTO>
       defaultValues={initialValues}
       schema={ChangeMPINSchema}
-      onSubmit={(data) =>
-        mutate({
-          old_pin_code: data.old_pin_code,
-          pin_code: data.pin_code,
-        })
+      onSubmit={(data, form) =>
+        mutate(
+          {
+            old_pin_code: data.old_pin_code,
+            pin_code: data.pin_code,
+          },
+          {
+            onSuccess: () => {
+              toast({
+                title: "Change MPIN",
+                description: "MPIN changed successfully",
+                variant: "success",
+              });
+              form.reset();
+            },
+            onError: (error: Error) => {
+              toast({
+                title: "Error",
+                description: error.message,
+                variant: "destructive",
+              });
+            },
+          }
+        )
       }
     >
       <FormContentWrapper className="p-4 ">

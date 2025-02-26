@@ -10,10 +10,10 @@ import { otpVerificationSchema } from "@/schemas/auth";
 import { getPageRoutes } from "@/utils/getRoutes";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { toast } from "sonner";
 import LoginUser from "@/store/actions/login";
 import { useAppStore } from "@/store";
 import { setAxiosAuthTokens } from "@/utils/token";
+import { useToast } from "@/components/ui/use-toast";
 
 function OTPVerification({
   searchParams,
@@ -25,6 +25,7 @@ function OTPVerification({
   };
 }) {
   const router = useRouter();
+  const { toast } = useToast();
   const {
     setAccessToken,
     username: storeUsername,
@@ -38,14 +39,22 @@ function OTPVerification({
       });
       if (response instanceof Error) {
         router.push(getPageRoutes("login"));
-        toast.error(response.message);
+        toast({
+          title: "Error",
+          description: response.message,
+          variant: "destructive",
+        });
         return;
       } else {
         setAccessToken(response.access);
         setAxiosAuthTokens(response.access);
         router.push(getPageRoutes("dashboard"));
       }
-      toast.success("OTP verification successful");
+      toast({
+        title: "OTP verified",
+        description: "You can now login",
+        variant: "success",
+      });
     },
   });
 

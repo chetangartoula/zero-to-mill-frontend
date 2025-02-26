@@ -2,11 +2,11 @@ import NumberCarousel from "@/components/base/carousel/NumberCarousel";
 import AppForm from "@/components/base/form/AppForm";
 import InputFormField from "@/components/formfields/InputFormField";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 import { useAppMutation } from "@/lib/api";
 import { oddListSchema } from "@/schemas/oddList";
 import { useQueryClient } from "@tanstack/react-query";
 import React from "react";
-import { toast } from "sonner";
 
 export interface OddListProps {
   isDisabled?: boolean;
@@ -18,12 +18,20 @@ function OddList({ isDisabled, onClick, total_odds = 0 }: OddListProps) {
   const { mutate } = useAppMutation("placeBet", {
     onSuccess: async (data, form) => {
       await queryClient.invalidateQueries({ queryKey: ["betSlip"] });
-      toast.success("Bet placed successfully");
+      toast({
+        title: "Bet placed",
+        description: "Bet has been placed successfully",
+        variant: "success",
+      });
       form.reset();
     },
     onError: async (data: string) => {
       await queryClient.invalidateQueries({ queryKey: ["betSlip"] });
-      toast.error(data);
+      toast({
+        title: "Error",
+        description: data.toString(),
+        variant: "destructive",
+      });
     },
   });
   return (

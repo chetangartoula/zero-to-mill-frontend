@@ -2,23 +2,30 @@
 import AppForm from "@/components/base/form/AppForm";
 import InputFormField from "@/components/formfields/InputFormField";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import AuthWrapper from "@/components/wrapper/authWrapper";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { useAppMutation } from "@/lib/api";
 import { forgotPasswordSchema } from "@/schemas/auth";
 import { BaseApiResponse } from "@/types/global";
 import React from "react";
-import { toast } from "sonner";
 
 function ForgotPassword() {
+  const { toast } = useToast();
   const { mutate } = useAppMutation("otp", {
     onSuccess: async (data: BaseApiResponse<{ success: string }>) => {
-      toast.success(
-        data?.responseData?.success.toString() || "OTP sent successfully"
-      );
+      toast({
+        title: "OTP sent successfully",
+        description: data?.responseData?.success.toString(),
+        variant: "success",
+      });
     },
     onError: (error: string) => {
-      toast.error(error.toString());
+      toast({
+        title: "Error",
+        description: error,
+        variant: "destructive",
+      });
     },
   });
   return (

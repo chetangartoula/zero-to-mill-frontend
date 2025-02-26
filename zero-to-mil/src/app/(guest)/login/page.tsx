@@ -4,6 +4,7 @@ import CheckBoxFormField from "@/components/formfields/CheckBoxFormField";
 import InputFormField from "@/components/formfields/InputFormField";
 import { Button } from "@/components/ui/button";
 import Text from "@/components/ui/text";
+import { useToast } from "@/components/ui/use-toast";
 import AuthWrapper from "@/components/wrapper/authWrapper";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { cn } from "@/lib/utils";
@@ -16,20 +17,28 @@ import { setAxiosAuthTokens } from "@/utils/token";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { toast } from "sonner";
 
 function Login() {
   const router = useRouter();
+  const { toast } = useToast();
   const { setAccessToken } = useAppStore((state) => state);
 
   const handleSubmit = async (data: LoginDTO) => {
     try {
       const response = await LoginUser(data);
       if (response instanceof Error) {
-        toast.error(response.message);
+        toast({
+          title: "Error",
+          description: response.message,
+          variant: "destructive",
+        });
         return;
       } else if (response.error) {
-        toast.error(response.error);
+        toast({
+          title: "Error",
+          description: response.error,
+          variant: "destructive",
+        });
         return;
       } else {
         setAccessToken(response.access);
@@ -37,7 +46,11 @@ function Login() {
         router.push(getPageRoutes("dashboard"));
       }
     } catch (error) {
-      console.error("Login failed", error);
+      toast({
+        title: "Error",
+        description: error?.toString() || "An error occurred",
+        variant: "destructive",
+      });
     }
   };
 

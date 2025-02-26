@@ -5,9 +5,9 @@ import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { useAppMutation } from "@/lib/api";
 import { SetMPINSchema } from "@/schemas/account-settings";
 import React from "react";
-import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { SetMPINDTO } from "@/types/base";
+import { toast } from "@/components/ui/use-toast";
 
 export interface SetMPINFormProps {
   displaySkip?: boolean;
@@ -22,7 +22,11 @@ function SetMPINForm({ displaySkip = false, onSkip }: SetMPINFormProps) {
   };
   const { mutate } = useAppMutation("setMPIN", {
     onSuccess: async () => {
-      toast.success("MPIN set successfully");
+      toast({
+        title: "MPIN",
+        description: "MPIN set successfully",
+        variant: "success",
+      });
       await queryClient.invalidateQueries({ queryKey: ["getMPIN"] });
     },
   });

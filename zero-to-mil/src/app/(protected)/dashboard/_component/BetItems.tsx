@@ -21,7 +21,7 @@ function BetItems({ itemKey }: { itemKey: string }) {
   const { messages: oddList } = useWebSocket<OddList[]>("odds_list", {
     filters: { sport_key: itemKey },
   });
-  const { toast } = useToast();
+  const { toast: htoast } = useToast();
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -31,17 +31,17 @@ function BetItems({ itemKey }: { itemKey: string }) {
   }, [itemKey]);
 
   const { mutate } = useAppMutation<BetSlipProps>("betSlip", {
-    onSuccess: (data) => {
+    onSuccess: () => {
       setSlip(numberOfSlips + 1);
-      toast({
+      htoast({
         title: "Bet added to slip",
-        description: `${data.home_team} vs ${data.away_team} added to slip`,
+        description: "You can view your slip by clicking the button below",
         variant: "success",
-        duration: 5000,
+        duration: 1000,
         action: (
           <Button
             onClick={() => router.push(getPageRoutes("betslip"))}
-            variant="link"
+            variant="white"
           >
             View Slip
           </Button>
@@ -50,7 +50,12 @@ function BetItems({ itemKey }: { itemKey: string }) {
     },
     onError: (error) => {
       isString(error) &&
-        toast({ title: "Error", variant: "error", description: error });
+        htoast({
+          title: "Error",
+          description: error,
+          variant: "destructive",
+          duration: 5000,
+        });
     },
   });
 

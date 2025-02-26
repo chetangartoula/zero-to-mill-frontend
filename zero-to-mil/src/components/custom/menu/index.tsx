@@ -1,5 +1,6 @@
 "use client";
 import MenuCards from "@/components/base/card/menuCards";
+import { useToast } from "@/components/ui/use-toast";
 import { NavDrawerItem } from "@/constants/navDrawer";
 import logout from "@/store/actions/logout";
 import { getPageRoutes } from "@/utils/getRoutes";
@@ -7,16 +8,20 @@ import { clearAxiosAuthTokens } from "@/utils/token";
 import { StarIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
-import { toast } from "sonner";
 
 function MenuComponent() {
   const router = useRouter();
   const pathname = usePathname();
+  const { toast } = useToast();
   const handleLogout = async () => {
     const res = await logout();
     if (res.status === 200) {
       clearAxiosAuthTokens();
-      toast.success(res.message || "Logout successful");
+      toast({
+        title: "Logged Out",
+        description: "You have been logged out",
+        variant: "success",
+      });
       router.push(getPageRoutes("login"));
     }
   };

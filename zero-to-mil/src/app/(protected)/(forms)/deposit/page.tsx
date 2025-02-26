@@ -4,6 +4,7 @@ import AppForm from "@/components/base/form/AppForm";
 import InputFormField from "@/components/formfields/InputFormField";
 import SelectFormField from "@/components/formfields/SelectFormField";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 import DetailWrapper from "@/components/wrapper/detailWrapper";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { currency, deposit_methods } from "@/constants/data";
@@ -12,7 +13,6 @@ import { DepositSchema } from "@/schemas/deposit";
 import { DepositDTO } from "@/types/base/deposit";
 import { getPageRoutes } from "@/utils/getRoutes";
 import React from "react";
-import { toast } from "sonner";
 
 function Deposit() {
   const initialValues: DepositDTO = {
@@ -25,8 +25,11 @@ function Deposit() {
 
   const { mutate } = useAppMutation("deposit", {
     onSuccess: async () => {
-      toast.success("Deposit successful");
-      console.log("Deposit successful");
+      toast({
+        title: "Deposit",
+        description: "Deposit successful",
+        variant: "success",
+      });
     },
   });
 

@@ -22,6 +22,7 @@ const buttonVariants = cva(
         link: "text-white",
         muted: "bg-muted text-muted-foreground hover:bg-muted/90",
         disabled: "bg-disabled text-disabled-foreground",
+        white: "bg-white text-success",
       },
       size: {
         default: "h-10 px-4 py-2",

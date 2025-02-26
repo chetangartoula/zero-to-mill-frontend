@@ -10,14 +10,15 @@ import { getPageRoutes } from "@/utils/getRoutes";
 import Text from "@/components/ui/text";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { useAppMutation } from "@/lib/api";
-import { LoginDTO, RegisterDTO } from "@/types/base";
-import { toast } from "sonner";
+import { RegisterDTO } from "@/types/base";
 import { BaseApiResponse } from "@/types/global";
 import { useRouter } from "next/navigation";
 import { useAppStore } from "@/store";
+import { useToast } from "@/components/ui/use-toast";
 
 function SignUp() {
   const router = useRouter();
+  const { toast } = useToast();
   const { setLoginState } = useAppStore((state) => state);
   const { mutate } = useAppMutation("register", {
     onSuccess: (
@@ -28,7 +29,7 @@ function SignUp() {
         username: variables.username,
         password: variables.password,
       });
-      toast.success("Account created successfully");
+
       const otpVerificationUrl = getPageRoutes(
         "otp-verification",
         {},
@@ -41,7 +42,11 @@ function SignUp() {
       try {
         router.push(decodeURIComponent(otpVerificationUrl));
       } catch (error) {
-        console.error("Failed to navigate:", error);
+        toast({
+          title: "Error",
+          description: error?.toString() || "An error occurred",
+          variant: "destructive",
+        });
       }
     },
   });

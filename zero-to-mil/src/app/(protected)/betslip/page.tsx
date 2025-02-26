@@ -3,11 +3,10 @@ import SlipCards from "@/components/base/card/SlipCards";
 import OddList from "@/components/custom/betSlip/OddList";
 import MobileTopNav from "@/components/navigation/MobileTopnav";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/components/ui/use-toast";
 import { useAppMutation, useAppQuery } from "@/lib/api";
 import { useAppStore } from "@/store";
 import { BetSlipProps } from "@/types/base/betslip";
-import { useEffect } from "react";
-import { toast } from "sonner";
 
 const defaultData = {
   slip_type: "",
@@ -16,6 +15,7 @@ const defaultData = {
 };
 
 export default function BetSlip() {
+  const { toast } = useToast();
   const { numberOfSlips, setSlip } = useAppStore((state) => state);
   const { data = defaultData, refetch } = useAppQuery<{
     slip_type: string;
@@ -38,11 +38,19 @@ export default function BetSlip() {
     {
       onSuccess: async (data: { error_message: string }) => {
         setSlip(Math.max(0, numberOfSlips - 1));
-        toast.success(data?.error_message);
+        toast({
+          title: "Bet removed",
+          description: "Bet has been removed from your slip",
+          variant: "success",
+        });
         await refetch();
       },
       onError: async (data: string) => {
-        toast.error(data);
+        toast({
+          title: "Error",
+          description: data.toString(),
+          variant: "success",
+        });
         await refetch();
       },
     },

@@ -3,6 +3,7 @@ import AppForm from "@/components/base/form/AppForm";
 import OTPFormField from "@/components/formfields/OTPFormField";
 import { Button } from "@/components/ui/button";
 import Text from "@/components/ui/text";
+import { toast } from "@/components/ui/use-toast";
 import AuthWrapper from "@/components/wrapper/authWrapper";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { useAppMutation } from "@/lib/api";
@@ -10,7 +11,6 @@ import { WithDrawVerifySchema } from "@/schemas/withdraw";
 import { useAppStore } from "@/store";
 import { WithDrawVerifyDTO } from "@/types/base";
 import React from "react";
-import { toast } from "sonner";
 
 function WithDrawVerify() {
   const { withdraw_method, user_identity, amount } = useAppStore(
@@ -18,9 +18,12 @@ function WithDrawVerify() {
   );
   const { mutate } = useAppMutation("withdraw", {
     onSuccess: async (data, form) => {
-      toast.success(`WithDraw successful`);
+      toast({
+        title: "Withdraw",
+        description: "Withdraw successful",
+        variant: "success",
+      });
       form.reset();
-      console.log("data", data);
     },
   });
   return (

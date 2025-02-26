@@ -1,4 +1,10 @@
-import { ClockIcon, MenuIcon, ReceiptIcon, StarIcon } from "lucide-react";
+import {
+  ClockIcon,
+  LoaderPinwheel,
+  MenuIcon,
+  ReceiptIcon,
+  StarIcon,
+} from "lucide-react";
 import { PageRoutes } from "./pageRoutes";
 
 export interface Route {
@@ -11,7 +17,7 @@ export interface Route {
 export const routes: Route[] = [
   {
     value: "dashboard",
-    icon: StarIcon,
+    icon: LoaderPinwheel,
     label: "Sports",
   },
   {
