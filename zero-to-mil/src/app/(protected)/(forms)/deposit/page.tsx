@@ -79,7 +79,7 @@ function Deposit() {
                 </div>
                 <div className="flex justify-between">
                   <p>Total</p>
-                  <p>{form.watch("amount")}</p>
+                  <p>${form.watch("amount")}</p>
                 </div>
               </div>
             </FormContentWrapper>
