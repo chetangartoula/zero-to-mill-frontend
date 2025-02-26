@@ -17,7 +17,7 @@ function DetailWrapper({
   enablePadding = true,
 }: PropsWithChildren<DetailWrapperProps>) {
   return (
-    <div className={enablePadding ? "mx-3" : "mx-0"}>
+    <div className={enablePadding ? "mx-3 mb-7 pb-7" : "mx-0 mb-7 pb-7"}>
       <div
         className={cn(
           "flex sm:justify-between md:justify-start sm:items-center my-7 ",

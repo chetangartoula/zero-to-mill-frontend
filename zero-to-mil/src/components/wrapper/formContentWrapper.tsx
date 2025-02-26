@@ -10,7 +10,7 @@ function FormContentWrapper({
   className?: string;
 }) {
   return (
-    <div className={cn("space-y-3 my-8 pb-8", className)} {...props}>
+    <div className={cn("space-y-3 my-7", className)} {...props}>
       {children}
     </div>
   );

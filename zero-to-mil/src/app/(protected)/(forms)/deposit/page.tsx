@@ -58,7 +58,7 @@ function Deposit() {
               />
               <InputFormField
                 name="user_identity"
-                label="Request To (Username)"
+                label="Request To (Admin Username)"
               />
               <InputFormField name="amount" label="Amount" type="number" />
               <NumberCarousel
