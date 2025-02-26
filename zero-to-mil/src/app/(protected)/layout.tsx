@@ -54,7 +54,7 @@ function ProtectedLayout({ children }: PropsWithChildren) {
       } as ProfileState);
       setSlip(BalanceData.active_slips);
     }
-  }, [BalanceData, setBalance]);
+  }, [BalanceData, setBalance, setProfile, setSlip]);
 
   if (!accessToken) return <Loading />;
 
