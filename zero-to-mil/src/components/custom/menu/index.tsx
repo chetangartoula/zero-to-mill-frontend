@@ -3,6 +3,7 @@ import MenuCards from "@/components/base/card/menuCards";
 import { NavDrawerItem } from "@/constants/navDrawer";
 import logout from "@/store/actions/logout";
 import { getPageRoutes } from "@/utils/getRoutes";
+import { clearAxiosAuthTokens } from "@/utils/token";
 import { StarIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
@@ -14,6 +15,7 @@ function MenuComponent() {
   const handleLogout = async () => {
     const res = await logout();
     if (res.status === 200) {
+      clearAxiosAuthTokens();
       toast.success(res.message || "Logout successful");
       router.push(getPageRoutes("login"));
     }
