@@ -13,6 +13,7 @@ import React from "react";
 import { toast } from "sonner";
 import LoginUser from "@/store/actions/login";
 import { useAppStore } from "@/store";
+import { setAxiosAuthTokens } from "@/utils/token";
 
 function OTPVerification({
   searchParams,
@@ -29,7 +30,7 @@ function OTPVerification({
     username: storeUsername,
     password,
   } = useAppStore((state) => state);
-  const { mutate } = useAppMutation("otp", {
+  const { mutate } = useAppMutation("register-otp", {
     onSuccess: async () => {
       const response = await LoginUser({
         username: storeUsername,
@@ -41,6 +42,7 @@ function OTPVerification({
         return;
       } else {
         setAccessToken(response.access);
+        setAxiosAuthTokens(response.access);
         router.push(getPageRoutes("dashboard"));
       }
       toast.success("OTP verification successful");
