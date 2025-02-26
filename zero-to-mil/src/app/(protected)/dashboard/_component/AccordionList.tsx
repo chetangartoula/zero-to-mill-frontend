@@ -42,7 +42,7 @@ function AccordionList({ data }: { data: MenuItems["data"] }) {
               }}
             >
               <BetAccordionTrigger>
-                <div className="flex px-4">
+                <div className="flex px-4 items-center">
                   <Image
                     src={item.logo_url}
                     alt="title"

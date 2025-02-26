@@ -51,12 +51,12 @@ const BetAccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "flex-column w-full items-center text-s text-white justify-between py-4 transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
+        "flex w-full items-center text-s text-white justify-between py-4 transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
         className
       )}
       {...props}
     >
-      <div className="flex justify-between items-center w-full">
+      <div className="flex justify-between items-center w-full [&[data-state=open]>svg]:rotate-180">
         {title && <div className="mx-3">{title}</div>}
         {dualTitle && (
           <div className="flex gap-2 justify-between w-full px-4">
@@ -66,8 +66,8 @@ const BetAccordionTrigger = React.forwardRef<
           </div>
         )}
         {children && <div>{children}</div>}
-        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
       </div>
+      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 text-muted-foreground data-[state=open]:rotate-180" />
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));
