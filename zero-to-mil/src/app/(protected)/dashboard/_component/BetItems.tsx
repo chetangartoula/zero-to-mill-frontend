@@ -94,7 +94,7 @@ function BetItems({ itemKey }: { itemKey: string }) {
 
             <p className="text-center mt-2 text-s text-greyf">
               {format(
-                parseISO(odds?.bookmaker?.last_update || odds?.commence_time),
+                parseISO(odds?.commence_time || odds?.bookmaker?.last_update),
                 "dd/MM/yyyy HH:mm",
                 { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }
               )}
