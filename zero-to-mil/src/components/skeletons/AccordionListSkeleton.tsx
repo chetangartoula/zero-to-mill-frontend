@@ -9,7 +9,7 @@ export function AccordionListSkeleton() {
           <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
           <div className="flex-1 h-4 bg-gray-300 rounded"></div>
         </div>
-        <BetItemsSkeleton />
+        {/* <BetItemsSkeleton /> */}
         {/* <div className="mt-4 space-y-2">
           {[...Array(3)].map((_, index) => (
             <div key={index} className="h-14 bg-gray-300 rounded"></div>

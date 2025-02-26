@@ -5,6 +5,7 @@ import { routes } from "@/constants/routes";
 import DynamicIcon from "../utils/DynamicIcon";
 import { usePathname, useRouter } from "next/navigation";
 import { getPageRoutes } from "@/utils/getRoutes";
+import { useAppStore } from "@/store";
 
 function normalizePath(path: string): string {
   return path.replace(/^\/+/, "./");
@@ -13,6 +14,7 @@ function normalizePath(path: string): string {
 function BBar() {
   const router = useRouter();
   const params = usePathname();
+  const { numberOfSlips } = useAppStore((state) => state);
   return (
     <>
       <Menubar className="fixed bottom-0 w-full bg-accent flex justify-between items-center h-13 rounded-none md:hidden">
@@ -28,11 +30,11 @@ function BBar() {
                     IconComponent={item.icon}
                     className="text-white "
                   />
-                  {/* {item.count && (
+                  {numberOfSlips > 0 && (
                     <div className="absolute -bottom-1 -right-0 bg-white text-primary text-xs rounded-full w-4 h-4 flex items-center justify-center z-10">
-                      {item.count}
+                      {numberOfSlips}
                     </div>
-                  )} */}
+                  )}
                 </div>
               ) : (
                 <DynamicIcon

@@ -23,6 +23,12 @@ export const useWebSocket = <T = unknown>(
   const [isAttemptingConnection, setIsAttemptingConnection] = useState(false);
 
   const createWebSocket = useCallback(() => {
+    if (socketRef.current) {
+      console.log("Closing existing WebSocket connection");
+      socketRef.current.close();
+      socketRef.current = null;
+      setIsConnected(false);
+    }
     let newSocket: WebSocket | null = null;
 
     if (isAttemptingConnection || isConnected) {

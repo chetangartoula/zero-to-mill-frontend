@@ -6,15 +6,21 @@ import { useAppQuery } from "@/lib/api";
 import { useAppStore } from "@/store";
 import getAccessToken from "@/store/actions/getAccessToken";
 import { BalanceState } from "@/store/slices/balance";
+import { ProfileState } from "@/store/slices/profile";
 import { setAxiosAuthTokens } from "@/utils/token";
 import React, { PropsWithChildren, Suspense, useEffect, useRef } from "react";
 
 function ProtectedLayout({ children }: PropsWithChildren) {
-  const { accessToken, setAccessToken, setBalance } = useAppStore(
-    (state) => state
-  );
+  const { accessToken, setAccessToken, setBalance, setProfile, setSlip } =
+    useAppStore((state) => state);
   const fetchingRef = useRef(false);
-  const { data: BalanceData } = useAppQuery<BalanceState>({
+  const { data: BalanceData } = useAppQuery<{
+    email: string;
+    username: string;
+    profile: string;
+    active_slips: number;
+    balance: BalanceState;
+  }>({
     routeName: "getBalance",
     queryKey: ["getBalance"],
     refetchOnWindowFocus: false,
@@ -40,7 +46,13 @@ function ProtectedLayout({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if (BalanceData) {
-      setBalance(BalanceData);
+      setBalance(BalanceData.balance);
+      setProfile({
+        profile_email: BalanceData.email,
+        profile_username: BalanceData.username,
+        profile_image: BalanceData.profile,
+      } as ProfileState);
+      setSlip(BalanceData.active_slips);
     }
   }, [BalanceData, setBalance]);
 

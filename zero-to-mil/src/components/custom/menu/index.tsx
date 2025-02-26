@@ -19,7 +19,7 @@ function MenuComponent() {
     }
   };
   return (
-    <div className="mt-6 p-4 bg-menu flex flex-col flex-grow gap-2 rounded-xl">
+    <div className="px-4 flex flex-col flex-grow gap-4">
       {NavDrawerItem.map(({ icon, value, label }, index) => (
         <MenuCards
           key={`${label}.${index}`}

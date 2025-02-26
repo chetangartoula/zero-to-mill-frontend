@@ -5,15 +5,23 @@ import { OddList } from "@/types/base";
 import { BetSlipProps } from "@/types/base/betslip";
 import { isString } from "lodash";
 import React, { useEffect, useState } from "react";
-import { toast } from "sonner";
 import { BetItemsSkeleton } from "./BetItemsSkeleton";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
+import { getPageRoutes } from "@/utils/getRoutes";
+import { useAppStore } from "@/store";
+import { format } from "date-fns-tz";
+import { parseISO } from "date-fns";
 
 function BetItems({ itemKey }: { itemKey: string }) {
+  const router = useRouter();
+  const { numberOfSlips, setSlip } = useAppStore((store) => store);
   const [isLoading, setIsLoading] = useState(true);
   const { messages: oddList } = useWebSocket<OddList[]>("odds_list", {
     filters: { sport_key: itemKey },
   });
-
+  const { toast } = useToast();
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -24,10 +32,25 @@ function BetItems({ itemKey }: { itemKey: string }) {
 
   const { mutate } = useAppMutation<BetSlipProps>("betSlip", {
     onSuccess: (data) => {
-      toast.success("Bet added to slip");
+      setSlip(numberOfSlips + 1);
+      toast({
+        title: "Bet added to slip",
+        description: `${data.home_team} vs ${data.away_team} added to slip`,
+        variant: "success",
+        duration: 5000,
+        action: (
+          <Button
+            onClick={() => router.push(getPageRoutes("betslip"))}
+            variant="link"
+          >
+            View Slip
+          </Button>
+        ),
+      });
     },
     onError: (error) => {
-      isString(error) && toast.error(error);
+      isString(error) &&
+        toast({ title: "Error", variant: "error", description: error });
     },
   });
 
@@ -65,7 +88,11 @@ function BetItems({ itemKey }: { itemKey: string }) {
             )}
 
             <p className="text-center mt-2 text-s text-greyf">
-              {odds?.bookmaker?.last_update || odds?.commence_time}
+              {format(
+                parseISO(odds?.bookmaker?.last_update || odds?.commence_time),
+                "dd/MM/yyyy HH:mm:ss",
+                { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }
+              )}
             </p>
 
             {odds?.bookmaker?.markets?.map((item, index) => (

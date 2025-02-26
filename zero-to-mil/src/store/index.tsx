@@ -8,6 +8,7 @@ import { createWithdrawStore } from "./slices/withdraw";
 import { createBetSlipStore } from "./slices/betSlip";
 import { createBetListStore } from "./slices/betList";
 import { createBalanceStore } from "./slices/balance";
+import { createProfileStore } from "./slices/profile";
 import type { Store } from "./store.d.ts";
 
 const appStore = create<Store>()((...set) => ({
@@ -18,6 +19,7 @@ const appStore = create<Store>()((...set) => ({
   ...createBetSlipStore(...set),
   ...createBetListStore(...set),
   ...createBalanceStore(...set),
+  ...createProfileStore(...set),
 }));
 
 export const AppStoreContext = createContext<StoreApi<Store>>(null!);

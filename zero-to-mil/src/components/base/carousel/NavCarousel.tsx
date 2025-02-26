@@ -21,9 +21,21 @@ export function NavCarousel({
   onClick,
 }: NavCarouselProps) {
   const isActive = (path: string) => path === isactive;
-  // console.log("is_active", isactive);
+
   return (
-    <Carousel className="w-full max-w">
+    <Carousel
+      className="w-full max-w"
+      opts={{
+        align: "start",
+        loop: true,
+        containScroll: false,
+        skipSnaps: false,
+        dragFree: true,
+        duration: 1000,
+        dragThreshold: 1,
+        slidesToScroll: 1,
+      }}
+    >
       <CarouselContent className="-ml-1">
         {data?.map(({ icon: Icon, ...rest }, index) => (
           <CarouselItem key={index} className="pl-1 basis-1/8 h-16.5">

@@ -4,6 +4,7 @@ import { BetListState } from "./slices/betList";
 import { BetSlipState } from "./slices/betSlip";
 import { LoginState } from "./slices/login";
 import { MPINGState } from "./slices/mpin";
+import { ProfileState } from "./slices/profile";
 import { WithdrawState } from "./slices/withdraw";
 
 export type Store = MPINGState &
@@ -12,4 +13,5 @@ export type Store = MPINGState &
   WithdrawState &
   BetListState &
   BetSlipState &
-  BalanceState;
+  BalanceState &
+  ProfileState;

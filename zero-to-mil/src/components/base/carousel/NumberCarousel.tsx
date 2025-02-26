@@ -22,7 +22,19 @@ function NumberCarousel({
 }) {
   const [isActive, setIsActive] = useState<number | string>(0);
   return (
-    <Carousel className="w-full max-w">
+    <Carousel
+      className="w-full max-w"
+      opts={{
+        align: "start",
+        loop: true,
+        containScroll: false,
+        skipSnaps: false,
+        dragFree: true,
+        duration: 1000,
+        dragThreshold: 1,
+        slidesToScroll: 1,
+      }}
+    >
       <CarouselContent className="-ml-1">
         {data?.map(({ name, value }, index) => (
           <CarouselItem

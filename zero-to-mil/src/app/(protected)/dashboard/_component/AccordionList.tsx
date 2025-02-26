@@ -10,6 +10,7 @@ import Image from "next/image";
 import React, { useEffect } from "react";
 import BetItems from "./BetItems";
 import { useAppStore } from "@/store";
+import Nosportsfound from "@/components/custom/fallback/nosportsfound";
 
 function AccordionList({ data }: { data: MenuItems["data"] }) {
   const defaultValue = data?.[0]?.key || "";
@@ -23,12 +24,12 @@ function AccordionList({ data }: { data: MenuItems["data"] }) {
   }, [defaultValue, setActiveSportKey]);
   return (
     <>
-      {defaultValue && activeSportKey && (
+      {
         <Accordion
           type="single"
-          value={activeSportKey}
+          // value={activeSportKey || "live"}
           className="border rounded mt-4 bg-menu"
-          defaultValue={defaultValue}
+          collapsible
           onValueChange={handleValueChange}
         >
           {data?.map((item) => (
@@ -57,7 +58,8 @@ function AccordionList({ data }: { data: MenuItems["data"] }) {
             </AccordionItem>
           ))}
         </Accordion>
-      )}
+      }
+      {data?.length === 0 && <Nosportsfound />}
     </>
   );
 }

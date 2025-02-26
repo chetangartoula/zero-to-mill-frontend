@@ -13,7 +13,7 @@ import { useAppStore } from "@/store";
 import { NavCarousel } from "@/components/base/carousel";
 import { NavCarouselSkeleton } from "@/components/skeletons/NavCarouselSkeleton";
 import { AccordionListSkeleton } from "@/components/skeletons";
-import { useWebSocket } from "@/hooks/useWebSocket";
+import BannerCarousel from "@/components/base/carousel/BannerCarousel";
 
 function DashBoard() {
   const { activeTabKey, setActiveTabKey, activeSportKey } = useAppStore(
@@ -60,6 +60,7 @@ function DashBoard() {
       <div className="w-full mb-4">
         <MobileTopNav />
       </div>
+
       <div className="w-full p-2 bg-navbackground">
         {isSportsLoading || isSportsFetching ? (
           <NavCarouselSkeleton />
@@ -71,7 +72,9 @@ function DashBoard() {
           />
         )}
       </div>
-      {isSportsLoading || isSportsFetching ? (
+      <BannerCarousel />
+
+      {activeSportKey && (isSportsLoading || isSportsFetching) ? (
         <div className="pt-4">
           <AccordionListSkeleton />
         </div>
