@@ -9,9 +9,12 @@ import {
 import type { CarouselApi } from "@/components/ui/carousel";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { getPageRoutes } from "../../../utils/getRoutes";
+import { useRouter } from "next/navigation";
 
 export default function BannerCarousel() {
   const [api, setApi] = useState<CarouselApi>();
+  const router = useRouter();
 
   useEffect(() => {
     if (!api) return;
@@ -39,6 +42,7 @@ export default function BannerCarousel() {
             <CarouselItem
               key={index}
               className="basis-full sm:basis-[48%] lg:basis-[24%]"
+              onClick={() => router.push(getPageRoutes("deposit"))}
             >
               <Card className="border-0">
                 <CardContent className="flex aspect-square items-center justify-center p-0">
