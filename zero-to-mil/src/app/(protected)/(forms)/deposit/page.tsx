@@ -27,8 +27,15 @@ function Deposit() {
     onSuccess: async () => {
       toast({
         title: "Deposit",
-        description: "Deposit successful",
+        description: "Deposit request successful",
         variant: "success",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Deposit",
+        description: error?.toString() || "An error occurred",
+        variant: "destructive",
       });
     },
   });

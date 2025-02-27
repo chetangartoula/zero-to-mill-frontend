@@ -25,6 +25,13 @@ function WithDrawVerify() {
       });
       form.reset();
     },
+    onError: (error) => {
+      toast({
+        title: "Withdraw",
+        description: error?.toString() || "An error occurred",
+        variant: "destructive",
+      });
+    },
   });
   return (
     <AuthWrapper
