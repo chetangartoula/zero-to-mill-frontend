@@ -16,14 +16,13 @@ export interface OddListProps {
 function OddList({ isDisabled, onClick, total_odds = 0 }: OddListProps) {
   const queryClient = useQueryClient();
   const { mutate } = useAppMutation("placeBet", {
-    onSuccess: async (data, form) => {
+    onSuccess: async (data) => {
       await queryClient.invalidateQueries({ queryKey: ["betSlip"] });
       toast({
         title: "Bet placed",
         description: "Bet has been placed successfully",
         variant: "success",
       });
-      form.reset();
     },
     onError: async (data: string) => {
       await queryClient.invalidateQueries({ queryKey: ["betSlip"] });
@@ -38,7 +37,10 @@ function OddList({ isDisabled, onClick, total_odds = 0 }: OddListProps) {
     <AppForm
       defaultValues={{ amount: 0 }}
       schema={oddListSchema}
-      onSubmit={(data) => mutate(data)}
+      onSubmit={(data, form) => {
+        mutate(data);
+        form.reset();
+      }}
     >
       {(form) => (
         <div className="sticky bottom-0 pb-8 mb-11 mx-4">
