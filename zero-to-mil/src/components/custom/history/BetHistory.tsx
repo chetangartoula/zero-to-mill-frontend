@@ -22,7 +22,11 @@ const getTextColor = (status: string) => {
 
 function BetHistory({ className, onClick, data, key }: BetHistoryProps) {
   return (
-    <div key={key} className={cn("bg-input p-4", className)} onClick={onClick}>
+    <div
+      key={key}
+      className={cn("bg-input p-4 mb-2", className)}
+      onClick={onClick}
+    >
       <div className="flex justify-between">
         <p className="font-bold">
           {data.slip_type === "single" ? "SINGLE" : "MULTIPLE"}

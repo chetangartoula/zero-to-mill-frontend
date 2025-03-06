@@ -27,8 +27,10 @@ const config = {
       colors: {
         border: "hsl(var(--border))",
         betcard: "hsl(var(--betcard))",
+        secondrybetcard: "hsl(var(--secondrybetcard))",
         greyf: "hsl(var(--greyf))",
         input: "hsl(var(--input))",
+        pointinput: "hsl(var(--pointinput))",
         subinput: "hsl(var(--subinput))",
         cardtitle: "hsl(var(--cardtitle))",
         ring: "hsl(var(--ring))",

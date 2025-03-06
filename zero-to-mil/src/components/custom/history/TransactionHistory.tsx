@@ -25,7 +25,11 @@ function BetHistory({
   key,
 }: TransactionHistoryProps) {
   return (
-    <div key={key} className={cn("bg-input p-4", className)} onClick={onClick}>
+    <div
+      key={key}
+      className={cn("bg-input p-4 mb-2", className)}
+      onClick={onClick}
+    >
       <div className="flex justify-between">
         <p>{data.txn_date.split("T")[0]}</p>
         <p>${data.amount}</p>

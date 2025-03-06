@@ -3,3 +3,5 @@ export * from "./account-settings";
 export * from "./deposit";
 export * from "./withdraw";
 export * from "./sockets";
+export * from "./betslip";
+export * from "./banner";

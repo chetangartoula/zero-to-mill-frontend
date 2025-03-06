@@ -75,18 +75,20 @@ function BetItems({ itemKey }: { itemKey: string }) {
       {oddList &&
         oddList?.map((odds, index) => (
           <div
-            className={cn("flex-column text-xs bg-betcard border rounded mx-2")}
+            className={cn(
+              "flex-column text-xs bg-secondrybetcard border rounded mx-2"
+            )}
             key={index}
           >
             {odds?.home_team && odds?.away_team && (
               <div className="grid grid-cols-[1fr,auto,1fr] gap-2 w-full px-2 sm:px-2 items-center">
-                <div className="border rounded p-2 text-xs sm:text-xs truncate text-end">
+                <div className="rounded p-2 text-xs sm:text-xs truncate text-end">
                   {odds?.home_team}
                 </div>
                 <div className="font-bold text-xs sm:text-sm px-1 border">
                   VS
                 </div>
-                <div className="border rounded p-2 text-xs sm:text-xs truncate text-start">
+                <div className="rounded p-2 text-xs sm:text-xs truncate text-start">
                   {odds?.away_team}
                 </div>
               </div>
@@ -102,7 +104,7 @@ function BetItems({ itemKey }: { itemKey: string }) {
 
             {odds?.bookmaker?.markets?.map((item, index) => (
               <div
-                className="grid auto-cols-fr gap-2 px-1 py-2"
+                className="grid auto-cols-fr gap-2 px-1 py-2 "
                 style={{
                   gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, ${
                     odds.home_team ? "50px" : "100px"
@@ -123,7 +125,7 @@ function BetItems({ itemKey }: { itemKey: string }) {
                   })
                   .map((outcome, index) => (
                     <div
-                      className="flex flex-col items-center justify-between bg-betcard rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1"
+                      className="flex flex-col items-center justify-between bg-bg-secondrybetcard  rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1"
                       key={`${outcome.name}_${index}`}
                       onClick={() =>
                         mutate({
@@ -148,7 +150,7 @@ function BetItems({ itemKey }: { itemKey: string }) {
                           ? "X"
                           : outcome.name}
                       </p>
-                      <p className="bg-subinput py-2 px-4 rounded w-full text-center text-sm font-medium">
+                      <p className="bg-pointinput py-2 px-4 rounded w-full text-center text-sm font-semibold">
                         {outcome.point || outcome.price}
                       </p>
                     </div>

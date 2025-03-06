@@ -31,6 +31,7 @@ export const apiRoutes = {
   "load-money": "/transaction/load-admin/",
   getTransactionHistory: "/me/transactions/",
   getBalance: "/me/balance/",
+  banners: "/sports/banners",
 
   //bet slip
   betSlip: "/slip/", //get, post(for amount)
