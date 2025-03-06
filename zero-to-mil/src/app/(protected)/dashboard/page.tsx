@@ -55,6 +55,21 @@ function DashBoard() {
     [sportsLists, activeTabKey]
   );
 
+  // const bannerData = [
+  //   {
+  //     image: ".",
+  //     link: "/deposit",
+  //   },
+  //   {
+  //     image: "./banner.svg",
+  //     link: "/deposit",
+  //   },
+  //   {
+  //     image: "./banner.svg",
+  //     link: "/deposit",
+  //   },
+  // ];
+
   return (
     <div className="mb-8 pb-8">
       <div className="w-full mb-4">
@@ -72,7 +87,6 @@ function DashBoard() {
           />
         )}
       </div>
-      <BannerCarousel />
 
       {activeSportKey && (isSportsLoading || isSportsFetching) ? (
         <div className="pt-4">

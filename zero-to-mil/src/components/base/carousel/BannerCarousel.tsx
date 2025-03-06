@@ -12,7 +12,12 @@ import { useEffect, useState } from "react";
 import { getPageRoutes } from "../../../utils/getRoutes";
 import { useRouter } from "next/navigation";
 
-export default function BannerCarousel() {
+export interface BannerData {
+  image: string;
+  link: string;
+}
+
+export default function BannerCarousel({ data }: { data: BannerData[] }) {
   const [api, setApi] = useState<CarouselApi>();
   const router = useRouter();
 
@@ -38,20 +43,15 @@ export default function BannerCarousel() {
         }}
       >
         <CarouselContent className="-ml-1">
-          {Array.from({ length: 8 }).map((_, index) => (
+          {data.map((_, index) => (
             <CarouselItem
               key={index}
               className="basis-full sm:basis-[48%] lg:basis-[24%]"
-              onClick={() => router.push(getPageRoutes("deposit"))}
+              onClick={() => router.push(_.link)}
             >
               <Card className="border-0">
                 <CardContent className="flex aspect-square items-center justify-center p-0">
-                  <Image
-                    src="/banner.png"
-                    alt="title"
-                    width={450}
-                    height={130}
-                  />
+                  <Image src={_.image} alt="title" width={450} height={130} />
                 </CardContent>
               </Card>
             </CarouselItem>

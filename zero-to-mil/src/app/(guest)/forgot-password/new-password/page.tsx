@@ -7,21 +7,16 @@ import { newPasswordSchema } from "@/schemas/auth";
 import AppForm from "@/components/base/form/AppForm";
 import FormContentWrapper from "@/components/wrapper/formContentWrapper";
 import { useAppMutation } from "@/lib/api";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { getPageRoutes } from "@/utils/getRoutes";
 import { isString } from "lodash";
 import { useToast } from "@/components/ui/use-toast";
 
-function NewPasswordSetUp({
-  searchParams,
-}: {
-  searchParams: {
-    ssid: string;
-  };
-}) {
+function NewPasswordSetUp() {
   const router = useRouter();
   const { mutate } = useAppMutation("forgotPassword");
   const { toast } = useToast();
+  const ssid = useSearchParams().get("ssid") || "";
   return (
     <AuthWrapper
       title="Set New Password"
@@ -39,7 +34,7 @@ function NewPasswordSetUp({
         onSubmit={(data, form) =>
           mutate(
             {
-              ssid: searchParams.ssid,
+              ssid: ssid,
               new_password: data.password,
               confirm_password: data.passwordConfirmation,
             },
