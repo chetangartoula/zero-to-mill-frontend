@@ -36,20 +36,19 @@ function AccordionList({ data }: { data: MenuItems["data"] }) {
             <AccordionItem
               key={item.key}
               value={item.key}
-              className="pr-4"
               onClick={() => {
                 setActiveSportKey(item.key);
               }}
             >
               <BetAccordionTrigger>
-                <div className="flex px-4 items-center">
+                <div className="flex px-4 items-center pr-6">
                   <Image
                     src={item.logo_url}
                     alt="title"
                     height={20}
                     width={24}
                   />
-                  <p className="ml-2 text-s text-cardtitle">{item.title}</p>
+                  <p className="ml-2 text-sm text-cardtitle">{item.title}</p>
                 </div>
               </BetAccordionTrigger>
               <AccordionContent>

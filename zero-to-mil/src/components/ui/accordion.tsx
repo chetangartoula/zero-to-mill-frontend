@@ -67,7 +67,7 @@ const BetAccordionTrigger = React.forwardRef<
         )}
         {children && <div>{children}</div>}
       </div>
-      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 text-muted-foreground data-[state=open]:rotate-180" />
+      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 text-muted-foreground data-[state=open]:rotate-180 mr-4" />
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));

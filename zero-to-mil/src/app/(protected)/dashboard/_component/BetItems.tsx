@@ -68,31 +68,31 @@ function BetItems({ itemKey }: { itemKey: string }) {
       className={`grid ${
         oddList.length <= 2
           ? "grid-cols-1"
-          : "grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"
+          : "grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
       } gap-4`}
       onClick={(e) => e.stopPropagation()}
     >
       {oddList &&
         oddList?.map((odds, index) => (
           <div
-            className={cn(
-              "flex-column text-s bg-betcard border rounded m-4 p-4 "
-            )}
+            className={cn("flex-column text-xs bg-betcard border rounded mx-2")}
             key={index}
           >
             {odds?.home_team && odds?.away_team && (
-              <div className="grid grid-cols-[1fr,auto,1fr] gap-2 w-full px-2 sm:px-4 items-center">
-                <div className="border rounded p-2 text-sm sm:text-base truncate">
+              <div className="grid grid-cols-[1fr,auto,1fr] gap-2 w-full px-2 sm:px-2 items-center">
+                <div className="border rounded p-2 text-xs sm:text-xs truncate text-end">
                   {odds?.home_team}
                 </div>
-                <div className="font-bold text-xs sm:text-sm px-1">VS</div>
-                <div className="border rounded p-2 text-sm sm:text-base truncate text-end">
+                <div className="font-bold text-xs sm:text-sm px-1 border">
+                  VS
+                </div>
+                <div className="border rounded p-2 text-xs sm:text-xs truncate text-start">
                   {odds?.away_team}
                 </div>
               </div>
             )}
 
-            <p className="text-center mt-2 text-s text-greyf">
+            <p className="text-center mt-1 text-xs text-greyf">
               {format(
                 parseISO(odds?.commence_time || odds?.bookmaker?.last_update),
                 "dd/MM/yyyy HH:mm",
@@ -102,38 +102,57 @@ function BetItems({ itemKey }: { itemKey: string }) {
 
             {odds?.bookmaker?.markets?.map((item, index) => (
               <div
-                className="grid auto-cols-fr gap-2 px-2 py-4"
+                className="grid auto-cols-fr gap-2 px-1 py-2"
                 style={{
-                  gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, 100px), 1fr))`,
+                  gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, ${
+                    odds.home_team ? "50px" : "100px"
+                  }), 1fr))`,
                 }}
                 key={`${item.key}_${index}`}
               >
-                {item.outcomes?.map((outcome, index) => (
-                  <div
-                    className="flex flex-col items-center justify-between bg-betcard rounded p-2 hover:bg-opacity-80 transition-all cursor-pointer flex-1"
-                    key={`${outcome.name}_${index}`}
-                    onClick={() =>
-                      mutate({
-                        sport_id: odds.id,
-                        sport_key: odds.sport_key,
-                        sport_title: odds.sport_title,
-                        home_team: odds.home_team,
-                        away_team: odds.away_team,
-                        bookmaker_key: odds.bookmaker?.key,
-                        selected_team: outcome.name,
-                        odds: outcome.point || outcome.price,
-                        market_key: item.key,
-                      })
-                    }
-                  >
-                    <p className="text-sm text-center mb-2 break-words w-full">
-                      {outcome.name}
-                    </p>
-                    <p className="bg-subinput py-2 px-4 rounded w-full text-center">
-                      {outcome.point || outcome.price}
-                    </p>
-                  </div>
-                ))}
+                {item.outcomes
+                  ?.sort((a, b) => {
+                    const getOrder = (name: string) => {
+                      if (name === odds.home_team) return 1;
+                      if (name === "Draw") return 2;
+                      if (name === odds.away_team) return 3;
+                      return 4;
+                    };
+
+                    return getOrder(a.name) - getOrder(b.name);
+                  })
+                  .map((outcome, index) => (
+                    <div
+                      className="flex flex-col items-center justify-between bg-betcard rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1"
+                      key={`${outcome.name}_${index}`}
+                      onClick={() =>
+                        mutate({
+                          sport_id: odds.id,
+                          sport_key: odds.sport_key,
+                          sport_title: odds.sport_title,
+                          home_team: odds.home_team,
+                          away_team: odds.away_team,
+                          bookmaker_key: odds.bookmaker?.key,
+                          selected_team: outcome.name,
+                          odds: outcome.point || outcome.price,
+                          market_key: item.key,
+                        })
+                      }
+                    >
+                      <p className="text-xs text-center mb-1 break-words w-full text-greyf">
+                        {outcome.name === odds.home_team
+                          ? "1"
+                          : outcome.name === odds.away_team
+                          ? "2"
+                          : outcome.name === "Draw"
+                          ? "X"
+                          : outcome.name}
+                      </p>
+                      <p className="bg-subinput py-2 px-4 rounded w-full text-center text-sm font-medium">
+                        {outcome.point || outcome.price}
+                      </p>
+                    </div>
+                  ))}
               </div>
             ))}
           </div>
