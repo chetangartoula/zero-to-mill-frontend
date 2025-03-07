@@ -2,7 +2,7 @@
 import MenuCards from "@/components/base/card/menuCards";
 import { useToast } from "@/components/ui/use-toast";
 import { NavDrawerItem } from "@/constants/navDrawer";
-import logout from "@/store/actions/logout";
+import { logout } from "@/store/actions/logout";
 import { getPageRoutes } from "@/utils/getRoutes";
 import { clearAxiosAuthTokens } from "@/utils/token";
 import { LogOut } from "lucide-react";

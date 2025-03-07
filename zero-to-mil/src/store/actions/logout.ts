@@ -2,7 +2,7 @@
 import { clearAxiosAuthTokens } from "@/utils/token";
 import { cookies } from "next/headers";
 
-export default async function logout() {
+export async function logout() {
   cookies().delete("refreshToken");
   clearAxiosAuthTokens();
   return {
