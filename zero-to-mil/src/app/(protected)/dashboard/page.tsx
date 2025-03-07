@@ -3,6 +3,7 @@ import MobileTopNav from "@/components/navigation/MobileTopnav";
 import { useAppQuery } from "@/lib/api";
 import {
   BannerSuccessResponse,
+  BetSlipProps,
   CarouselData,
   MenuItems,
   MenuItemsSuccessResponse,
@@ -40,7 +41,16 @@ function DashBoard() {
     refetchOnWindowFocus: false,
   });
 
-  console.log("bannerData", bannerData);
+  const { data } = useAppQuery<{
+    slip_type: string;
+    slips: BetSlipProps[];
+    total_odds: number;
+  }>({
+    routeName: "betSlip",
+    queryKey: ["betSlip"],
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
 
   const finalTabData = useMemo(
     () =>
@@ -92,7 +102,10 @@ function DashBoard() {
           <AccordionListSkeleton />
         </div>
       ) : (
-        <AccordionList data={betList?.data as MenuItems["data"]} />
+        <AccordionList
+          data={betList?.data as MenuItems["data"]}
+          activeSlip={data?.slips || []}
+        />
       )}
     </div>
   );

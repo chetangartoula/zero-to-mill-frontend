@@ -4,7 +4,7 @@ import {
   AccordionItem,
   BetAccordionTrigger,
 } from "@/components/ui/accordion";
-import { MenuItems } from "@/types/base";
+import { BetSlipProps, MenuItems } from "@/types/base";
 import { AccordionContent } from "@radix-ui/react-accordion";
 import Image from "next/image";
 import React, { useEffect } from "react";
@@ -12,9 +12,15 @@ import BetItems from "./BetItems";
 import { useAppStore } from "@/store";
 import Nosportsfound from "@/components/custom/fallback/nosportsfound";
 
-function AccordionList({ data }: { data: MenuItems["data"] }) {
+function AccordionList({
+  data,
+  activeSlip,
+}: {
+  data: MenuItems["data"];
+  activeSlip: BetSlipProps[];
+}) {
   const defaultValue = data?.[0]?.key || "";
-  const { activeSportKey, setActiveSportKey } = useAppStore((state) => state);
+  const { setActiveSportKey } = useAppStore((state) => state);
   const handleValueChange = (newValue: string) => {
     setActiveSportKey(newValue || defaultValue);
   };
@@ -52,7 +58,9 @@ function AccordionList({ data }: { data: MenuItems["data"] }) {
                 </div>
               </BetAccordionTrigger>
               <AccordionContent>
-                {item.key && <BetItems itemKey={item.key} />}
+                {item.key && (
+                  <BetItems itemKey={item.key} activeSlip={activeSlip} />
+                )}
               </AccordionContent>
             </AccordionItem>
           ))}
