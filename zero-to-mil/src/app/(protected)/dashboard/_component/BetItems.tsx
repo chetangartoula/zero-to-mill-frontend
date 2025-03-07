@@ -85,9 +85,7 @@ function BetItems({ itemKey }: { itemKey: string }) {
                 <div className="rounded p-2 text-xs sm:text-xs truncate text-end">
                   {odds?.home_team}
                 </div>
-                <div className="font-bold text-xs sm:text-sm px-1 border">
-                  VS
-                </div>
+                <div className="font-bold text-xs sm:text-sm px-1">VS</div>
                 <div className="rounded p-2 text-xs sm:text-xs truncate text-start">
                   {odds?.away_team}
                 </div>

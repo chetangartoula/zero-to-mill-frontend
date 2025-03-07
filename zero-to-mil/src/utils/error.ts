@@ -1,3 +1,4 @@
+import logout from "@/store/actions/logout";
 import axios, { AxiosError } from "axios";
 import { error } from "console";
 
@@ -15,8 +16,13 @@ export function handleApiError(error: unknown): string {
 
     if (axiosError.response) {
       const { data } = axiosError.response;
-      if (axiosError.response.status === 500)
+      if (axiosError.response.status === 500) {
         return "An unexpected server error occurred. Please try again later.";
+      } else if (axiosError.response.status === 401) {
+        logout();
+        return "Authentication failed. Please log in again.";
+      }
+
       if (data?.error_message) return data.error_message;
       if (data?.detail) return data.detail;
       if (data?.error) return data.error;
