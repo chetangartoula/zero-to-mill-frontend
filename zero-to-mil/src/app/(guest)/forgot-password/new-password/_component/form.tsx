@@ -15,7 +15,7 @@ function NewPasswordForm() {
   const { mutate } = useAppMutation("forgotPassword");
   const { toast } = useToast();
   const searchParams = useSearchParams();
-  const ssid = searchParams.get("ssid");
+  const ssid = searchParams.get("ssid") || "";
   return (
     <AppForm
       defaultValues={{
@@ -26,7 +26,7 @@ function NewPasswordForm() {
       onSubmit={(data, form) =>
         mutate(
           {
-            ssid: "",
+            ssid: ssid,
             new_password: data.password,
             confirm_password: data.passwordConfirmation,
           },
