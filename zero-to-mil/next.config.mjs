@@ -14,6 +14,10 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'ba5.zerotomil.com',
                 pathname: '/**',
+            }, {
+                protocol: 'https',
+                hostname: 'www.zerotomil.com',
+                pathname: '/**',
             }
         ],
     }
