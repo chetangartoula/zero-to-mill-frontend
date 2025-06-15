@@ -91,6 +91,12 @@ const config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        none: "0",
+        xs: "0.125rem",
+        xl: "0.75rem",
+        "2xl": "1rem",
+        "3xl": "1.5rem",
+        full: "9999px",
       },
       gap: {
         "11": "2.75rem",

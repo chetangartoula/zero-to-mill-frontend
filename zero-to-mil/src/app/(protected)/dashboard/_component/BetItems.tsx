@@ -14,6 +14,23 @@ import { useAppStore } from "@/store";
 import { format } from "date-fns-tz";
 import { parseISO } from "date-fns";
 import { useQueryClient } from "@tanstack/react-query";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { Card, CardContent } from "@/components/ui/card";
 
 function BetItems({
   itemKey,
@@ -22,6 +39,11 @@ function BetItems({
   itemKey: string;
   activeSlip: BetSlipProps[];
 }) {
+  const [activeTab, setActiveTab] = useState("Goals");
+  const [bothTeamToScoreOpen, setBothTeamToScoreOpen] = useState(true);
+  const [total1Open, setTotal1Open] = useState(false);
+  const [total2Open, setTotal2Open] = useState(false);
+  const [total2SecondOpen, setTotal2SecondOpen] = useState(false);
   const router = useRouter();
   const queryClient = useQueryClient();
   const { numberOfSlips, setSlip } = useAppStore((store) => store);
@@ -72,114 +94,309 @@ function BetItems({
     return <BetItemsSkeleton />;
   }
 
+  const tabs = [
+    "Goals",
+    "Yellow Cards",
+    "Red Cards",
+    "Corner kicks",
+    "Corner kicks",
+    "Corner kicks",
+  ];
+
   return (
-    <div
-      className={`grid ${
-        oddList.length <= 2
-          ? "grid-cols-1"
-          : "grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-      } gap-4`}
-      onClick={(e) => e.stopPropagation()}
-    >
-      {oddList &&
-        oddList?.map((odds, index) => {
-          const selected = activeSlip.find((item) => item.sport_id === odds.id);
-          return (
-            <div
-              className={cn(
-                "flex-column text-xs bg-secondrybetcard border rounded mx-2"
-              )}
-              key={index}
-            >
-              {odds?.home_team && odds?.away_team && (
-                <div className="grid grid-cols-[1fr,auto,1fr] gap-2 w-full px-2 sm:px-2 items-center">
-                  <div className="rounded p-2 text-xs sm:text-xs truncate text-end">
-                    {odds?.home_team}
+    <Drawer direction="right">
+      <div
+        className={`grid ${
+          oddList.length <= 2
+            ? "grid-cols-1"
+            : "grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        } gap-4 border border-primary`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {oddList &&
+          oddList?.map((odds, index) => {
+            const selected = activeSlip.find(
+              (item) => item.sport_id === odds.id
+            );
+            return (
+              <DrawerTrigger asChild key={`${odds?.sport_key}-${index}`}>
+                <div
+                  className={cn(
+                    "flex-column text-xs bg-secondrybetcard border rounded mx-2"
+                  )}
+                >
+                  {odds?.home_team && odds?.away_team && (
+                    <div className="grid grid-cols-[1fr,auto,1fr] gap-2 w-full px-2 sm:px-2 items-center">
+                      <div className="rounded p-2 text-xs sm:text-xs truncate text-end">
+                        {odds?.home_team}
+                      </div>
+                      <div className="font-bold text-xs sm:text-sm px-1">
+                        VS
+                      </div>
+                      <div className="rounded p-2 text-xs sm:text-xs truncate text-start">
+                        {odds?.away_team}
+                      </div>
+                    </div>
+                  )}
+
+                  <p className="text-center mt-1 text-xs text-greyf">
+                    {format(
+                      parseISO(
+                        odds?.commence_time || odds?.bookmaker?.last_update
+                      ),
+                      "dd/MM/yyyy HH:mm",
+                      {
+                        timeZone:
+                          Intl.DateTimeFormat().resolvedOptions().timeZone,
+                      }
+                    )}
+                  </p>
+
+                  {odds?.bookmaker?.markets?.map((item, index) => (
+                    <div
+                      className="grid auto-cols-fr gap-2 px-1 py-2 "
+                      style={{
+                        gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, ${
+                          odds.home_team ? "50px" : "100px"
+                        }), 1fr))`,
+                      }}
+                      key={`${item.key}_${index}`}
+                    >
+                      {item.outcomes
+                        ?.sort((a, b) => {
+                          const getOrder = (name: string) => {
+                            if (name === odds.home_team) return 1;
+                            if (name === "Draw") return 2;
+                            if (name === odds.away_team) return 3;
+                            return 4;
+                          };
+
+                          return getOrder(a.name) - getOrder(b.name);
+                        })
+                        .map((outcome, index) => (
+                          <div
+                            className={cn(
+                              `flex flex-col items-center justify-between bg-secondrybetcard  rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1`
+                            )}
+                            key={`${outcome.name}_${index}`}
+                            onClick={() =>
+                              mutate({
+                                sport_id: odds.id,
+                                sport_key: odds.sport_key,
+                                sport_title: odds.sport_title,
+                                home_team: odds.home_team,
+                                away_team: odds.away_team,
+                                bookmaker_key: odds.bookmaker?.key,
+                                selected_team: outcome.name,
+                                odds: outcome.point || outcome.price,
+                                market_key: item.key,
+                              })
+                            }
+                          >
+                            <p className="text-xs text-center mb-1 break-words w-full text-greyf">
+                              {outcome.name === odds.home_team
+                                ? "1"
+                                : outcome.name === odds.away_team
+                                ? "2"
+                                : outcome.name === "Draw"
+                                ? "X"
+                                : outcome.name}
+                            </p>
+                            <p
+                              className={cn(
+                                "bg-pointinput py-2 px-4 rounded w-full text-center text-sm font-semibold",
+                                {
+                                  "text-haravara bg-haravara-foreground":
+                                    selected?.selected_team === outcome.name,
+                                }
+                              )}
+                            >
+                              {outcome.point || outcome.price}
+                            </p>
+                          </div>
+                        ))}
+                    </div>
+                  ))}
+                </div>
+              </DrawerTrigger>
+            );
+          })}
+        <DrawerContent className="fixed right-0 top-0 min-h-screen w-full sm:w-1/2 transform translate-x-full data-[state=open]:translate-x-0 transition-transform duration-300 ease-in-out bg-background left-auto z-50 m-0 p-0 translate-y-0 shadow-lg">
+          <div className="min-h-screen text-white">
+            {/* Header */}
+            <div className="relative">
+              <div
+                className="h-80 bg-cover bg-center relative"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(rgba(246, 234, 234, 0.6), rgba(219, 211, 211, 0.6)), url('/placeholder.svg?height=320&width=400')",
+                  backgroundSize: "cover",
+                }}
+              >
+                {/* Navigation */}
+                <div className="flex items-center justify-between p-4">
+                  <DrawerClose asChild>
+                    <ArrowLeft className="w-6 h-6" />
+                  </DrawerClose>
+                  <h1 className="text-xl font-semibold">Champions League</h1>
+                  <div className="w-6" />
+                </div>
+
+                {/* Match Info */}
+                <div className="flex flex-col items-center justify-center flex-1 px-4 mt-8">
+                  {/* Teams */}
+                  <div className="flex items-center justify-center space-x-8 mb-4">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                        <span className="text-xs font-bold">FCB</span>
+                      </div>
+                      <span className="text-sm">FC Barcelona</span>
+                    </div>
+
+                    <span className="text-sm text-gray-300">VS</span>
+
+                    <div className="flex items-center space-x-2">
+                      <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                        <span className="text-xs font-bold text-black">RM</span>
+                      </div>
+                      <span className="text-sm">Realmadrid FC</span>
+                    </div>
                   </div>
-                  <div className="font-bold text-xs sm:text-sm px-1">VS</div>
-                  <div className="rounded p-2 text-xs sm:text-xs truncate text-start">
-                    {odds?.away_team}
+
+                  {/* Match Details */}
+                  <div className="text-center">
+                    <p className="text-sm text-gray-300 mb-1">
+                      6th Feb, 2024 12:45 pm
+                    </p>
+                    <p className="text-sm text-gray-300">Santiago, Bernebeu</p>
+                  </div>
+
+                  {/* Football */}
+                  <div className="mt-8">
+                    <div className="w-16 h-16 bg-gray-600 rounded-full flex items-center justify-center">
+                      <div className="w-12 h-12 bg-gray-500 rounded-full relative">
+                        <div className="absolute inset-2 border-2 border-gray-400 rounded-full">
+                          <div className="w-full h-full flex items-center justify-center">
+                            <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              )}
+              </div>
+            </div>
 
-              <p className="text-center mt-1 text-xs text-greyf">
-                {format(
-                  parseISO(odds?.commence_time || odds?.bookmaker?.last_update),
-                  "dd/MM/yyyy HH:mm",
-                  { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }
-                )}
-              </p>
+            <div className="relative -mt-4 rounded-xl overflow-hidden bg-input shadow-lg">
+              {/* Tabs */}
+              <div className="flex overflow-x-auto  px-4 pt-6 space-x-2">
+                {tabs.map((tab, index) => (
+                  <Button
+                    key={index}
+                    variant={activeTab === tab ? "default" : "ghost"}
+                    size="sm"
+                    className={`whitespace-nowrap text-xs rounded ${
+                      activeTab === tab
+                        ? "bg-primary hover:bg-primary text-white"
+                        : "bg-slate-700 hover:bg-slate-600 text-white"
+                    }`}
+                    onClick={() => setActiveTab(tab)}
+                  >
+                    {tab}
+                  </Button>
+                ))}
+              </div>
 
-              {odds?.bookmaker?.markets?.map((item, index) => (
-                <div
-                  className="grid auto-cols-fr gap-2 px-1 py-2 "
-                  style={{
-                    gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, ${
-                      odds.home_team ? "50px" : "100px"
-                    }), 1fr))`,
-                  }}
-                  key={`${item.key}_${index}`}
+              {/* Betting Options */}
+              <div className="p-4 space-y-3">
+                <Collapsible
+                  open={bothTeamToScoreOpen}
+                  onOpenChange={setBothTeamToScoreOpen}
                 >
-                  {item.outcomes
-                    ?.sort((a, b) => {
-                      const getOrder = (name: string) => {
-                        if (name === odds.home_team) return 1;
-                        if (name === "Draw") return 2;
-                        if (name === odds.away_team) return 3;
-                        return 4;
-                      };
+                  <Card className="bg-slate-800 border-slate-700">
+                    <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-slate-750">
+                      <span className="text-white font-medium">
+                        Both Team to Score
+                      </span>
+                      {bothTeamToScoreOpen ? (
+                        <ChevronUp className="w-5 h-5 text-gray-400" />
+                      ) : (
+                        <ChevronDown className="w-5 h-5 text-gray-400" />
+                      )}
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <div className="px-4 pb-4">
+                        <div className="grid grid-cols-2 gap-3">
+                          <Button className="bg-slate-600 hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto">
+                            <span>Yes</span>
+                            <span className="font-bold">1.4</span>
+                          </Button>
+                          <Button className="bg-slate-600 hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto">
+                            <span>Yes</span>
+                            <span className="font-bold">1.4</span>
+                          </Button>
+                        </div>
+                      </div>
+                    </CollapsibleContent>
+                  </Card>
+                </Collapsible>
 
-                      return getOrder(a.name) - getOrder(b.name);
-                    })
-                    .map((outcome, index) => (
-                      <div
-                        className={cn(
-                          `flex flex-col items-center justify-between bg-secondrybetcard  rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1`
-                        )}
-                        key={`${outcome.name}_${index}`}
-                        onClick={() =>
-                          mutate({
-                            sport_id: odds.id,
-                            sport_key: odds.sport_key,
-                            sport_title: odds.sport_title,
-                            home_team: odds.home_team,
-                            away_team: odds.away_team,
-                            bookmaker_key: odds.bookmaker?.key,
-                            selected_team: outcome.name,
-                            odds: outcome.point || outcome.price,
-                            market_key: item.key,
-                          })
-                        }
-                      >
-                        <p className="text-xs text-center mb-1 break-words w-full text-greyf">
-                          {outcome.name === odds.home_team
-                            ? "1"
-                            : outcome.name === odds.away_team
-                            ? "2"
-                            : outcome.name === "Draw"
-                            ? "X"
-                            : outcome.name}
-                        </p>
-                        <p
-                          className={cn(
-                            "bg-pointinput py-2 px-4 rounded w-full text-center text-sm font-semibold",
-                            {
-                              "text-haravara bg-haravara-foreground":
-                                selected?.selected_team === outcome.name,
-                            }
-                          )}
-                        >
-                          {outcome.point || outcome.price}
+                <Collapsible open={total1Open} onOpenChange={setTotal1Open}>
+                  <Card className="bg-slate-800 border-slate-700">
+                    <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-slate-750">
+                      <span className="text-white font-medium">Total 1</span>
+                      <ChevronDown className="w-5 h-5 text-gray-400" />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <div className="px-4 pb-4">
+                        <p className="text-gray-400 text-sm">
+                          Betting options for Total 1
                         </p>
                       </div>
-                    ))}
-                </div>
-              ))}
+                    </CollapsibleContent>
+                  </Card>
+                </Collapsible>
+
+                <Collapsible open={total2Open} onOpenChange={setTotal2Open}>
+                  <Card className="bg-slate-800 border-slate-700">
+                    <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-slate-750">
+                      <span className="text-white font-medium">Total 2</span>
+                      <ChevronDown className="w-5 h-5 text-gray-400" />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <div className="px-4 pb-4">
+                        <p className="text-gray-400 text-sm">
+                          Betting options for Total 2
+                        </p>
+                      </div>
+                    </CollapsibleContent>
+                  </Card>
+                </Collapsible>
+
+                <Collapsible
+                  open={total2SecondOpen}
+                  onOpenChange={setTotal2SecondOpen}
+                >
+                  <Card className="bg-slate-800 border-slate-700">
+                    <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-slate-750">
+                      <span className="text-white font-medium">Total 2</span>
+                      <ChevronDown className="w-5 h-5 text-gray-400" />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <div className="px-4 pb-4">
+                        <p className="text-gray-400 text-sm">
+                          Betting options for Total 2
+                        </p>
+                      </div>
+                    </CollapsibleContent>
+                  </Card>
+                </Collapsible>
+              </div>
             </div>
-          );
-        })}
-    </div>
+          </div>
+        </DrawerContent>
+      </div>
+    </Drawer>
   );
 }
 
