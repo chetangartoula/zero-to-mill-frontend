@@ -28,6 +28,7 @@ const config = {
         border: "hsl(var(--border))",
         betcard: "hsl(var(--betcard))",
         secondrybetcard: "hsl(var(--secondrybetcard))",
+        greenbetcard: "hsl(var(--greenbetcard))",
         greyf: "hsl(var(--greyf))",
         input: "hsl(var(--input))",
         pointinput: "hsl(var(--pointinput))",

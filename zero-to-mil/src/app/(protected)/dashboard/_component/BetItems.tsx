@@ -31,6 +31,12 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  BetAccordionTrigger,
+} from "@/components/ui/accordion";
 
 function BetItems({
   itemKey,
@@ -110,7 +116,7 @@ function BetItems({
           oddList.length <= 2
             ? "grid-cols-1"
             : "grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-        } gap-4 border border-primary`}
+        } gap-4`}
         onClick={(e) => e.stopPropagation()}
       >
         {oddList &&
@@ -122,7 +128,7 @@ function BetItems({
               <DrawerTrigger asChild key={`${odds?.sport_key}-${index}`}>
                 <div
                   className={cn(
-                    "flex-column text-xs bg-secondrybetcard border rounded mx-2"
+                    "flex-column text-xs bg-greenbetcard border rounded mx-2 mb-2 shadow-[0_0_15px_rgba(255,255,255,0.1)]"
                   )}
                 >
                   {odds?.home_team && odds?.away_team && (
@@ -176,7 +182,7 @@ function BetItems({
                         .map((outcome, index) => (
                           <div
                             className={cn(
-                              `flex flex-col items-center justify-between bg-secondrybetcard  rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1`
+                              `flex flex-col items-center justify-between bg-greenbetcard shadow-[0_0_15px_rgba(255,255,255,0.1)]  rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1`
                             )}
                             key={`${outcome.name}_${index}`}
                             onClick={() =>
@@ -309,12 +315,12 @@ function BetItems({
 
               {/* Betting Options */}
               <div className="p-4 space-y-3">
-                <Collapsible
+                {/* <Collapsible
                   open={bothTeamToScoreOpen}
                   onOpenChange={setBothTeamToScoreOpen}
                 >
-                  <Card className="bg-slate-800 border-slate-700">
-                    <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-slate-750">
+                  <Card className="bg-greenbetcard  rounded-2xl shadow-[0_0_20px_rgba(255,255,255,0.15)]">
+                    <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-greenbetcard ">
                       <span className="text-white font-medium">
                         Both Team to Score
                       </span>
@@ -325,7 +331,7 @@ function BetItems({
                       )}
                     </CollapsibleTrigger>
                     <CollapsibleContent>
-                      <div className="px-4 pb-4">
+                      <div className="px-4 pb-4 rounded">
                         <div className="grid grid-cols-2 gap-3">
                           <Button className="bg-slate-600 hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto">
                             <span>Yes</span>
@@ -339,58 +345,71 @@ function BetItems({
                       </div>
                     </CollapsibleContent>
                   </Card>
-                </Collapsible>
-
-                <Collapsible open={total1Open} onOpenChange={setTotal1Open}>
-                  <Card className="bg-slate-800 border-slate-700">
-                    <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-slate-750">
-                      <span className="text-white font-medium">Total 1</span>
-                      <ChevronDown className="w-5 h-5 text-gray-400" />
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
-                      <div className="px-4 pb-4">
-                        <p className="text-gray-400 text-sm">
-                          Betting options for Total 1
-                        </p>
-                      </div>
-                    </CollapsibleContent>
-                  </Card>
-                </Collapsible>
-
-                <Collapsible open={total2Open} onOpenChange={setTotal2Open}>
-                  <Card className="bg-slate-800 border-slate-700">
-                    <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-slate-750">
-                      <span className="text-white font-medium">Total 2</span>
-                      <ChevronDown className="w-5 h-5 text-gray-400" />
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
-                      <div className="px-4 pb-4">
-                        <p className="text-gray-400 text-sm">
-                          Betting options for Total 2
-                        </p>
-                      </div>
-                    </CollapsibleContent>
-                  </Card>
-                </Collapsible>
-
-                <Collapsible
-                  open={total2SecondOpen}
-                  onOpenChange={setTotal2SecondOpen}
+                </Collapsible> */}
+                <Accordion
+                  type="single"
+                  // value={activeSportKey || "live"}
+                  className="border rounded mt-4 bg-menu space-y-2"
+                  collapsible
+                  onValueChange={() => console.log("valuechanged")}
                 >
-                  <Card className="bg-slate-800 border-slate-700">
-                    <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-slate-750">
-                      <span className="text-white font-medium">Total 2</span>
-                      <ChevronDown className="w-5 h-5 text-gray-400" />
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
-                      <div className="px-4 pb-4">
-                        <p className="text-gray-400 text-sm">
-                          Betting options for Total 2
-                        </p>
+                  <AccordionItem
+                    key={"test"}
+                    value={"test"}
+                    onClick={() => {
+                      console.log("test");
+                    }}
+                    className="bg-greenbetcard rounded shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+                  >
+                    <BetAccordionTrigger>
+                      <span className="text-white font-medium ml-2">
+                        Both Team to Score
+                      </span>
+                    </BetAccordionTrigger>
+                    <AccordionContent>
+                      <div className="px-4 pb-4 rounded">
+                        <div className="grid grid-cols-2 gap-3">
+                          <Button className="bg-slate-600 hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto">
+                            <span>Yes</span>
+                            <span className="font-bold">1.4</span>
+                          </Button>
+                          <Button className="bg-slate-600 hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto">
+                            <span>Yes</span>
+                            <span className="font-bold">1.4</span>
+                          </Button>
+                        </div>
                       </div>
-                    </CollapsibleContent>
-                  </Card>
-                </Collapsible>
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem
+                    key={"test1"}
+                    value={"test1"}
+                    onClick={() => {
+                      console.log("test1");
+                    }}
+                    className="bg-greenbetcard rounded shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+                  >
+                    <BetAccordionTrigger>
+                      <span className="text-white font-medium ml-2">
+                        Both Team to Score
+                      </span>
+                    </BetAccordionTrigger>
+                    <AccordionContent>
+                      <div className="px-4 pb-4 rounded">
+                        <div className="grid grid-cols-2 gap-3">
+                          <Button className="bg-slate-600 hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto">
+                            <span>Yes</span>
+                            <span className="font-bold">1.4</span>
+                          </Button>
+                          <Button className="bg-slate-600 hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto">
+                            <span>Yes</span>
+                            <span className="font-bold">1.4</span>
+                          </Button>
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </div>
             </div>
           </div>
