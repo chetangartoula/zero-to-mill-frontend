@@ -3,7 +3,7 @@ import { useAppMutation } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { OddList } from "@/types/base";
 import { BetSlipProps } from "@/types/base/betslip";
-import { isString } from "lodash";
+import { isString, set } from "lodash";
 import React, { useEffect, useState } from "react";
 import { BetItemsSkeleton } from "./BetItemsSkeleton";
 import { useRouter } from "next/navigation";
@@ -18,19 +18,10 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { Card, CardContent } from "@/components/ui/card";
+import { ArrowLeft } from "lucide-react";
+import { formatLabel } from "@/utils/titleFormatter";
 import {
   Accordion,
   AccordionContent,
@@ -46,14 +37,11 @@ function BetItems({
   activeSlip: BetSlipProps[];
 }) {
   const [activeTab, setActiveTab] = useState("Goals");
-  const [bothTeamToScoreOpen, setBothTeamToScoreOpen] = useState(true);
-  const [total1Open, setTotal1Open] = useState(false);
-  const [total2Open, setTotal2Open] = useState(false);
-  const [total2SecondOpen, setTotal2SecondOpen] = useState(false);
   const router = useRouter();
   const queryClient = useQueryClient();
   const { numberOfSlips, setSlip } = useAppStore((store) => store);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedSportKey, setSelectedSportKey] = useState<string | null>(null);
   const { messages: oddList } = useWebSocket<OddList[]>("odds_list", {
     filters: { sport_key: itemKey },
   });
@@ -100,14 +88,16 @@ function BetItems({
     return <BetItemsSkeleton />;
   }
 
-  const tabs = [
-    "Goals",
-    "Yellow Cards",
-    "Red Cards",
-    "Corner kicks",
-    "Corner kicks",
-    "Corner kicks",
-  ];
+  const activeProps = oddList.find(
+    (odds) => odds.sport_key === selectedSportKey
+  );
+
+  const propsToDisplay = activeProps?.bookmaker?.props?.[activeTab] || [];
+
+  console.log("propsToDisplay", propsToDisplay);
+
+  console.log("oddList", oddList);
+  console.log("activeProps", activeProps);
 
   return (
     <Drawer direction="right">
@@ -128,8 +118,12 @@ function BetItems({
               <DrawerTrigger asChild key={`${odds?.sport_key}-${index}`}>
                 <div
                   className={cn(
-                    "flex-column text-xs bg-greenbetcard border rounded mx-2 mb-2 shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+                    "flex-column bg-greenbetcard border rounded mx-2 mb-2 shadow-[0_0_15px_rgba(255,255,255,0.1)]"
                   )}
+                  onClick={() => {
+                    setSelectedSportKey(odds.sport_key);
+                    setActiveTab(Object.keys(odds.bookmaker.props)[0]);
+                  }}
                 >
                   {odds?.home_team && odds?.away_team && (
                     <div className="grid grid-cols-[1fr,auto,1fr] gap-2 w-full px-2 sm:px-2 items-center">
@@ -227,9 +221,8 @@ function BetItems({
               </DrawerTrigger>
             );
           })}
-        <DrawerContent className="fixed right-0 top-0 min-h-screen w-full sm:w-1/2 transform translate-x-full data-[state=open]:translate-x-0 transition-transform duration-300 ease-in-out bg-background left-auto z-50 m-0 p-0 translate-y-0 shadow-lg">
+        <DrawerContent className="fixed right-0 top-0 min-h-screen w-full sm:w-1/2 transform translate-x-full data-[state=open]:translate-x-0 transition-transform duration-300 ease-in-out bg-background left-auto z-50 m-0 p-0 translate-y-0 shadow-lg font-seoge">
           <div className="min-h-screen text-white">
-            {/* Header */}
             <div className="relative">
               <div
                 className="h-80 bg-cover bg-center relative"
@@ -239,7 +232,6 @@ function BetItems({
                   backgroundSize: "cover",
                 }}
               >
-                {/* Navigation */}
                 <div className="flex items-center justify-between p-4">
                   <DrawerClose asChild>
                     <ArrowLeft className="w-6 h-6" />
@@ -248,9 +240,7 @@ function BetItems({
                   <div className="w-6" />
                 </div>
 
-                {/* Match Info */}
                 <div className="flex flex-col items-center justify-center flex-1 px-4 mt-8">
-                  {/* Teams */}
                   <div className="flex items-center justify-center space-x-8 mb-4">
                     <div className="flex items-center space-x-2">
                       <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
@@ -277,7 +267,6 @@ function BetItems({
                     <p className="text-sm text-gray-300">Santiago, Bernebeu</p>
                   </div>
 
-                  {/* Football */}
                   <div className="mt-8">
                     <div className="w-16 h-16 bg-gray-600 rounded-full flex items-center justify-center">
                       <div className="w-12 h-12 bg-gray-500 rounded-full relative">
@@ -294,121 +283,61 @@ function BetItems({
             </div>
 
             <div className="relative -mt-4 rounded-xl overflow-hidden bg-input shadow-lg">
-              {/* Tabs */}
               <div className="flex overflow-x-auto  px-4 pt-6 space-x-2">
-                {tabs.map((tab, index) => (
-                  <Button
-                    key={index}
-                    variant={activeTab === tab ? "default" : "ghost"}
-                    size="sm"
-                    className={`whitespace-nowrap text-xs rounded ${
-                      activeTab === tab
-                        ? "bg-primary hover:bg-primary text-white"
-                        : "bg-slate-700 hover:bg-slate-600 text-white"
-                    }`}
-                    onClick={() => setActiveTab(tab)}
-                  >
-                    {tab}
-                  </Button>
-                ))}
+                {Object?.entries(activeProps?.bookmaker?.props || {}).map(
+                  ([key, value], index) => (
+                    <Button
+                      key={index}
+                      variant={activeTab === key ? "default" : "ghost"}
+                      size="sm"
+                      className={`whitespace-nowrap rounded ${
+                        activeTab === key
+                          ? "bg-primary hover:bg-primary text-white"
+                          : "bg-slate-700 hover:bg-slate-600 text-white"
+                      }`}
+                      onClick={() => setActiveTab(key)}
+                    >
+                      {formatLabel(key, " ")}
+                    </Button>
+                  )
+                )}
               </div>
 
-              {/* Betting Options */}
-              <div className="p-4 space-y-3">
-                {/* <Collapsible
-                  open={bothTeamToScoreOpen}
-                  onOpenChange={setBothTeamToScoreOpen}
-                >
-                  <Card className="bg-greenbetcard  rounded-2xl shadow-[0_0_20px_rgba(255,255,255,0.15)]">
-                    <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-greenbetcard ">
-                      <span className="text-white font-medium">
-                        Both Team to Score
-                      </span>
-                      {bothTeamToScoreOpen ? (
-                        <ChevronUp className="w-5 h-5 text-gray-400" />
-                      ) : (
-                        <ChevronDown className="w-5 h-5 text-gray-400" />
-                      )}
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
-                      <div className="px-4 pb-4 rounded">
-                        <div className="grid grid-cols-2 gap-3">
-                          <Button className="bg-slate-600 hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto">
-                            <span>Yes</span>
-                            <span className="font-bold">1.4</span>
-                          </Button>
-                          <Button className="bg-slate-600 hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto">
-                            <span>Yes</span>
-                            <span className="font-bold">1.4</span>
-                          </Button>
-                        </div>
-                      </div>
-                    </CollapsibleContent>
-                  </Card>
-                </Collapsible> */}
+              <div className="p-4 space-y-3 overflow-y-auto max-h-[calc(100vh-200px)]">
                 <Accordion
                   type="single"
-                  // value={activeSportKey || "live"}
                   className="border rounded mt-4 bg-menu space-y-2"
                   collapsible
-                  onValueChange={() => console.log("valuechanged")}
                 >
-                  <AccordionItem
-                    key={"test"}
-                    value={"test"}
-                    onClick={() => {
-                      console.log("test");
-                    }}
-                    className="bg-greenbetcard rounded shadow-[0_0_20px_rgba(255,255,255,0.15)]"
-                  >
-                    <BetAccordionTrigger>
-                      <span className="text-white font-medium ml-2">
-                        Both Team to Score
-                      </span>
-                    </BetAccordionTrigger>
-                    <AccordionContent>
-                      <div className="px-4 pb-4 rounded">
-                        <div className="grid grid-cols-2 gap-3">
-                          <Button className="bg-slate-600 hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto">
-                            <span>Yes</span>
-                            <span className="font-bold">1.4</span>
-                          </Button>
-                          <Button className="bg-slate-600 hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto">
-                            <span>Yes</span>
-                            <span className="font-bold">1.4</span>
-                          </Button>
+                  {propsToDisplay.map((outcome, index) => (
+                    <AccordionItem
+                      key={index}
+                      value={`${outcome.key || outcome.title}-${index}`}
+                      onClick={() => {
+                        console.log("test");
+                      }}
+                      className="bg-greenbetcard rounded shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+                    >
+                      <BetAccordionTrigger>
+                        <span className="text-white font-medium ml-2">
+                          {outcome.title}
+                        </span>
+                      </BetAccordionTrigger>
+                      <AccordionContent>
+                        <div className="px-4 pb-4 rounded w-full space-y-2">
+                          {outcome.points.map((point, pointIndex) => (
+                            <div
+                              key={pointIndex}
+                              className="bg-slate-600 hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto border border-primary"
+                            >
+                              <span>{point.game_name}</span>
+                              <span className="font-bold">{point.odds}</span>
+                            </div>
+                          ))}
                         </div>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem
-                    key={"test1"}
-                    value={"test1"}
-                    onClick={() => {
-                      console.log("test1");
-                    }}
-                    className="bg-greenbetcard rounded shadow-[0_0_20px_rgba(255,255,255,0.15)]"
-                  >
-                    <BetAccordionTrigger>
-                      <span className="text-white font-medium ml-2">
-                        Both Team to Score
-                      </span>
-                    </BetAccordionTrigger>
-                    <AccordionContent>
-                      <div className="px-4 pb-4 rounded">
-                        <div className="grid grid-cols-2 gap-3">
-                          <Button className="bg-slate-600 hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto">
-                            <span>Yes</span>
-                            <span className="font-bold">1.4</span>
-                          </Button>
-                          <Button className="bg-slate-600 hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto">
-                            <span>Yes</span>
-                            <span className="font-bold">1.4</span>
-                          </Button>
-                        </div>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
                 </Accordion>
               </div>
             </div>

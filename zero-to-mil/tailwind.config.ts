@@ -146,7 +146,8 @@ const config = {
         "collapsible-up": "collapsible-up 0.2s ease-in-out",
       },
       fontFamily: {
-        switzer: ["Switzer", "sans-serif"],
+        switzer: ["Segoe UI", "Switzer", "sans-serif"],
+        seoge: ["Segoe UI"],
       },
       fontWeight: {
         light: "300",
