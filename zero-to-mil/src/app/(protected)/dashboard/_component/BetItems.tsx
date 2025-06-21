@@ -251,9 +251,9 @@ function BetItems({
                             </p>
                             <p
                               className={cn(
-                                "bg-pointinput py-2 px-4 rounded w-full text-center text-sm font-semibold",
+                                "bg-white py-2 px-4 rounded w-full text-center text-sm font-semibold",
                                 {
-                                  "text-haravara bg-haravara-foreground":
+                                  "text-black opacity-60":
                                     selected?.selected_team === outcome.oddId,
                                 }
                               )}
@@ -296,9 +296,9 @@ function BetItems({
                             </p>
                             <p
                               className={cn(
-                                "bg-pointinput py-2 px-4 rounded w-full  text-center text-sm font-semibold",
+                                "bg-white py-2 px-4 rounded w-full  text-center text-sm font-semibold",
                                 {
-                                  "text-haravara bg-haravara-foreground":
+                                  "text-black  opacity-60":
                                     selected?.selected_team === outcome.oddId,
                                 }
                               )}
@@ -402,7 +402,7 @@ function BetItems({
                   className="border rounded mt-4 bg-menu space-y-2"
                   collapsible
                 >
-                  {propsToDisplay.map((outcome, index) => (
+                  {propsToDisplay?.map((outcome, index) => (
                     <AccordionItem
                       key={index}
                       value={`${outcome.title}-${index}`}
@@ -421,10 +421,14 @@ function BetItems({
                           {outcome.points.map((point, pointIndex) => (
                             <div
                               key={pointIndex}
-                              className="bg-slate-600 hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto border border-primary"
+                              className="bg-white hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto opacity-60"
                             >
-                              <span>{point.game_name}</span>
-                              <span className="font-bold">{point.odds}</span>
+                              <span className="text-black">
+                                {point.game_name}
+                              </span>
+                              <span className="font-bold text-black">
+                                {point.odds}
+                              </span>
                             </div>
                           ))}
                         </div>
