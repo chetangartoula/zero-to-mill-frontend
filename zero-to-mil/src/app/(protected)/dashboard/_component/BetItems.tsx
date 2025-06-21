@@ -218,13 +218,18 @@ function BetItems({
 
                   {Object?.entries(odds?.bookmaker?.odds?.ml || {}).length >
                     0 && (
-                    <div className="grid auto-cols-fr gap-2 px-1 py-2">
+                    <div className="grid grid-cols-4 gap-2 px-1 py-2">
                       {Object?.entries(odds?.bookmaker?.odds?.ml).map(
                         ([key, outcome], index) => (
                           <div
                             className={cn(
-                              `flex flex-col items-center justify-between bg-greenbetcard shadow-[0_0_15px_rgba(255,255,255,0.1)] rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1`
+                              "col-span-2 flex flex-col items-center justify-between bg-greenbetcard  rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1"
                             )}
+                            style={{
+                              gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, ${
+                                odds.home_team ? "50px" : "100px"
+                              }), 1fr))`,
+                            }}
                             key={`${key}_${index}`}
                             onClick={
                               () => console
@@ -242,12 +247,7 @@ function BetItems({
                             }
                           >
                             <p className="text-xs text-center mb-1 break-words w-full text-greyf">
-                              {/* {outcome.name === odds.home_team
-                                ? "1"
-                                : outcome.name === odds.away_team
-                                ? "2"
-                                : outcome.name} */}
-                              {outcome.market_name}
+                              {formatLabel(key)}-ml
                             </p>
                             <p
                               className={cn(
@@ -268,12 +268,12 @@ function BetItems({
 
                   {Object?.entries(odds?.bookmaker?.odds?.ml3way || {}).length >
                     0 && (
-                    <div className="grid auto-cols-fr gap-2 px-1 py-2">
+                    <div className="grid grid-cols-6 gap-2 px-1 py-2">
                       {Object?.entries(odds?.bookmaker?.odds?.ml3way).map(
                         ([key, outcome], index) => (
                           <div
                             className={cn(
-                              `flex flex-col items-center justify-between bg-greenbetcard shadow-[0_0_15px_rgba(255,255,255,0.1)] rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1`
+                              "col-span-2 flex flex-col items-center justify-between w-full bg-greenbetcard  rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1"
                             )}
                             key={`${key}_${index}`}
                             onClick={
@@ -291,17 +291,12 @@ function BetItems({
                               // })
                             }
                           >
-                            <p className="text-xs text-center mb-1 break-words w-full text-greyf">
-                              {/* {outcome.name === odds.home_team
-                                ? "1"
-                                : outcome.name === odds.away_team
-                                ? "2"
-                                : outcome.name} */}
-                              {outcome.market_name}
+                            <p className="text-xs text-center mb-1 break-words  text-greyf background-transparent">
+                              {formatLabel(key)}-ml3way
                             </p>
                             <p
                               className={cn(
-                                "bg-pointinput py-2 px-4 rounded w-full text-center text-sm font-semibold",
+                                "bg-pointinput py-2 px-4 rounded w-full  text-center text-sm font-semibold",
                                 {
                                   "text-haravara bg-haravara-foreground":
                                     selected?.selected_team === outcome.oddId,
