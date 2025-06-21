@@ -26,10 +26,27 @@ export interface Props {
 
 export interface Bookmaker {
   odds: {
-    ml: unknown;
-    ml3way: unknown;
+    ml: {
+      away: Odd;
+      home: Odd;
+    };
+    ml3way: {
+      away: Odd;
+      home: Odd;
+      draw: Odd;
+    };
   };
-  props: unknown;
+  props: {
+    [key: string]: {
+      title: string;
+      points: {
+        odd_id: string;
+        odds: string;
+        points: string;
+        game_name: string;
+      }[];
+    }[];
+  };
 }
 export interface OddList {
   id: string;

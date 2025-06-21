@@ -141,9 +141,7 @@ function BetItems({
 
                   <p className="text-center mt-1 text-xs text-greyf">
                     {format(
-                      parseISO(
-                        odds?.commence_time || odds?.bookmaker?.last_update
-                      ),
+                      parseISO(odds?.commence_time || odds?.last_update),
                       "dd/MM/yyyy HH:mm",
                       {
                         timeZone:
@@ -152,7 +150,7 @@ function BetItems({
                     )}
                   </p>
 
-                  {odds?.bookmaker?.markets?.map((item, index) => (
+                  {/* {odds?.bookmaker?.markets?.map((item, index) => (
                     <div
                       className="grid auto-cols-fr gap-2 px-1 py-2 "
                       style={{
@@ -216,7 +214,107 @@ function BetItems({
                           </div>
                         ))}
                     </div>
-                  ))}
+                  ))} */}
+
+                  {Object?.entries(odds?.bookmaker?.odds?.ml || {}).length >
+                    0 && (
+                    <div className="grid auto-cols-fr gap-2 px-1 py-2">
+                      {Object?.entries(odds?.bookmaker?.odds?.ml).map(
+                        ([key, outcome], index) => (
+                          <div
+                            className={cn(
+                              `flex flex-col items-center justify-between bg-greenbetcard shadow-[0_0_15px_rgba(255,255,255,0.1)] rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1`
+                            )}
+                            key={`${key}_${index}`}
+                            onClick={
+                              () => console
+                              // mutate({
+                              //   sport_id: odds.id,
+                              //   sport_key: odds.sport_key,
+                              //   sport_title: odds.sport_title,
+                              //   home_team: odds.home_team,
+                              //   away_team: odds.away_team,
+                              //   bookmaker_key: odds.bookmaker?.key,
+                              //   selected_team: outcome.name,
+                              //   odds: outcome.price,
+                              //   market_key: "ml",
+                              // })
+                            }
+                          >
+                            <p className="text-xs text-center mb-1 break-words w-full text-greyf">
+                              {/* {outcome.name === odds.home_team
+                                ? "1"
+                                : outcome.name === odds.away_team
+                                ? "2"
+                                : outcome.name} */}
+                              {outcome.market_name}
+                            </p>
+                            <p
+                              className={cn(
+                                "bg-pointinput py-2 px-4 rounded w-full text-center text-sm font-semibold",
+                                {
+                                  "text-haravara bg-haravara-foreground":
+                                    selected?.selected_team === outcome.oddId,
+                                }
+                              )}
+                            >
+                              {outcome.odds}
+                            </p>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  )}
+
+                  {Object?.entries(odds?.bookmaker?.odds?.ml3way || {}).length >
+                    0 && (
+                    <div className="grid auto-cols-fr gap-2 px-1 py-2">
+                      {Object?.entries(odds?.bookmaker?.odds?.ml3way).map(
+                        ([key, outcome], index) => (
+                          <div
+                            className={cn(
+                              `flex flex-col items-center justify-between bg-greenbetcard shadow-[0_0_15px_rgba(255,255,255,0.1)] rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1`
+                            )}
+                            key={`${key}_${index}`}
+                            onClick={
+                              () => console
+                              // mutate({
+                              //   sport_id: odds.id,
+                              //   sport_key: odds.sport_key,
+                              //   sport_title: odds.sport_title,
+                              //   home_team: odds.home_team,
+                              //   away_team: odds.away_team,
+                              //   bookmaker_key: odds.bookmaker?.key,
+                              //   selected_team: outcome.name,
+                              //   odds: outcome.price,
+                              //   market_key: "ml",
+                              // })
+                            }
+                          >
+                            <p className="text-xs text-center mb-1 break-words w-full text-greyf">
+                              {/* {outcome.name === odds.home_team
+                                ? "1"
+                                : outcome.name === odds.away_team
+                                ? "2"
+                                : outcome.name} */}
+                              {outcome.market_name}
+                            </p>
+                            <p
+                              className={cn(
+                                "bg-pointinput py-2 px-4 rounded w-full text-center text-sm font-semibold",
+                                {
+                                  "text-haravara bg-haravara-foreground":
+                                    selected?.selected_team === outcome.oddId,
+                                }
+                              )}
+                            >
+                              {outcome.odds}
+                            </p>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  )}
                 </div>
               </DrawerTrigger>
             );
@@ -312,7 +410,7 @@ function BetItems({
                   {propsToDisplay.map((outcome, index) => (
                     <AccordionItem
                       key={index}
-                      value={`${outcome.key || outcome.title}-${index}`}
+                      value={`${outcome.title}-${index}`}
                       onClick={() => {
                         console.log("test");
                       }}
