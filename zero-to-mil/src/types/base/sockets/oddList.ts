@@ -11,14 +11,14 @@ export interface Market {
 export interface Odd {
   bookmaker: unknown;
   market_name: string;
-  oddId: string;
+  oddID: string;
   odds: string;
-  opposinOddID: string;
+  opposingOddID: string;
 }
 
 export interface Props {
   market_name: string;
-  oddId: string;
+  oddID: string;
   odds: string;
   opposingOddID: string;
   points: string;

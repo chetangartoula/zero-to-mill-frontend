@@ -48,18 +48,18 @@ function BetCard({ data, title }: { data: OddList; title?: TabData }) {
           value={data.sport_key}
           className="bg-input rounded mt-4 pr-4"
         >
-          <BetAccordionTrigger>
+          {/* <BetAccordionTrigger>
             {data.bookmaker && (
               <BetItem title="" betData={data.bookmaker.markets[0].outcomes} />
             )}
-          </BetAccordionTrigger>
+          </BetAccordionTrigger> */}
           <AccordionContent>
-            {data?.bookmaker?.markets?.slice(1)?.map((item) => (
+            {/* {data?.bookmaker?.markets?.slice(1)?.map((item) => (
               <>
                 <Separator className="bg-muted mt-4" />
                 <BetItem title={capitalize(item.key)} betData={item.outcomes} />
               </>
-            ))}
+            ))} */}
           </AccordionContent>
         </AccordionItem>
       </Accordion>

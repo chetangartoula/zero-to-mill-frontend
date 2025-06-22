@@ -150,72 +150,6 @@ function BetItems({
                     )}
                   </p>
 
-                  {/* {odds?.bookmaker?.markets?.map((item, index) => (
-                    <div
-                      className="grid auto-cols-fr gap-2 px-1 py-2 "
-                      style={{
-                        gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, ${
-                          odds.home_team ? "50px" : "100px"
-                        }), 1fr))`,
-                      }}
-                      key={`${item.key}_${index}`}
-                    >
-                      {item.outcomes
-                        ?.sort((a, b) => {
-                          const getOrder = (name: string) => {
-                            if (name === odds.home_team) return 1;
-                            if (name === "Draw") return 2;
-                            if (name === odds.away_team) return 3;
-                            return 4;
-                          };
-
-                          return getOrder(a.name) - getOrder(b.name);
-                        })
-                        .map((outcome, index) => (
-                          <div
-                            className={cn(
-                              `flex flex-col items-center justify-between bg-greenbetcard shadow-[0_0_15px_rgba(255,255,255,0.1)]  rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1`
-                            )}
-                            key={`${outcome.name}_${index}`}
-                            onClick={() =>
-                              mutate({
-                                sport_id: odds.id,
-                                sport_key: odds.sport_key,
-                                sport_title: odds.sport_title,
-                                home_team: odds.home_team,
-                                away_team: odds.away_team,
-                                bookmaker_key: odds.bookmaker?.key,
-                                selected_team: outcome.name,
-                                odds: outcome.point || outcome.price,
-                                market_key: item.key,
-                              })
-                            }
-                          >
-                            <p className="text-xs text-center mb-1 break-words w-full text-greyf">
-                              {outcome.name === odds.home_team
-                                ? "1"
-                                : outcome.name === odds.away_team
-                                ? "2"
-                                : outcome.name === "Draw"
-                                ? "X"
-                                : outcome.name}
-                            </p>
-                            <p
-                              className={cn(
-                                "bg-pointinput py-2 px-4 rounded w-full text-center text-sm font-semibold",
-                                {
-                                  "text-haravara bg-haravara-foreground":
-                                    selected?.selected_team === outcome.name,
-                                }
-                              )}
-                            >
-                              {outcome.point || outcome.price}
-                            </p>
-                          </div>
-                        ))}
-                    </div>
-                  ))} */}
-
                   {Object?.entries(odds?.bookmaker?.odds?.ml || {}).length >
                     0 && (
                     <div className="grid grid-cols-4 gap-2 px-1 py-2">
@@ -231,19 +165,18 @@ function BetItems({
                               }), 1fr))`,
                             }}
                             key={`${key}_${index}`}
-                            onClick={
-                              () => console
-                              // mutate({
-                              //   sport_id: odds.id,
-                              //   sport_key: odds.sport_key,
-                              //   sport_title: odds.sport_title,
-                              //   home_team: odds.home_team,
-                              //   away_team: odds.away_team,
-                              //   bookmaker_key: odds.bookmaker?.key,
-                              //   selected_team: outcome.name,
-                              //   odds: outcome.price,
-                              //   market_key: "ml",
-                              // })
+                            onClick={() =>
+                              mutate({
+                                sport_id: odds.sport_id,
+                                sport_key: odds.sport_key,
+                                sport_title: odds.sport_title,
+                                home_team: odds.home_team,
+                                away_team: odds.away_team,
+                                bookmaker_key: outcome.oddID,
+                                selected_team: key,
+                                odds: outcome.odds,
+                                market_key: "ml",
+                              })
                             }
                           >
                             <p className="text-xs text-center mb-1 break-words w-full text-greyf">
@@ -254,7 +187,7 @@ function BetItems({
                                 "bg-white py-2 px-4 rounded w-full text-center text-sm font-semibold",
                                 {
                                   "text-black opacity-60":
-                                    selected?.selected_team === outcome.oddId,
+                                    selected?.selected_team === outcome.oddID,
                                 }
                               )}
                             >
@@ -276,19 +209,18 @@ function BetItems({
                               "col-span-2 flex flex-col items-center justify-between w-full bg-greenbetcard  rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1"
                             )}
                             key={`${key}_${index}`}
-                            onClick={
-                              () => console
-                              // mutate({
-                              //   sport_id: odds.id,
-                              //   sport_key: odds.sport_key,
-                              //   sport_title: odds.sport_title,
-                              //   home_team: odds.home_team,
-                              //   away_team: odds.away_team,
-                              //   bookmaker_key: odds.bookmaker?.key,
-                              //   selected_team: outcome.name,
-                              //   odds: outcome.price,
-                              //   market_key: "ml",
-                              // })
+                            onClick={() =>
+                              mutate({
+                                sport_id: odds.sport_id,
+                                sport_key: odds.sport_key,
+                                sport_title: odds.sport_title,
+                                home_team: odds.home_team,
+                                away_team: odds.away_team,
+                                bookmaker_key: outcome?.oddID,
+                                selected_team: key,
+                                odds: outcome?.odds,
+                                market_key: "ml3way",
+                              })
                             }
                           >
                             <p className="text-xs text-center mb-1 break-words  text-greyf background-transparent">
@@ -299,7 +231,7 @@ function BetItems({
                                 "bg-white py-2 px-4 rounded w-full  text-center text-sm font-semibold",
                                 {
                                   "text-black  opacity-60":
-                                    selected?.selected_team === outcome.oddId,
+                                    selected?.selected_team === outcome.oddID,
                                 }
                               )}
                             >
@@ -406,9 +338,7 @@ function BetItems({
                     <AccordionItem
                       key={index}
                       value={`${outcome.title}-${index}`}
-                      onClick={() => {
-                        console.log("test");
-                      }}
+                      onClick={(e) => e.stopPropagation()}
                       className="bg-greenbetcard rounded shadow-[0_0_20px_rgba(255,255,255,0.15)]"
                     >
                       <BetAccordionTrigger>
@@ -422,6 +352,19 @@ function BetItems({
                             <div
                               key={pointIndex}
                               className="bg-white hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto opacity-60"
+                              onClick={() =>
+                                mutate({
+                                  sport_id: activeProps?.sport_id,
+                                  sport_key: activeProps?.sport_key,
+                                  sport_title: activeProps?.sport_title,
+                                  home_team: activeProps?.home_team,
+                                  away_team: activeProps?.away_team,
+                                  bookmaker_key: point.odd_id,
+                                  selected_team: point.game_name,
+                                  odds: point.odds,
+                                  market_key: "ml3way",
+                                })
+                              }
                             >
                               <span className="text-black">
                                 {point.game_name}
