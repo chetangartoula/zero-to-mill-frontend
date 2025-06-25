@@ -76,6 +76,7 @@
   @media (prefers-color-scheme: dark) {
     :root {
       --background: 226 68% 7%;
+      --black: 0 0 0%;
       --cardtitle: 225 16% 61%;
       --betcard: 225 29% 19%;
       --secondrybetcard: 225 29% 21%;

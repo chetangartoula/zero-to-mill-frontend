@@ -165,7 +165,8 @@ function BetItems({
                               }), 1fr))`,
                             }}
                             key={`${key}_${index}`}
-                            onClick={() =>
+                            onClick={(e) => {
+                              e.stopPropagation();
                               mutate({
                                 sport_id: odds.sport_id,
                                 sport_key: odds.sport_key,
@@ -176,22 +177,22 @@ function BetItems({
                                 selected_team: key,
                                 odds: outcome.odds,
                                 market_key: "ml",
-                              })
-                            }
+                              });
+                            }}
                           >
                             <p className="text-xs text-center mb-1 break-words w-full text-greyf">
                               {formatLabel(key)}-ml
                             </p>
                             <p
                               className={cn(
-                                "bg-white py-2 px-4 rounded w-full text-center text-sm font-semibold",
+                                "bg-white py-2 px-4 rounded w-full text-center text-sm font-semibold text-black opacity-60",
                                 {
-                                  "text-black opacity-60":
+                                  "text-white bg-primary":
                                     selected?.selected_team === outcome.oddID,
                                 }
                               )}
                             >
-                              {outcome.odds}
+                              {outcome.odds} test
                             </p>
                           </div>
                         )
@@ -209,7 +210,8 @@ function BetItems({
                               "col-span-2 flex flex-col items-center justify-between w-full bg-greenbetcard  rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1"
                             )}
                             key={`${key}_${index}`}
-                            onClick={() =>
+                            onClick={(e) => {
+                              e.stopPropagation();
                               mutate({
                                 sport_id: odds.sport_id,
                                 sport_key: odds.sport_key,
@@ -220,17 +222,17 @@ function BetItems({
                                 selected_team: key,
                                 odds: outcome?.odds,
                                 market_key: "ml3way",
-                              })
-                            }
+                              });
+                            }}
                           >
                             <p className="text-xs text-center mb-1 break-words  text-greyf background-transparent">
                               {formatLabel(key)}-ml3way
                             </p>
                             <p
                               className={cn(
-                                "bg-white py-2 px-4 rounded w-full  text-center text-sm font-semibold",
+                                "bg-white py-2 px-4 rounded w-full  text-center text-sm font-semibold text-black opacity-60",
                                 {
-                                  "text-black  opacity-60":
+                                  "text-white  bg-primary":
                                     selected?.selected_team === outcome.oddID,
                                 }
                               )}

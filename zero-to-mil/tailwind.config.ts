@@ -27,6 +27,7 @@ const config = {
       colors: {
         border: "hsl(var(--border))",
         betcard: "hsl(var(--betcard))",
+        black: "hsl(var(--black))",
         secondrybetcard: "hsl(var(--secondrybetcard))",
         greenbetcard: "hsl(var(--greenbetcard))",
         greyf: "hsl(var(--greyf))",
