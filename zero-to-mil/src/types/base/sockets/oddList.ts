@@ -56,6 +56,9 @@ export interface OddList {
   last_update: string;
   commence_time: string;
   home_team: string;
+  home_team_short: string;
+  away_team_short: string;
+  image_url: string;
   away_team: string;
   bookmaker: Bookmaker;
 }

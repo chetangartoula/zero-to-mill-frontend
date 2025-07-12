@@ -94,11 +94,6 @@ function BetItems({
 
   const propsToDisplay = activeProps?.bookmaker?.props?.[activeTab] || [];
 
-  console.log("propsToDisplay", propsToDisplay);
-
-  console.log("oddList", oddList);
-  console.log("activeProps", activeProps);
-
   return (
     <Drawer direction="right">
       <div
@@ -112,7 +107,7 @@ function BetItems({
         {oddList &&
           oddList?.map((odds, index) => {
             const selected = activeSlip.find(
-              (item) => item.sport_id === odds.id
+              (item) => item.sport_id === odds.sport_id
             );
             return (
               <DrawerTrigger asChild key={`${odds?.sport_key}-${index}`}>
@@ -187,12 +182,12 @@ function BetItems({
                               className={cn(
                                 "bg-white py-2 px-4 rounded w-full text-center text-sm font-semibold text-black opacity-60",
                                 {
-                                  "text-white bg-primary":
-                                    selected?.selected_team === outcome.oddID,
+                                  "text-white bg-primary opacity-100":
+                                    selected?.bookmaker_key === outcome.oddID,
                                 }
                               )}
                             >
-                              {outcome.odds} test
+                              {outcome.odds}
                             </p>
                           </div>
                         )
@@ -233,7 +228,7 @@ function BetItems({
                                 "bg-white py-2 px-4 rounded w-full  text-center text-sm font-semibold text-black opacity-60",
                                 {
                                   "text-white  bg-primary":
-                                    selected?.selected_team === outcome.oddID,
+                                    selected?.bookmaker_key === outcome.oddID,
                                 }
                               )}
                             >
@@ -255,6 +250,7 @@ function BetItems({
                 className="h-80 bg-cover bg-center relative"
                 style={{
                   backgroundImage:
+                    activeProps?.image_url ??
                     "linear-gradient(rgba(246, 234, 234, 0.6), rgba(219, 211, 211, 0.6)), url('/placeholder.svg?height=320&width=400')",
                   backgroundSize: "cover",
                 }}
@@ -263,7 +259,9 @@ function BetItems({
                   <DrawerClose asChild>
                     <ArrowLeft className="w-6 h-6" />
                   </DrawerClose>
-                  <h1 className="text-xl font-semibold">Champions League</h1>
+                  <h1 className="text-xl font-semibold">
+                    {activeProps?.sport_title}
+                  </h1>
                   <div className="w-6" />
                 </div>
 
@@ -271,30 +269,34 @@ function BetItems({
                   <div className="flex items-center justify-center space-x-8 mb-4">
                     <div className="flex items-center space-x-2">
                       <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                        <span className="text-xs font-bold">FCB</span>
+                        <span className="text-xs font-bold">
+                          {activeProps?.home_team_short}
+                        </span>
                       </div>
-                      <span className="text-sm">FC Barcelona</span>
+                      <span className="text-sm">{activeProps?.home_team}</span>
                     </div>
 
                     <span className="text-sm text-gray-300">VS</span>
 
                     <div className="flex items-center space-x-2">
                       <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                        <span className="text-xs font-bold text-black">RM</span>
+                        <span className="text-xs font-bold text-black">
+                          {activeProps?.away_team_short}
+                        </span>
                       </div>
-                      <span className="text-sm">Realmadrid FC</span>
+                      <span className="text-sm">{activeProps?.away_team}</span>
                     </div>
                   </div>
 
                   {/* Match Details */}
                   <div className="text-center">
                     <p className="text-sm text-gray-300 mb-1">
-                      6th Feb, 2024 12:45 pm
+                      {activeProps?.commence_time}
                     </p>
-                    <p className="text-sm text-gray-300">Santiago, Bernebeu</p>
+                    {/* <p className="text-sm text-gray-300">Santiago, Bernebeu</p> */}
                   </div>
 
-                  <div className="mt-8">
+                  {/* <div className="mt-8">
                     <div className="w-16 h-16 bg-gray-600 rounded-full flex items-center justify-center">
                       <div className="w-12 h-12 bg-gray-500 rounded-full relative">
                         <div className="absolute inset-2 border-2 border-gray-400 rounded-full">
@@ -304,7 +306,7 @@ function BetItems({
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
