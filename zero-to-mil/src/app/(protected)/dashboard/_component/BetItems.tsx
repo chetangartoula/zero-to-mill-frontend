@@ -28,6 +28,7 @@ import {
   AccordionItem,
   BetAccordionTrigger,
 } from "@/components/ui/accordion";
+import { convertUTCToLocal } from "@/utils/convertUTCToLocal";
 
 function BetItems({
   itemKey,
@@ -291,7 +292,8 @@ function BetItems({
                   {/* Match Details */}
                   <div className="text-center">
                     <p className="text-sm text-gray-300 mb-1">
-                      {activeProps?.commence_time}
+                      {activeProps &&
+                        convertUTCToLocal(activeProps.commence_time)}
                     </p>
                     {/* <p className="text-sm text-gray-300">Santiago, Bernebeu</p> */}
                   </div>
