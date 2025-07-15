@@ -244,19 +244,20 @@ function BetItems({
               </DrawerTrigger>
             );
           })}
-        <DrawerContent className="fixed right-0 top-0 min-h-screen w-full sm:w-1/2 transform translate-x-full data-[state=open]:translate-x-0 transition-transform duration-300 ease-in-out bg-background left-auto z-50 m-0 p-0 translate-y-0 shadow-lg font-seoge">
+        <DrawerContent className="fixed right-0 top-0 min-h-screen w-full sm:w-1/2 transform translate-x-full data-[state=open]:translate-x-0 transition-transform duration-300 ease-in-out  left-auto z-50 m-0 p-0 translate-y-0 shadow-lg font-seoge">
           <div className="min-h-screen text-white">
             <div className="relative">
               <div
                 className="h-80 bg-cover bg-center relative"
                 style={{
-                  backgroundImage:
-                    activeProps?.image_url ??
-                    "linear-gradient(rgba(246, 234, 234, 0.6), rgba(219, 211, 211, 0.6)), url('/placeholder.svg?height=320&width=400')",
+                  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${activeProps?.image_url})`,
                   backgroundSize: "cover",
                 }}
               >
-                <div className="flex items-center justify-between p-4">
+                <div
+                  className="flex items-center justify-between p-4"
+                  style={{ background: "transparent" }}
+                >
                   <DrawerClose asChild>
                     <ArrowLeft className="w-6 h-6" />
                   </DrawerClose>
@@ -368,7 +369,7 @@ function BetItems({
                                   bookmaker_key: point.odd_id,
                                   selected_team: point.game_name,
                                   odds: point.odds,
-                                  market_key: "ml3way",
+                                  market_key: activeTab,
                                 })
                               }
                             >
