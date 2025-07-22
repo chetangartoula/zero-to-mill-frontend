@@ -341,50 +341,62 @@ function BetItems({
                   className="border rounded mt-4 bg-menu space-y-2"
                   collapsible
                 >
-                  {propsToDisplay?.map((outcome, index) => (
-                    <AccordionItem
-                      key={index}
-                      value={`${outcome.title}-${index}`}
-                      onClick={(e) => e.stopPropagation()}
-                      className="bg-greenbetcard rounded shadow-[0_0_20px_rgba(255,255,255,0.15)]"
-                    >
-                      <BetAccordionTrigger>
-                        <span className="text-white font-medium ml-2">
-                          {outcome.title}
-                        </span>
-                      </BetAccordionTrigger>
-                      <AccordionContent>
-                        <div className="px-4 pb-4 rounded w-full space-y-2">
-                          {outcome.points.map((point, pointIndex) => (
-                            <div
-                              key={pointIndex}
-                              className="bg-white hover:bg-slate-500 text-white flex items-center justify-between p-3 h-auto opacity-60"
-                              onClick={() =>
-                                mutate({
-                                  sport_id: activeProps?.sport_id,
-                                  sport_key: activeProps?.sport_key,
-                                  sport_title: activeProps?.sport_title,
-                                  home_team: activeProps?.home_team,
-                                  away_team: activeProps?.away_team,
-                                  bookmaker_key: point.odd_id,
-                                  selected_team: point.game_name,
-                                  odds: point.odds,
-                                  market_key: activeTab,
-                                })
-                              }
-                            >
-                              <span className="text-black">
-                                {point.game_name}
-                              </span>
-                              <span className="font-bold text-black">
-                                {point.odds}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
+                  {propsToDisplay?.map((outcome, index) => {
+                    return (
+                      <AccordionItem
+                        key={index}
+                        value={`${outcome.title}-${index}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-greenbetcard rounded shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+                      >
+                        <BetAccordionTrigger>
+                          <span className="text-white font-medium ml-2">
+                            {outcome.title}
+                          </span>
+                        </BetAccordionTrigger>
+                        <AccordionContent>
+                          <div className="px-4 pb-4 rounded w-full space-y-2">
+                            {outcome.points.map((point, pointIndex) => {
+                              const selectedProps = activeSlip.find(
+                                (item) => item.bookmaker_key === point.odd_id
+                              );
+                              return (
+                                <div
+                                  key={pointIndex}
+                                  className={cn(
+                                    "bg-white hover:bg-slate-500 text-black flex items-center justify-between p-3 h-auto opacity-60",
+                                    {
+                                      "text-white bg-primary opacity-100":
+                                        selectedProps?.bookmaker_key ===
+                                        point.odd_id,
+                                    }
+                                  )}
+                                  onClick={() =>
+                                    mutate({
+                                      sport_id: activeProps?.sport_id,
+                                      sport_key: activeProps?.sport_key,
+                                      sport_title: activeProps?.sport_title,
+                                      home_team: activeProps?.home_team,
+                                      away_team: activeProps?.away_team,
+                                      bookmaker_key: point.odd_id,
+                                      selected_team: point.game_name,
+                                      odds: point.odds,
+                                      market_key: activeTab,
+                                    })
+                                  }
+                                >
+                                  <span>{point.game_name}</span>
+                                  <span className="font-bold">
+                                    {point.odds}
+                                  </span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    );
+                  })}
                 </Accordion>
               </div>
             </div>
