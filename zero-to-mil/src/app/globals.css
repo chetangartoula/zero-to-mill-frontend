@@ -208,3 +208,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.vaul-overlay {
+  pointer-events: none !important;
+}

@@ -244,7 +244,10 @@ function BetItems({
               </DrawerTrigger>
             );
           })}
-        <DrawerContent className="fixed right-0 top-0 min-h-screen w-full sm:w-1/2 transform translate-x-full data-[state=open]:translate-x-0 transition-transform duration-300 ease-in-out  left-auto z-50 m-0 p-0 translate-y-0 shadow-lg font-seoge">
+        <DrawerContent
+          className="fixed right-0 top-0 min-h-screen w-full sm:w-1/2 transform translate-x-full data-[state=open]:translate-x-0 transition-transform duration-300 ease-in-out  left-auto z-50 m-0 p-0 translate-y-0 shadow-lg font-seoge"
+          onWheel={(e) => e.stopPropagation()}
+        >
           <div className="min-h-screen text-white">
             <div className="relative">
               <div
