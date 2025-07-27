@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const ChangeMPINSchema = z
   .object({
-    old_pin_code: z.string(),
+    old_pin: z.string(),
     pin_code: z.string(),
     confirm_pin_code: z.string(),
   })

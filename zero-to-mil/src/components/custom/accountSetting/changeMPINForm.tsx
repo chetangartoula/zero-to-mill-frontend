@@ -9,9 +9,15 @@ import { ChangeMPINDTO } from "@/types/base";
 import React from "react";
 
 function ChangeMPINForm() {
-  const { mutate } = useAppMutation("changeMPIN");
+  const { mutate } = useAppMutation(
+    "changeMPIN",
+    {},
+    {
+      method: "PATCH",
+    }
+  );
   const initialValues = {
-    old_pin_code: "",
+    old_pin: "",
     pin_code: "",
     confirm_pin_code: "",
   };
@@ -22,7 +28,7 @@ function ChangeMPINForm() {
       onSubmit={(data, form) =>
         mutate(
           {
-            old_pin_code: data.old_pin_code,
+            old_pin: data.old_pin,
             pin_code: data.pin_code,
           },
           {
@@ -47,12 +53,7 @@ function ChangeMPINForm() {
     >
       <FormContentWrapper className="p-4 ">
         <div className="flex justify-center">
-          <OTPFormField
-            name="old_pin_code"
-            length={4}
-            label="Old MPIN"
-            fullWidth
-          />
+          <OTPFormField name="old_pin" length={4} label="Old MPIN" fullWidth />
         </div>
 
         <OTPFormField name="pin_code" length={4} label="New MPIN" fullWidth />

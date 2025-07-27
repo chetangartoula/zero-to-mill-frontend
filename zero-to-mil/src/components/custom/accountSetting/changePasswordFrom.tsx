@@ -14,7 +14,7 @@ function ChangePasswordFrom() {
     new_password: "",
     confirm_password: "",
   };
-  const { mutate } = useAppMutation("changePassword");
+  const { mutate } = useAppMutation("resetPassword");
   return (
     <AppForm<ChangePasswordDTO>
       defaultValues={initialData}

@@ -17,7 +17,8 @@ export const apiRoutes = {
   //mpin
   getMPIN: "/config/gurd-verification/",
   setMPIN: "/auth/me/setup-pin/",
-  changeMPIN: "/auth/me/change-pin/",
+  changeMPIN: "/auth/me/setup-pin/",
+  // changeMPIN: "/auth/me/change-pin/",
 
   //options
   "cash-options": "/config/cash-options/",
