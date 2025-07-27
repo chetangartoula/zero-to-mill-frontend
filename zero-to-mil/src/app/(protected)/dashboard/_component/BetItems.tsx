@@ -149,8 +149,17 @@ function BetItems({
                   {Object?.entries(odds?.bookmaker?.odds?.ml || {}).length >
                     0 && (
                     <div className="grid grid-cols-4 gap-2 px-1 py-2">
-                      {Object?.entries(odds?.bookmaker?.odds?.ml).map(
-                        ([key, outcome], index) => (
+                      {Object?.entries(odds?.bookmaker?.odds?.ml)
+                        ?.sort((a, b) => {
+                          const getOrder = (name: string) => {
+                            if (name === "home") return 1;
+                            if (name === "draw") return 2;
+                            if (name === "away") return 3;
+                            return 4;
+                          };
+                          return getOrder(a[0]) - getOrder(b[0]);
+                        })
+                        .map(([key, outcome], index) => (
                           <div
                             className={cn(
                               "col-span-2 flex flex-col items-center justify-between bg-greenbetcard  rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1"
@@ -177,7 +186,11 @@ function BetItems({
                             }}
                           >
                             <p className="text-xs text-center mb-1 break-words w-full text-greyf">
-                              {formatLabel(key)}-ml
+                              {key === "away"
+                                ? odds?.away_team
+                                : key === "home"
+                                ? odds?.home_team
+                                : formatLabel(key)}
                             </p>
                             <p
                               className={cn(
@@ -191,16 +204,24 @@ function BetItems({
                               {outcome.odds}
                             </p>
                           </div>
-                        )
-                      )}
+                        ))}
                     </div>
                   )}
 
                   {Object?.entries(odds?.bookmaker?.odds?.ml3way || {}).length >
                     0 && (
                     <div className="grid grid-cols-6 gap-2 px-1 py-2">
-                      {Object?.entries(odds?.bookmaker?.odds?.ml3way).map(
-                        ([key, outcome], index) => (
+                      {Object?.entries(odds?.bookmaker?.odds?.ml3way)
+                        ?.sort((a, b) => {
+                          const getOrder = (name: string) => {
+                            if (name === "home") return 1;
+                            if (name === "draw") return 2;
+                            if (name === "away") return 3;
+                            return 4;
+                          };
+                          return getOrder(a[0]) - getOrder(b[0]);
+                        })
+                        .map(([key, outcome], index) => (
                           <div
                             className={cn(
                               "col-span-2 flex flex-col items-center justify-between w-full bg-greenbetcard  rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1"
@@ -222,7 +243,11 @@ function BetItems({
                             }}
                           >
                             <p className="text-xs text-center mb-1 break-words  text-greyf background-transparent">
-                              {formatLabel(key)}-ml3way
+                              {key === "away"
+                                ? odds?.away_team
+                                : key === "home"
+                                ? odds?.home_team
+                                : formatLabel(key)}
                             </p>
                             <p
                               className={cn(
@@ -236,8 +261,7 @@ function BetItems({
                               {outcome.odds}
                             </p>
                           </div>
-                        )
-                      )}
+                        ))}
                     </div>
                   )}
                 </div>
