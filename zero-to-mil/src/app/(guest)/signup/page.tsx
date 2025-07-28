@@ -48,6 +48,13 @@ function SignUp() {
         });
       }
     },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error?.toString() || "An error occurred",
+        variant: "destructive",
+      });
+    },
   });
 
   return (

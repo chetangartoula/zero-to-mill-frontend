@@ -30,6 +30,7 @@ function ChangeMPINForm() {
           {
             old_pin: data.old_pin,
             pin_code: data.pin_code,
+            confirm_pin_code: data.confirm_pin_code,
           },
           {
             onSuccess: () => {
@@ -40,10 +41,10 @@ function ChangeMPINForm() {
               });
               form.reset();
             },
-            onError: (error: Error) => {
+            onError: (error: any) => {
               toast({
                 title: "Error",
-                description: error.message,
+                description: error,
                 variant: "destructive",
               });
             },

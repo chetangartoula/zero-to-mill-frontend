@@ -56,6 +56,14 @@ function OTPVerification({
         variant: "success",
       });
     },
+    onError: (error) => {
+      console.log("error", error);
+      toast({
+        title: "OTP not verified",
+        description: error.toString() || "OTP verification failed",
+        variant: "destructive",
+      });
+    },
   });
   const email = searchParams.email || "";
   const username = searchParams.username || "";

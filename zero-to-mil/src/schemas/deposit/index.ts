@@ -5,5 +5,5 @@ export const DepositSchema = z.object({
   deposit_method: z.string().min(1, "Deposit method is required"),
   user_identity: z.string(),
   amount: z.number().min(1, "Amount is required"),
-  remarks: z.string(),
+  remarks: z.string().min(3, "Remarks is required"),
 });
