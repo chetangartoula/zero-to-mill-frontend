@@ -32,7 +32,10 @@ function TransactionHistoryList() {
 
   return (
     <>
-      <MobileTopNav />
+      <div className="block sm:hidden">
+        <MobileTopNav />
+      </div>
+
       <Tabs defaultValue="bet_history" className="relative mr-auto w-full mt-1">
         <TabsList className="w-full flex justify-start rounded-none border-b bg-transparent p-0 ">
           <TabsTrigger

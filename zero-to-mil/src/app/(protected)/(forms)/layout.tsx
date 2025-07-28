@@ -15,7 +15,7 @@ function FormLayout({ children }: PropsWithChildren) {
         <div className="w-full flex justify-center mx-auto">
           <div className="flex gap-6 w-4/6">
             <div className="w-1/3">
-              <h1 className="font-switzer font-semibold text-2xl leading-5 ml-4 flex-grow mt-7">
+              <h1 className="font-switzer font-semibold text-2xl leading-5 ml-4 flex-grow mt-7 mb-4">
                 Menu
               </h1>
               <MenuComponent />
