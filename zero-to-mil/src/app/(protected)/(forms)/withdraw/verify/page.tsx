@@ -10,29 +10,16 @@ import { useAppMutation } from "@/lib/api";
 import { WithDrawVerifySchema } from "@/schemas/withdraw";
 import { useAppStore } from "@/store";
 import { WithDrawVerifyDTO } from "@/types/base";
+import { getPageRoutes } from "@/utils/getRoutes";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 function WithDrawVerify() {
+  const router = useRouter();
   const { withdraw_method, user_identity, amount } = useAppStore(
     (state) => state
   );
-  const { mutate } = useAppMutation("withdraw", {
-    onSuccess: async (data, form) => {
-      toast({
-        title: "Withdraw",
-        description: "Withdraw successful",
-        variant: "success",
-      });
-      form.reset();
-    },
-    onError: (error) => {
-      toast({
-        title: "Withdraw",
-        description: error?.toString() || "An error occurred",
-        variant: "destructive",
-      });
-    },
-  });
+  const { mutate } = useAppMutation("withdraw");
   return (
     <AuthWrapper
       title="Enter your MPIN"
@@ -48,13 +35,34 @@ function WithDrawVerify() {
       <AppForm<WithDrawVerifyDTO>
         defaultValues={{ mpin: "" }}
         schema={WithDrawVerifySchema}
-        onSubmit={(data) =>
-          mutate({
-            withdraw_method,
-            user_identity,
-            amount,
-            ...data,
-          })
+        onSubmit={(data, form) =>
+          mutate(
+            {
+              withdraw_method,
+              user_identity,
+              amount,
+              ...data,
+            },
+            {
+              onSuccess: async (data) => {
+                toast({
+                  title: "Withdraw",
+                  description: "Withdraw successful",
+                  variant: "success",
+                });
+
+                router.push(getPageRoutes("dashboard"));
+                form.reset();
+              },
+              onError: (error) => {
+                toast({
+                  title: "Withdraw",
+                  description: error?.toString() || "An error occurred",
+                  variant: "destructive",
+                });
+              },
+            }
+          )
         }
       >
         {(form) => (

@@ -31,5 +31,8 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response) => response,
-  (error) => Promise.reject(handleApiError(error))
+  (error) => {
+    console.log("error", error);
+    return Promise.reject(handleApiError(error));
+  }
 );
