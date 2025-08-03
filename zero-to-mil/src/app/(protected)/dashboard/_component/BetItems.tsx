@@ -136,6 +136,11 @@ function BetItems({
                   )}
 
                   <p className="text-center mt-1 text-xs text-greyf">
+                    {odds?.bookmaker?.odds?.ml3way?.home?.market_name ||
+                      odds?.bookmaker?.odds?.ml?.home?.market_name}
+                  </p>
+
+                  <p className="text-center mt-1 text-xs text-greyf">
                     {format(
                       parseISO(odds?.commence_time || odds?.last_update),
                       "dd/MM/yyyy HH:mm",
@@ -144,6 +149,10 @@ function BetItems({
                           Intl.DateTimeFormat().resolvedOptions().timeZone,
                       }
                     )}
+                  </p>
+
+                  <p className="text-center mt-1 text-xs text-greyf underline">
+                    Click here for props builder
                   </p>
 
                   {Object?.entries(odds?.bookmaker?.odds?.ml || {}).length >
@@ -341,8 +350,8 @@ function BetItems({
               </div>
             </div>
 
-            <div className="relative -mt-4 rounded-xl overflow-hidden bg-input shadow-lg">
-              <div className="flex overflow-x-auto  px-4 pt-6 space-x-2">
+            <div className="relative mt-4 h-full rounded-xl overflow-hidden bg-input shadow-lg">
+              <div className="flex overflow-x-auto  px-4 pt-6 space-x-2 mb-2">
                 {Object?.entries(activeProps?.bookmaker?.props || {}).map(
                   ([key, value], index) => (
                     <Button
@@ -362,7 +371,7 @@ function BetItems({
                 )}
               </div>
 
-              <div className="p-4 space-y-3 overflow-y-auto max-h-[calc(100vh-200px)]">
+              <div className="p-4 space-y-3  overflow-y-auto max-h-[calc(73vh-200px)] pb-8">
                 <Accordion
                   type="single"
                   className="border rounded mt-4 bg-menu space-y-2"
@@ -426,6 +435,8 @@ function BetItems({
                   })}
                 </Accordion>
               </div>
+
+              <div className="max-sm:m-4 max-sm:p-8"></div>
             </div>
           </div>
         </DrawerContent>
