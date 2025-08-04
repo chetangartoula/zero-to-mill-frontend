@@ -203,7 +203,7 @@ function BetItems({
                             </p>
                             <p
                               className={cn(
-                                "bg-white py-2 px-4 rounded w-full text-center text-sm font-semibold text-black opacity-60",
+                                "bg-white py-2 px-4 rounded w-full text-center text-sm font-semibold text-[#000000] opacity-60",
                                 {
                                   "text-white bg-primary opacity-100":
                                     selected?.bookmaker_key === outcome.oddID,
