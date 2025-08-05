@@ -24,6 +24,11 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'zerotomil.com',
                 pathname: '/**',
+            },
+             {
+                protocol: 'https',
+                hostname: 'api.zerotomil.com',
+                pathname: '/**',
             }
         ],
     }
