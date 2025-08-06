@@ -6,6 +6,7 @@ import { toast } from "@/components/ui/use-toast";
 import { useAppMutation } from "@/lib/api";
 import { oddListSchema } from "@/schemas/oddList";
 import { useQueryClient } from "@tanstack/react-query";
+import { round } from "lodash";
 import React from "react";
 
 export interface OddListProps {
@@ -46,7 +47,7 @@ function OddList({ isDisabled, onClick, total_odds = 0 }: OddListProps) {
         <div className="sticky bottom-0 pb-8 mb-11 mx-4">
           <div className="flex justify-between mb-3 text-lg">
             <p className="font-semibold">Total Odds</p>
-            <p>{total_odds}</p>
+            <p>{round(total_odds, 2)}</p>
           </div>
           <div className="bg-input w-full rounded mb-4 p-3 text-sm text-cardtitle">
             <p>Stake amount, $</p>
