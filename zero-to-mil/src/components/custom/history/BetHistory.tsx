@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { BetHistoryApiProps } from "@/types/base/history/betHistory";
+import { round } from "lodash";
 import React from "react";
 
 export interface BetHistoryProps {
@@ -48,7 +49,7 @@ function BetHistory({ className, onClick, data, key }: BetHistoryProps) {
           </div>
           <div className="flex justify-between">
             <p className="text-muted">Bet:</p>
-            <p>{data.bet_amount}</p>
+            <p>{round(parseFloat(data.bet_amount), 2)}</p>
           </div>
           <div className="flex justify-between">
             <p className="text-muted">Status:</p>

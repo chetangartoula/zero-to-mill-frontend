@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { TransactionHistoryApiProps } from "@/types/base/history";
+import { round } from "lodash";
 import React from "react";
 
 export interface TransactionHistoryProps {
@@ -32,7 +33,7 @@ function BetHistory({
     >
       <div className="flex justify-between">
         <p>{data.txn_date.split("T")[0]}</p>
-        <p>${data.amount}</p>
+        <p>${round(data.amount, 2)}</p>
       </div>
       <div className="text-sm space-y-2 border-t border-muted pt-2 mt-2">
         {" "}
