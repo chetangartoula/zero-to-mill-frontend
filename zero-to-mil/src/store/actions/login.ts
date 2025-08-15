@@ -13,7 +13,6 @@ export default async function LoginUser(data: LoginDTO) {
       name: "login",
       data,
     });
-    console.log(response, "response");
     if (response.status === 200) {
       cookies().set("refreshToken", response.data.refresh, {
         httpOnly: true,

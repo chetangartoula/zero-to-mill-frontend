@@ -30,7 +30,6 @@ function Withdraw() {
         defaultValues={withDrawInitialValue}
         schema={WithDrawSchema}
         onSubmit={async (data) => {
-          console.log("withdrawData", data);
           await setWithdrawState(data);
           router.push(getPageRoutes("withdraw-verify"));
         }}

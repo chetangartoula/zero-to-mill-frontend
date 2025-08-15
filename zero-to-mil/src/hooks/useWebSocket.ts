@@ -25,7 +25,7 @@ export const useWebSocket = <T = unknown>(
 
   const createWebSocket = useCallback(() => {
     const connectionId = connectionIdRef.current;
-    console.log(`[${connectionId}] Attempting to create WebSocket`);
+    // console.log(`[${connectionId}] Attempting to create WebSocket`);
 
     // Prevent creating a new connection if one is already open or connecting
     if (
@@ -39,7 +39,7 @@ export const useWebSocket = <T = unknown>(
     }
 
     if (socketRef.current) {
-      console.log("Closing existing WebSocket connection");
+      // console.log("Closing existing WebSocket connection");
       socketRef.current.close();
       socketRef.current = null;
       setIsConnected(false);
@@ -88,7 +88,7 @@ export const useWebSocket = <T = unknown>(
     };
 
     newSocket.onclose = (event) => {
-      console.log("WebSocket closed:", event.code, event);
+      // console.log("WebSocket closed:", event.code, event);
       newSocket.CLOSED;
       setIsConnected(false);
       setIsAttemptingConnection(false);

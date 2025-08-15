@@ -52,7 +52,6 @@ function ProtectedLayout({ children }: PropsWithChildren) {
       }
     };
     if (isTimeExpired || !accessToken) {
-      console.log("accessToken was fetched");
       fetchAccessToken();
     }
   }, [accessToken, setAccessToken, tokenTime, tokenExpireTime]);
