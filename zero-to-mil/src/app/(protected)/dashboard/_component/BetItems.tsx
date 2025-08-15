@@ -50,7 +50,7 @@ function BetItems({
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 10);
 
     return () => clearTimeout(timer);
   }, [itemKey]);

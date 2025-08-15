@@ -25,7 +25,6 @@ export default async function getAccessToken(): Promise<any> {
       throw new Error("Failed to get access token");
     }
   } catch (error) {
-    console.log("test", error);
     return error;
   }
 }

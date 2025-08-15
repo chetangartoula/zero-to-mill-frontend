@@ -8,11 +8,18 @@ import getAccessToken from "@/store/actions/getAccessToken";
 import { BalanceState } from "@/store/slices/balance";
 import { ProfileState } from "@/store/slices/profile";
 import { setAxiosAuthTokens } from "@/utils/token";
+import { format } from "date-fns";
 import React, { PropsWithChildren, Suspense, useEffect, useRef } from "react";
 
 function ProtectedLayout({ children }: PropsWithChildren) {
-  const { accessToken, setAccessToken, setBalance, setProfile, setSlip } =
-    useAppStore((state) => state);
+  const {
+    accessToken,
+    setAccessToken,
+    setBalance,
+    tokenTime,
+    setProfile,
+    setSlip,
+  } = useAppStore((state) => state);
   const fetchingRef = useRef(false);
   const { data: BalanceData } = useAppQuery<{
     email: string;
@@ -26,23 +33,31 @@ function ProtectedLayout({ children }: PropsWithChildren) {
     refetchOnWindowFocus: false,
     enabled: !!accessToken,
   });
+  const now = new Date();
+  const tokenExpireTime = format(
+    new Date(now.getTime() + 1 * 60 * 1000),
+    "yyyy-MM-dd HH:mm"
+  );
+  console.log("tokenExpireTime", tokenExpireTime);
 
   useEffect(() => {
+    console.log("tokenTime", tokenTime);
+    const isTimeExpired = new Date() > new Date(tokenTime);
+
     const fetchAccessToken = async () => {
-      if (fetchingRef.current) return;
       try {
-        fetchingRef.current = true;
         const response = await getAccessToken();
-        setAccessToken(response);
+        setAccessToken(response, tokenExpireTime);
         setAxiosAuthTokens(response);
       } catch (error) {
         console.error("Failed to fetch access token:", error);
-      } finally {
-        fetchingRef.current = false;
       }
     };
-    if (!accessToken) fetchAccessToken();
-  }, [accessToken, setAccessToken]);
+    if (isTimeExpired || !accessToken) {
+      console.log("accessToken was fetched");
+      fetchAccessToken();
+    }
+  }, [accessToken, setAccessToken, tokenTime, tokenExpireTime]);
 
   useEffect(() => {
     if (BalanceData) {

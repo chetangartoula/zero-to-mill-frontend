@@ -14,6 +14,7 @@ import LoginUser from "@/store/actions/login";
 import { LoginDTO } from "@/types/base";
 import { getPageRoutes } from "@/utils/getRoutes";
 import { setAxiosAuthTokens } from "@/utils/token";
+import { format } from "date-fns";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -24,6 +25,11 @@ function Login() {
   const { setAccessToken } = useAppStore((state) => state);
 
   const handleSubmit = async (data: LoginDTO) => {
+    const now = new Date();
+    const tokenExpireTime = format(
+      new Date(now.getTime() + 1 * 60 * 1000),
+      "yyyy-MM-dd HH:mm"
+    );
     try {
       const response = await LoginUser(data);
       if (response instanceof Error) {
@@ -41,7 +47,7 @@ function Login() {
         });
         return;
       } else {
-        setAccessToken(response.access);
+        setAccessToken(response.access, tokenExpireTime);
         setAxiosAuthTokens(response.access);
         router.push(getPageRoutes("dashboard"));
       }
