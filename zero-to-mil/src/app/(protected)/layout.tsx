@@ -7,6 +7,7 @@ import { useAppStore } from "@/store";
 import getAccessToken from "@/store/actions/getAccessToken";
 import { BalanceState } from "@/store/slices/balance";
 import { ProfileState } from "@/store/slices/profile";
+import { getJWTExpiry } from "@/utils/getJWTExpiry";
 import { setAxiosAuthTokens } from "@/utils/token";
 import { format } from "date-fns";
 import React, { PropsWithChildren, Suspense, useEffect, useRef } from "react";
@@ -20,7 +21,6 @@ function ProtectedLayout({ children }: PropsWithChildren) {
     setProfile,
     setSlip,
   } = useAppStore((state) => state);
-  const fetchingRef = useRef(false);
   const { data: BalanceData } = useAppQuery<{
     email: string;
     username: string;
@@ -38,16 +38,14 @@ function ProtectedLayout({ children }: PropsWithChildren) {
     new Date(now.getTime() + 1 * 60 * 1000),
     "yyyy-MM-dd HH:mm"
   );
-  console.log("tokenExpireTime", tokenExpireTime);
 
   useEffect(() => {
-    console.log("tokenTime", tokenTime);
     const isTimeExpired = new Date() > new Date(tokenTime);
 
     const fetchAccessToken = async () => {
       try {
-        const response = await getAccessToken();
-        setAccessToken(response, tokenExpireTime);
+        const response = (await getAccessToken()) as string;
+        setAccessToken(response, getJWTExpiry(response) ?? "");
         setAxiosAuthTokens(response);
       } catch (error) {
         console.error("Failed to fetch access token:", error);

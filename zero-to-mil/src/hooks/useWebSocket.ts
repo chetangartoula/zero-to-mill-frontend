@@ -1,7 +1,6 @@
 "use client";
 
 import { useAppStore } from "@/store";
-import { logout } from "@/store/actions/logout";
 import { useEffect, useState, useRef, useCallback } from "react";
 
 interface WebSocketOptions<T> {
@@ -17,14 +16,12 @@ export const useWebSocket = <T = unknown>(
   url: string,
   options?: WebSocketOptions<T>
 ) => {
-  const { accessToken, tokenTime } = useAppStore((state) => state);
+  const { accessToken } = useAppStore((state) => state);
   const [isConnected, setIsConnected] = useState(false);
   const [messages, setMessages] = useState<T | []>([]);
   const socketRef = useRef<WebSocket | null>(null);
   const [isAttemptingConnection, setIsAttemptingConnection] = useState(false);
   const connectionIdRef = useRef<string>(Date.now().toString());
-  const isTimeExpired = new Date() > new Date(tokenTime);
-  console.log("tokenTimeWebSocket", tokenTime);
 
   const createWebSocket = useCallback(() => {
     const connectionId = connectionIdRef.current;
@@ -121,11 +118,6 @@ export const useWebSocket = <T = unknown>(
   }, [accessToken, isConnected, isAttemptingConnection, options, url]);
 
   useEffect(() => {
-    if (isTimeExpired) {
-      logout();
-      window.location.replace("/login");
-    }
-
     let isMounted = true;
     const connectWebSocket = () => {
       if (isMounted && !isConnected && !isAttemptingConnection) {

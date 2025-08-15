@@ -15,6 +15,7 @@ import { useAppStore } from "@/store";
 import { setAxiosAuthTokens } from "@/utils/token";
 import { useToast } from "@/components/ui/use-toast";
 import { format } from "date-fns";
+import { getJWTExpiry } from "@/utils/getJWTExpiry";
 
 function OTPVerification({
   searchParams,
@@ -27,11 +28,6 @@ function OTPVerification({
 }) {
   const router = useRouter();
   const { toast } = useToast();
-  const now = new Date();
-  const tokenExpireTime = format(
-    new Date(now.getTime() + 1 * 60 * 1000),
-    "yyyy-MM-dd HH:mm"
-  );
   const {
     setAccessToken,
     username: storeUsername,
@@ -52,7 +48,7 @@ function OTPVerification({
         });
         return;
       } else {
-        setAccessToken(response.access, tokenExpireTime);
+        setAccessToken(response.access, getJWTExpiry(response.access) ?? "");
         setAxiosAuthTokens(response.access);
         router.push(getPageRoutes("dashboard"));
       }
@@ -63,7 +59,6 @@ function OTPVerification({
       });
     },
     onError: (error) => {
-      // console.log("error", error);
       toast({
         title: "OTP not verified",
         description: error.toString() || "OTP verification failed",

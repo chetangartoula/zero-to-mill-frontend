@@ -12,6 +12,7 @@ import { LoginSchema } from "@/schemas/auth";
 import { useAppStore } from "@/store";
 import LoginUser from "@/store/actions/login";
 import { LoginDTO } from "@/types/base";
+import { getJWTExpiry } from "@/utils/getJWTExpiry";
 import { getPageRoutes } from "@/utils/getRoutes";
 import { setAxiosAuthTokens } from "@/utils/token";
 import { format } from "date-fns";
@@ -25,11 +26,6 @@ function Login() {
   const { setAccessToken } = useAppStore((state) => state);
 
   const handleSubmit = async (data: LoginDTO) => {
-    const now = new Date();
-    const tokenExpireTime = format(
-      new Date(now.getTime() + 1 * 60 * 1000),
-      "yyyy-MM-dd HH:mm"
-    );
     try {
       const response = await LoginUser(data);
       if (response instanceof Error) {
@@ -47,7 +43,7 @@ function Login() {
         });
         return;
       } else {
-        setAccessToken(response.access, tokenExpireTime);
+        setAccessToken(response.access, getJWTExpiry(response.access) ?? "");
         setAxiosAuthTokens(response.access);
         router.push(getPageRoutes("dashboard"));
       }
