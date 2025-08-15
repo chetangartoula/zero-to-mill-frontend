@@ -41,19 +41,11 @@ function BetItems({
   const router = useRouter();
   const queryClient = useQueryClient();
   const { numberOfSlips, setSlip } = useAppStore((store) => store);
-  const [isLoading, setIsLoading] = useState(true);
   const [selectedSportKey, setSelectedSportKey] = useState<string | null>(null);
   const { messages: oddList } = useWebSocket<OddList[]>("odds_list", {
     filters: { sport_key: itemKey },
   });
   const { toast: htoast } = useToast();
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [itemKey]);
 
   const { mutate } = useAppMutation<BetSlipProps>("betSlip", {
     onSuccess: () => {
@@ -85,7 +77,7 @@ function BetItems({
     },
   });
 
-  if (isLoading || !oddList || oddList?.length === 0) {
+  if (!oddList || oddList?.length === 0) {
     return <BetItemsSkeleton />;
   }
 
