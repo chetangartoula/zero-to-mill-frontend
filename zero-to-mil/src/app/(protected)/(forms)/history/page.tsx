@@ -36,7 +36,10 @@ function TransactionHistoryList() {
         <MobileTopNav />
       </div>
 
-      <Tabs defaultValue="bet_history" className="relative mr-auto w-full mt-1">
+      <Tabs
+        defaultValue="bet_history"
+        className="relative mr-auto w-full mt-1 mb-8 pb-8"
+      >
         <TabsList className="w-full flex justify-start rounded-none border-b bg-transparent p-0 ">
           <TabsTrigger
             value="bet_history"

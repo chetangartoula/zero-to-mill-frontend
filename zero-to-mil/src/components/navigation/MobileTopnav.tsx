@@ -15,6 +15,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { getPageRoutes } from "@/utils/getRoutes";
 import { routes } from "@/constants/routes";
 import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
+import { round } from "lodash";
 
 export interface MobileTopNavProps {
   logoSrc?: string;
@@ -85,14 +86,14 @@ function MobileTopNav({
                     className="text-background bg-white rounded-full"
                     onClick={() => router.push(getPageRoutes("deposit"))}
                   />
-                  <p>{main}$</p>
+                  <p>{round(main, 2)}$</p>
                 </div>
               </Button>
             </HoverCardTrigger>
             <HoverCardContent className="w-60 mr-2 rounded-lg" sideOffset={5}>
               <div className="flex justify-between">
                 <p className="text-sm text-start">Available</p>
-                <p className="text-primary text-lg">${main}</p>
+                <p className="text-primary text-lg">${round(main, 2)}</p>
               </div>
               <Separator className="my-2" />
               <div className="flex justify-between">

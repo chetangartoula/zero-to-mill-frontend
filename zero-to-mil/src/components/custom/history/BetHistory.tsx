@@ -45,7 +45,7 @@ function BetHistory({ className, onClick, data, key }: BetHistoryProps) {
         <div className="space-y-2">
           <div className="flex justify-between">
             <p className="text-muted">Odds:</p>
-            <p>{data.total_odds}</p>
+            <p>{round(data.total_odds, 2)}</p>
           </div>
           <div className="flex justify-between">
             <p className="text-muted">Bet:</p>
