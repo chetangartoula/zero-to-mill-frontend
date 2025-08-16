@@ -1,3 +1,14 @@
+
+const withPWA = (await import('next-pwa')).default({
+    dest: 'public',
+    disable: false,
+    register: true,
+    skipWaiting: true,
+
+    buildExcludes: [/middleware-manifest\.json$/],
+    publicExcludes: ['!robots.txt', '!sitemap.xml'],
+})
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: false,
@@ -25,7 +36,7 @@ const nextConfig = {
                 hostname: 'zerotomil.com',
                 pathname: '/**',
             },
-             {
+            {
                 protocol: 'https',
                 hostname: 'api.zerotomil.com',
                 pathname: '/**',
@@ -34,4 +45,4 @@ const nextConfig = {
     }
 };
 
-export default nextConfig;
+export default withPWA(nextConfig);
