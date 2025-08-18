@@ -53,7 +53,7 @@ function BetHistory({
           <div className="flex justify-between">
             <p className="text-muted">Type:</p>
             <p className={`${getTextColor(data.type)}`}>
-              {data.type === "load" ? "Deposit" : "WithDraw"}
+              {data.type === "load" ? "Deposit" : data.type}
             </p>
           </div>
         </div>
