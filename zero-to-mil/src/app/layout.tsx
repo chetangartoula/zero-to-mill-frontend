@@ -9,15 +9,15 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "My PWA App",
-    template: "%s | My PWA App",
+    default: "Zero To Mil",
+    template: "%s | Zero To Mil",
   },
   description: "A Progressive Web App built with Next.js App Router and pnpm",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "My PWA App",
+    title: "Zero To Mil",
     startupImage: [
       {
         url: "/splash-640x1136.png",
@@ -31,20 +31,20 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    siteName: "My PWA App",
+    siteName: "Zero To Mil",
     title: {
-      default: "My PWA App",
-      template: "%s | My PWA App",
+      default: "Zero To Mil",
+      template: "%s | Zero To Mil",
     },
-    description: "A Progressive Web App built with Next.js",
+    description: "Zero To MIl.",
   },
   twitter: {
     card: "summary",
     title: {
-      default: "My PWA App",
-      template: "%s | My PWA App",
+      default: "Zero To Mil",
+      template: "%s | Zero To Mil",
     },
-    description: "A Progressive Web App built with Next.js",
+    description: "Zero To Mil",
   },
 };
 
