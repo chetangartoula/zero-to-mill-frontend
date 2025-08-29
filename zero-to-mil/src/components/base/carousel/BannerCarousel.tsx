@@ -6,36 +6,23 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import type { CarouselApi } from "@/components/ui/carousel";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Banner } from "@/types/base";
+import Autoplay from "embla-carousel-autoplay";
 
 export default function BannerCarousel({ data }: { data: Banner[] }) {
-  const [api, setApi] = useState<CarouselApi>();
   const router = useRouter();
-
-  useEffect(() => {
-    if (!api) return;
-    return () => clearInterval(setInterval(() => api.scrollNext(), 3000));
-  }, [api]);
+  const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
 
   return (
     <div className="w-full max-w p-2 pt-4">
       <Carousel
-        setApi={setApi}
         className="w-full"
-        opts={{
-          align: "start",
-          loop: true,
-          containScroll: "trimSnaps",
-          skipSnaps: false,
-          dragFree: true,
-          duration: 1000,
-          dragThreshold: 1,
-          slidesToScroll: 1,
-        }}
+        plugins={[plugin.current]}
+        onMouseEnter={plugin.current.stop}
+        onMouseLeave={plugin.current.reset}
       >
         <CarouselContent className="-ml-1">
           {data.map((_, index) => (

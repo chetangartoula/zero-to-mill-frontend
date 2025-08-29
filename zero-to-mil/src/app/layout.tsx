@@ -4,6 +4,7 @@ import { AppProvider } from "./provider";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Metadata, Viewport } from "next";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,6 +15,14 @@ export const metadata: Metadata = {
   },
   description: "A Progressive Web App built with Next.js App Router and pnpm",
   manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/images/72.png", type: "image/svg+xml" },
+      { url: "/images/72.png", type: "image/x-icon" },
+      { url: "/images/72.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [{ url: "/images/152.png", sizes: "180x180" }],
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",

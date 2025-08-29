@@ -39,6 +39,7 @@ function OddList({ isDisabled, onClick, total_odds = 0 }: OddListProps) {
       defaultValues={{ amount: 0 }}
       schema={oddListSchema}
       onSubmit={(data, form) => {
+        console.log("dtaa", data);
         mutate(data);
         form.reset();
       }}

@@ -35,7 +35,7 @@ function Login() {
           variant: "destructive",
         });
         return;
-      } else if (response.error) {
+      } else if (response?.error) {
         toast({
           title: "Error",
           description: response.error,

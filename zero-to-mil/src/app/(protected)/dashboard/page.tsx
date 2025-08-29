@@ -16,6 +16,7 @@ import { NavCarousel } from "@/components/base/carousel";
 import { NavCarouselSkeleton } from "@/components/skeletons/NavCarouselSkeleton";
 import { AccordionListSkeleton } from "@/components/skeletons";
 import BannerCarousel from "@/components/base/carousel/BannerCarousel";
+import BannerCarouselSkeleton from "@/components/base/carousel/BannerCarouselSkeleton";
 
 function DashBoard() {
   const { activeTabKey, setActiveTabKey, activeSportKey } = useAppStore(
@@ -32,7 +33,7 @@ function DashBoard() {
     refetchOnWindowFocus: false,
   });
 
-  const { data: bannerData } = useAppQuery<
+  const { data: bannerData, isLoading } = useAppQuery<
     BannerSuccessResponse["responseData"]
   >({
     routeName: "banners",
@@ -94,8 +95,11 @@ function DashBoard() {
           />
         )}
       </div>
-
-      <BannerCarousel data={bannerData || []} />
+      {isLoading ? (
+        <BannerCarouselSkeleton />
+      ) : (
+        <BannerCarousel data={bannerData || []} />
+      )}
 
       {activeSportKey && (isSportsLoading || isSportsFetching) ? (
         <div className="pt-4">
