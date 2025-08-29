@@ -16,6 +16,7 @@ export interface InputFieldProps {
   label: string;
   type?: string;
   isDisabled?: boolean;
+  autoComplete?: string;
   placeholder?: string;
   formItemProps?: React.ComponentProps<typeof FormItem>;
   formLabelProps?: React.ComponentProps<typeof FormLabel>;
@@ -30,6 +31,7 @@ function InputFormField({
   formControlProps,
   formLabelProps,
   type,
+  autoComplete,
 }: InputFieldProps & InputProps) {
   const form = useFormContext();
   return (
@@ -45,6 +47,7 @@ function InputFormField({
                 {...field}
                 disabled={isDisabled}
                 placeholder={placeholder ?? `Please enter the ${label}`}
+                autoComplete="current-password"
                 onChange={(e) => {
                   field.onChange(e.target.value);
                 }}
@@ -52,6 +55,7 @@ function InputFormField({
             ) : (
               <Input
                 {...field}
+                autoComplete={autoComplete}
                 type={type ?? "text"}
                 disabled={isDisabled}
                 placeholder={placeholder ?? `Please enter the ${label}`}

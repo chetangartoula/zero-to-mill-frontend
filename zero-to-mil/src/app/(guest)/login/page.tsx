@@ -70,8 +70,17 @@ function Login() {
         onSubmit={handleSubmit}
       >
         <FormContentWrapper>
-          <InputFormField name="username" label="Username" />
-          <InputFormField name="password" label="Password" type="password" />
+          <InputFormField
+            name="username"
+            label="Username"
+            autoComplete="username"
+          />
+          <InputFormField
+            name="password"
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+          />
           <div className="flex justify-between">
             <CheckBoxFormField
               name="remember"
