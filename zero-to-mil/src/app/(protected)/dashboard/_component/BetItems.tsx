@@ -183,6 +183,7 @@ function BetItems({
                                 selected_team: key,
                                 odds: outcome.odds,
                                 market_key: "ml",
+                                points: outcome.odds,
                               });
                             }}
                           >
@@ -240,6 +241,7 @@ function BetItems({
                                 selected_team: key,
                                 odds: outcome?.odds,
                                 market_key: "ml3way",
+                                points: outcome?.odds,
                               });
                             }}
                           >
@@ -408,6 +410,7 @@ function BetItems({
                                       away_team: activeProps?.away_team,
                                       bookmaker_key: point.odd_id,
                                       selected_team: point.game_name,
+                                      points: point.points,
                                       odds: point.odds,
                                       market_key: activeTab,
                                     })

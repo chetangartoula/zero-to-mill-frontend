@@ -4,7 +4,6 @@ import { AppProvider } from "./provider";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Metadata, Viewport } from "next";
-import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
