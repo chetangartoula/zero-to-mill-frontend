@@ -29,14 +29,14 @@ function MobileMenuPage() {
               src={profile_image}
               alt={profile_username || "User"}
             />
-            <AvatarFallback>
+            <AvatarFallback className="text-foreground">
               {getInitials(profile_username) || ""}
             </AvatarFallback>
           </Avatar>
           {profile_username === "" ? (
             <p className="w-1/4 pt-4 h-3 rounded bg-muted animate"></p>
           ) : (
-            <p className="text-white text-base font-bold mt-2">
+            <p className="text-foreground text-base font-bold mt-2">
               {profile_username}
             </p>
           )}

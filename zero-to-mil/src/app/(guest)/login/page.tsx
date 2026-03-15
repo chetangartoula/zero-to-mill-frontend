@@ -103,7 +103,7 @@ function Login() {
         <Button size={"full"} type="submit">
           Login
         </Button>
-        <Text className="text-center mt-3">
+        <Text className="text-center text-foreground mt-3">
           Don&apos;t have an account?{" "}
           <Link
             type="button"
