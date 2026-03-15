@@ -55,6 +55,7 @@ const config = {
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
+          text: "hsl(var(--muted-text))",
         },
         disabled: {
           DEFAULT: "hsl(var(--disabled))",
