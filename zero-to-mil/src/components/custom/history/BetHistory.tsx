@@ -17,7 +17,7 @@ const getTextColor = (status: string) => {
     case "Lost":
       return "text-destructive";
     default:
-      return "text-muted";
+      return "text-muted-foreground";
   }
 };
 
@@ -25,16 +25,19 @@ function BetHistory({ className, onClick, data, key }: BetHistoryProps) {
   return (
     <div
       key={key}
-      className={cn("bg-input p-4 mb-2", className)}
+      className={cn(
+        "bg-card/80 border border-border/60 rounded-2xl p-4 mb-3 shadow-sm hover:shadow-md transition-shadow",
+        className
+      )}
       onClick={onClick}
     >
       <div className="flex justify-between">
         <p className="font-bold">
           {data.slip_type === "single" ? "SINGLE" : "MULTIPLE"}
         </p>
-        <p className="text-muted">{data.created_date}</p>
+        <p className="text-muted-foreground">{data.created_date}</p>
       </div>
-      <div className="text-sm space-y-2 border-t border-muted pt-2 mt-2">
+      <div className="text-sm space-y-2 border-t border-border/60 pt-2 mt-2">
         {" "}
         <div className="flex justify-between">
           <p>Events: {data.total}</p>
@@ -44,11 +47,11 @@ function BetHistory({ className, onClick, data, key }: BetHistoryProps) {
         </div>
         <div className="space-y-2">
           <div className="flex justify-between">
-            <p className="text-muted">Odds:</p>
+            <p className="text-muted-foreground">Odds:</p>
             <p>{round(data.total_odds, 2)}</p>
           </div>
           <div className="flex justify-between">
-            <p className="text-muted">Bet:</p>
+            <p className="text-muted-foreground">Bet:</p>
             <p>{round(parseFloat(data.bet_amount), 2)}</p>
           </div>
           {/* <div className="flex justify-between">
@@ -56,7 +59,7 @@ function BetHistory({ className, onClick, data, key }: BetHistoryProps) {
             <p>{round(parseFloat(data.win_loss_amount), 2)}</p>
           </div> */}
           <div className="flex justify-between">
-            <p className="text-muted">Status:</p>
+            <p className="text-muted-foreground">Status:</p>
             <p className={`${getTextColor(data.bet_status)}`}>
               {data.bet_status} (${data.win_loss_amount})
             </p>

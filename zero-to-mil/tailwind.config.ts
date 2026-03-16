@@ -148,8 +148,10 @@ const config = {
         "collapsible-up": "collapsible-up 0.2s ease-in-out",
       },
       fontFamily: {
-        switzer: ["Segoe UI", "Switzer", "sans-serif"],
-        seoge: ["Segoe UI"],
+        sans: ["var(--font-sans)", "Manrope", "sans-serif"],
+        display: ["var(--font-display)", "Space Grotesk", "sans-serif"],
+        switzer: ["var(--font-display)", "Space Grotesk", "sans-serif"],
+        seoge: ["var(--font-sans)", "Manrope", "sans-serif"],
       },
       fontWeight: {
         light: "300",

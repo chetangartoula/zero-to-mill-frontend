@@ -15,7 +15,12 @@ function SlipCards({
   onCancel?: (data: any) => void;
 }) {
   return (
-    <div className={cn("p-4  bg-menu", className)}>
+    <div
+      className={cn(
+        "p-4 bg-card/80 border border-border/60 rounded-2xl shadow-sm",
+        className
+      )}
+    >
       <div className="flex justify-between">
         <div className="flex">
           <DynamicIcon IconComponent={StarIcon} className={"text-cardtitle"} />
@@ -27,7 +32,7 @@ function SlipCards({
         </div>
         {onCancel && (
           <div
-            className="text-muted"
+            className="text-muted-foreground"
             onClick={(e) => {
               e.stopPropagation();
               onCancel?.(data);
@@ -39,12 +44,12 @@ function SlipCards({
       </div>
 
       <div className="flex items-center pt-2">
-        <div className=" min-w-12 min-h-11 rounded bg-input text-center flex justify-center  items-center ">
+        <div className="min-w-12 min-h-11 rounded-xl bg-input/80 border border-border/60 text-center flex justify-center items-center">
           <p className="fw-normal">{data?.odds}</p>
         </div>
         <div className="ml-2 text-xs">
           <p>{data?.selected_team}</p>
-          <p className="text-muted pt-2">1x2</p>
+          <p className="text-muted-foreground pt-2">1x2</p>
         </div>
       </div>
     </div>

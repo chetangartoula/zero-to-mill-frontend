@@ -34,7 +34,7 @@ function AccordionList({
         <Accordion
           type="single"
           // value={activeSportKey || "live"}
-          className="border rounded mt-4 bg-menu"
+          className="mt-4 rounded-2xl border border-border/60 bg-card/70 backdrop-blur-sm shadow-sm"
           collapsible
           onValueChange={handleValueChange}
         >
@@ -42,6 +42,7 @@ function AccordionList({
             <AccordionItem
               key={item.key}
               value={item.key}
+              className="first:rounded-t-2xl last:rounded-b-2xl"
               onClick={() => {
                 setActiveSportKey(item.key);
               }}
@@ -54,7 +55,9 @@ function AccordionList({
                     height={20}
                     width={24}
                   />
-                  <p className="ml-2 text-sm text-cardtitle">{item.title}</p>
+                  <p className="ml-2 text-sm font-medium text-cardtitle">
+                    {item.title}
+                  </p>
                 </div>
               </BetAccordionTrigger>
               <AccordionContent>

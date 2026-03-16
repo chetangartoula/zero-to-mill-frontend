@@ -79,38 +79,41 @@ function DashBoard() {
   );
 
   return (
-    <div className="mb-8 pb-8">
-      <div className="w-full mb-4">
+    <div className="mb-10 pb-10">
+      <div className="w-full mb-3">
         <MobileTopNav />
       </div>
 
-      <div className="w-full p-2 bg-navbackground">
-        {isSportsLoading || isSportsFetching ? (
-          <NavCarouselSkeleton />
+      <div className="px-3 sm:px-6 space-y-4">
+        <div className="w-full rounded-2xl border border-border/60 bg-navbackground/70 backdrop-blur-sm p-2 shadow-sm">
+          {isSportsLoading || isSportsFetching ? (
+            <NavCarouselSkeleton />
+          ) : (
+            <NavCarousel
+              data={finalTabData as CarouselData[]}
+              onClick={(data) => setActiveTabKey(data.key)}
+              isactive={activeTabKey || ""}
+            />
+          )}
+        </div>
+
+        {isLoading ? (
+          <BannerCarouselSkeleton />
         ) : (
-          <NavCarousel
-            data={finalTabData as CarouselData[]}
-            onClick={(data) => setActiveTabKey(data.key)}
-            isactive={activeTabKey || ""}
+          <BannerCarousel data={bannerData || []} />
+        )}
+
+        {activeSportKey && (isSportsLoading || isSportsFetching) ? (
+          <div className="pt-4">
+            <AccordionListSkeleton />
+          </div>
+        ) : (
+          <AccordionList
+            data={betList?.data as MenuItems["data"]}
+            activeSlip={data?.slips || []}
           />
         )}
       </div>
-      {isLoading ? (
-        <BannerCarouselSkeleton />
-      ) : (
-        <BannerCarousel data={bannerData || []} />
-      )}
-
-      {activeSportKey && (isSportsLoading || isSportsFetching) ? (
-        <div className="pt-4">
-          <AccordionListSkeleton />
-        </div>
-      ) : (
-        <AccordionList
-          data={betList?.data as MenuItems["data"]}
-          activeSlip={data?.slips || []}
-        />
-      )}
     </div>
   );
 }

@@ -106,7 +106,7 @@ function BetItems({
               <DrawerTrigger asChild key={`${odds?.sport_key}-${index}`}>
                 <div
                   className={cn(
-                    "flex-column bg-greenbetcard border rounded mx-2 mb-2 shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+                    "flex-column bg-card/80 border border-border/60 rounded-2xl mx-2 mb-2 shadow-sm hover:shadow-md transition-shadow"
                   )}
                   onClick={() => {
                     setSelectedSportKey(odds.sport_key);
@@ -127,12 +127,12 @@ function BetItems({
                     </div>
                   )}
 
-                  <p className="text-center mt-1 text-xs text-greyf">
+                  <p className="text-center mt-1 text-xs text-muted-foreground">
                     {odds?.bookmaker?.odds?.ml3way?.home?.market_name ||
                       odds?.bookmaker?.odds?.ml?.home?.market_name}
                   </p>
 
-                  <p className="text-center mt-1 text-xs text-greyf">
+                  <p className="text-center mt-1 text-xs text-muted-foreground">
                     {format(
                       parseISO(odds?.commence_time || odds?.last_update),
                       "dd/MM/yyyy HH:mm",
@@ -143,7 +143,7 @@ function BetItems({
                     )}
                   </p>
 
-                  <p className="text-center mt-1 text-xs text-greyf underline">
+                  <p className="text-center mt-1 text-xs text-muted-foreground underline">
                     Click here for props builder
                   </p>
 
@@ -163,7 +163,7 @@ function BetItems({
                         .map(([key, outcome], index) => (
                           <div
                             className={cn(
-                              "col-span-2 flex flex-col items-center justify-between bg-greenbetcard  rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1"
+                              "col-span-2 flex flex-col items-center justify-between bg-muted/40 rounded-xl p-1 hover:bg-muted/60 transition-colors cursor-pointer flex-1"
                             )}
                             style={{
                               gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, ${
@@ -196,9 +196,9 @@ function BetItems({
                             </p>
                             <p
                               className={cn(
-                                "bg-white py-2 px-4 rounded w-full text-center text-sm font-semibold text-[#000000] opacity-60",
+                                "bg-card/90 border border-border/60 py-2 px-4 rounded-lg w-full text-center text-sm font-semibold text-foreground",
                                 {
-                                  "text-white bg-primary opacity-100":
+                                  "text-primary-foreground bg-primary border-primary":
                                     selected?.bookmaker_key === outcome.oddID,
                                 }
                               )}
@@ -226,7 +226,7 @@ function BetItems({
                         .map(([key, outcome], index) => (
                           <div
                             className={cn(
-                              "col-span-2 flex flex-col items-center justify-between w-full bg-greenbetcard  rounded p-1 hover:bg-opacity-80 transition-all cursor-pointer flex-1"
+                              "col-span-2 flex flex-col items-center justify-between w-full bg-muted/40 rounded-xl p-1 hover:bg-muted/60 transition-colors cursor-pointer flex-1"
                             )}
                             key={`${key}_${index}`}
                             onClick={(e) => {
@@ -245,7 +245,7 @@ function BetItems({
                               });
                             }}
                           >
-                            <p className="text-xs text-center mb-1 break-words  text-greyf background-transparent">
+                            <p className="text-xs text-center mb-1 break-words text-muted-foreground background-transparent">
                               {key === "away"
                                 ? odds?.away_team
                                 : key === "home"
@@ -254,9 +254,9 @@ function BetItems({
                             </p>
                             <p
                               className={cn(
-                                "bg-white py-2 px-4 rounded w-full  text-center text-sm font-semibold text-black opacity-60",
+                                "bg-card/90 border border-border/60 py-2 px-4 rounded-lg w-full text-center text-sm font-semibold text-foreground",
                                 {
-                                  "text-white  bg-primary":
+                                  "text-primary-foreground bg-primary border-primary":
                                     selected?.bookmaker_key === outcome.oddID,
                                 }
                               )}

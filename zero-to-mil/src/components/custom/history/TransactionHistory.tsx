@@ -28,14 +28,17 @@ function BetHistory({
   return (
     <div
       key={key}
-      className={cn("bg-input p-4 mb-2", className)}
+      className={cn(
+        "bg-card/80 border border-border/60 rounded-2xl p-4 mb-3 shadow-sm hover:shadow-md transition-shadow",
+        className
+      )}
       onClick={onClick}
     >
       <div className="flex justify-between">
         <p>{data.txn_date.split("T")[0]}</p>
         <p>${round(data.amount, 2)}</p>
       </div>
-      <div className="text-sm space-y-2 border-t border-muted pt-2 mt-2">
+      <div className="text-sm space-y-2 border-t border-border/60 pt-2 mt-2">
         {" "}
         <div className="flex justify-between">
           <p>Currency</p>
@@ -43,15 +46,15 @@ function BetHistory({
         </div>
         <div className="space-y-2">
           <div className="flex justify-between">
-            <p className="text-muted">Method:</p>
+            <p className="text-muted-foreground">Method:</p>
             <p>{data.deposit_method}</p>
           </div>
           <div className="flex justify-between">
-            <p className="text-muted">Name</p>
+            <p className="text-muted-foreground">Name</p>
             <p>{data.name}</p>
           </div>
           <div className="flex justify-between">
-            <p className="text-muted">Type:</p>
+            <p className="text-muted-foreground">Type:</p>
             <p className={`${getTextColor(data.type)}`}>
               {data.type === "load" ? "Deposit" : data.type}
             </p>

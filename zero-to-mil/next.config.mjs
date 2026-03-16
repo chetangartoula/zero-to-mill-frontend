@@ -12,6 +12,9 @@ const withPWA = (await import('next-pwa')).default({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: false,
+    turbopack: {
+        
+    },
     images: {
         dangerouslyAllowSVG: true,
         contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",

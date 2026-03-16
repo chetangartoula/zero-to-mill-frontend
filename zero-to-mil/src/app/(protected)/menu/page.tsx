@@ -19,8 +19,8 @@ function MobileMenuPage() {
   return (
     <div className="flex flex-col h-screen">
       <MobileTopNav />
-      <div className=" bg-menu flex flex-col flex-grow gap-2">
-        <div className="flex flex-col items-center justify-center mt-6 mb-2">
+      <div className="bg-menu/40 flex flex-col flex-grow gap-2 px-3 sm:px-6">
+        <div className="flex flex-col items-center justify-center mt-6 mb-2 rounded-2xl border border-border/60 bg-card/80 p-4 shadow-sm">
           <Avatar>
             <AvatarImage
               // src={`https://ui-avatars.com/api/?name=${encodeURIComponent(

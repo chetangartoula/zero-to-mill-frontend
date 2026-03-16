@@ -19,7 +19,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         ghostprimary:
           "hover:bg-primary hover:text-primary-foreground text-primary",
-        link: "text-white",
+        link: "text-foreground hover:text-foreground",
         muted: "bg-muted text-muted-foreground hover:bg-muted/90",
         disabled: "bg-disabled text-disabled-foreground",
         white: "bg-white text-success",

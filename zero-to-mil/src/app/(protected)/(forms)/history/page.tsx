@@ -38,23 +38,23 @@ function TransactionHistoryList() {
 
       <Tabs
         defaultValue="bet_history"
-        className="relative mr-auto w-full mt-1 mb-8 pb-8"
+        className="relative mr-auto w-full mt-3 mb-8 pb-8 px-3 sm:px-6"
       >
-        <TabsList className="w-full flex justify-start rounded-none border-b bg-transparent p-0 ">
+        <TabsList className="w-full flex justify-start rounded-2xl border border-border/60 bg-card/70 backdrop-blur-sm p-1 shadow-sm">
           <TabsTrigger
             value="bet_history"
-            className="relative flex-1 flex flex-grow rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none focus-visible:ring-0 data-[state=active]:border-b-haravara data-[state=active]:text-foreground data-[state=active]:shadow-none "
+            className="relative flex-1 flex flex-grow rounded-xl border-b-0 bg-transparent px-4 py-2 font-semibold text-muted-foreground shadow-none transition-none focus-visible:ring-0 data-[state=active]:bg-primary/10 data-[state=active]:text-foreground data-[state=active]:shadow-none"
           >
             Bet History
           </TabsTrigger>
           <TabsTrigger
             value="transaction_history"
-            className="relative flex-1 flex flex-grow rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none focus-visible:ring-0 data-[state=active]:border-b-haravara data-[state=active]:text-foreground data-[state=active]:shadow-none "
+            className="relative flex-1 flex flex-grow rounded-xl border-b-0 bg-transparent px-4 py-2 font-semibold text-muted-foreground shadow-none transition-none focus-visible:ring-0 data-[state=active]:bg-primary/10 data-[state=active]:text-foreground data-[state=active]:shadow-none"
           >
             Transaction History
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="bet_history">
+        <TabsContent value="bet_history" className="mt-4">
           {" "}
           {isBetHistoryLoading && (
             <>
@@ -70,12 +70,12 @@ function TransactionHistoryList() {
               </p>
             </div>
           )}
-          <div className="gap-4 p-4">
+          <div className="gap-4">
             {isArray(betHistory) &&
               betHistory?.map((history) => (
                 <BetHistory
                   key="1"
-                  className="border rounded-xl"
+                  className=""
                   data={history || {}}
                   onClick={() =>
                     router.push(
@@ -88,7 +88,7 @@ function TransactionHistoryList() {
               ))}
           </div>
         </TabsContent>
-        <TabsContent value="transaction_history" className="p-4">
+        <TabsContent value="transaction_history" className="mt-4">
           {isTransactionHistoryLoading && (
             <>
               {Array.from({ length: 5 }).map((_, index) => (
@@ -106,7 +106,7 @@ function TransactionHistoryList() {
           {transactionHistory?.map((history) => (
             <TransactionHistory
               key={history.txn_id}
-              className="border rounded-xl"
+              className=""
               data={history || {}}
             />
           ))}
@@ -117,6 +117,3 @@ function TransactionHistoryList() {
 }
 
 export default TransactionHistoryList;
-
-{
-}

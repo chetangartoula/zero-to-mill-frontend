@@ -3,7 +3,8 @@ import { axiosInstance } from "@/lib/axios";
 import { cookies } from "next/headers";
 
 export default async function getAccessToken(): Promise<any> {
-  const refresh = cookies().get("refreshToken")?.value;
+  const cookieStore = await cookies();
+  const refresh = cookieStore.get("refreshToken")?.value;
   if (!refresh) {
     throw new Error("No refresh token found");
   }

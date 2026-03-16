@@ -14,7 +14,8 @@ export default async function LoginUser(data: LoginDTO) {
       data,
     });
     if (response.status === 200) {
-      cookies().set("refreshToken", response.data.refresh, {
+      const cookieStore = await cookies();
+      cookieStore.set("refreshToken", response.data.refresh, {
         httpOnly: true,
         maxAge: 7 * 24 * 60 * 60,
         expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),

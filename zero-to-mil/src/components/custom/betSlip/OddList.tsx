@@ -45,13 +45,15 @@ function OddList({ isDisabled, onClick, total_odds = 0 }: OddListProps) {
       }}
     >
       {(form) => (
-        <div className="sticky bottom-0 pb-8 mb-11 mx-4">
-          <div className="flex justify-between mb-3 text-lg">
-            <p className="font-semibold">Total Odds</p>
-            <p>{round(total_odds, 2)}</p>
+        <div className="sticky bottom-0 pb-6 mb-8 mx-4 sm:mx-6">
+          <div className="flex justify-between mb-3 text-base sm:text-lg">
+            <p className="font-semibold text-foreground">Total Odds</p>
+            <p className="font-semibold text-foreground">
+              {round(total_odds, 2)}
+            </p>
           </div>
-          <div className="bg-input w-full rounded mb-4 p-3 text-sm text-cardtitle">
-            <p>Stake amount, $</p>
+          <div className="bg-input/80 border border-border/60 w-full rounded-2xl mb-4 p-3 text-sm text-cardtitle">
+            <p className="text-muted-foreground">Stake amount, $</p>
             <InputFormField
               name="amount"
               label=""
@@ -72,7 +74,9 @@ function OddList({ isDisabled, onClick, total_odds = 0 }: OddListProps) {
             }
           />
           <div className="flex justify-between pb-4 mt-3 text-lg">
-            <div className="font-semibold">Possible Return</div>
+            <div className="font-semibold text-foreground">
+              Possible Return
+            </div>
             <p>
               $
               {(
@@ -81,8 +85,8 @@ function OddList({ isDisabled, onClick, total_odds = 0 }: OddListProps) {
             </p>
           </div>
           <Button
-            variant="secondary"
-            className="w-full mb-4"
+            variant="default"
+            className="w-full mb-4 rounded-xl"
             disabled={isDisabled}
             onClick={onClick}
           >

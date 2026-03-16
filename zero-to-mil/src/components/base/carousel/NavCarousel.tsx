@@ -38,14 +38,21 @@ export function NavCarousel({
     >
       <CarouselContent className="-ml-1">
         {data?.map(({ icon: Icon, ...rest }, index) => (
-          <CarouselItem key={index} className="pl-1 basis-1/8 h-16.5">
+          <CarouselItem
+            key={index}
+            className="pl-1 basis-[5.5rem] sm:basis-[6.5rem] h-16.5"
+          >
             {(rest.logo_url || Icon) && (
               <Card
-                className={`w-fit-content min-w-[6rem] max-w-[8rem] h-17.5 rounded ${isActive(rest.value) ? "bg-primary" : "bg-accent"}`}
+                className={`w-fit-content min-w-[5.5rem] max-w-[7.5rem] h-17.5 rounded-2xl border border-border/60 shadow-sm transition-all ${
+                  isActive(rest.value)
+                    ? "bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-md"
+                    : "bg-card/80 text-foreground hover:bg-card"
+                }`}
                 onClick={() => onClick && onClick(rest)}
                 title={rest.name}
               >
-                <CardContent className="flex flex-col aspect-square items-center justify-center p-2">
+                <CardContent className="flex flex-col aspect-square items-center justify-center gap-1 p-2">
                   <div className="p-1">
                     {rest.logo_url ? (
                       <Image
@@ -57,22 +64,26 @@ export function NavCarousel({
                         height={30}
                         className={`object-contain ${
                           isActive(rest.value)
-                            ? "brightness-150"
-                            : "opacity-100"
+                            ? "brightness-110"
+                            : "opacity-80"
                         }`}
                       />
                     ) : Icon ? (
                       <Icon
                         className={`w-4 h-4 ${
-                          isActive(rest.value) ? "text-white" : "text-icon"
+                          isActive(rest.value)
+                            ? "text-primary-foreground"
+                            : "text-icon"
                         }`}
                       />
                     ) : null}
                   </div>
                   <p
                     className={`text-xs ${
-                      isActive(rest.value) ? "text-white" : "text-icon"
-                    } font-medium text-center align-center`}
+                      isActive(rest.value)
+                        ? "text-primary-foreground"
+                        : "text-foreground"
+                    } font-medium text-center`}
                   >
                     {rest.name}
                   </p>

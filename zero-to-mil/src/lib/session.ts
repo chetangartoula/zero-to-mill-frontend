@@ -10,7 +10,8 @@ export async function POST(req: NextRequest) {
       { status: 400 }
     );
   }
-  cookies().set({
+  const cookieStore = await cookies();
+  cookieStore.set({
     name: "refreshToken",
     value: refreshToken,
     httpOnly: true,

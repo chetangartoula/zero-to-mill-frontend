@@ -22,22 +22,23 @@ function MenuCards({
   return (
     <Card
       className={cn(
-        " rounded",
+        "rounded-2xl border border-border/60 shadow-sm hover:shadow-md transition-shadow",
         {
-          "bg-input": !isActive,
-          "bg-primary": isActive,
+          "bg-card/80": !isActive,
+          "bg-gradient-to-br from-primary to-primary/80 text-primary-foreground":
+            isActive,
         },
         cardProps?.className
       )}
       onClick={onClick}
       {...cardProps}
     >
-      <CardContent className="flex aspect-square items-center justify-start p-3">
+      <CardContent className="flex items-center justify-start p-3">
         {Icon && (
           <div className="p-1">
             <Icon
               className={cn("h-4", {
-                "text-white": isActive,
+                "text-primary-foreground": isActive,
                 "text-icon": !isActive,
               })}
             />
@@ -45,7 +46,7 @@ function MenuCards({
         )}
         <p
           className={cn(
-            "text-xs text-foreground font-semibold",
+            "text-xs font-semibold",
             textProps?.className
           )}
         >

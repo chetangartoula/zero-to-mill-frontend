@@ -26,7 +26,7 @@ function MenuComponent() {
     }
   };
   return (
-    <div className="px-4 flex flex-col flex-grow gap-4">
+    <div className="px-1 sm:px-2 flex flex-col flex-grow gap-4">
       {NavDrawerItem.map(({ icon, value, label }, index) => (
         <MenuCards
           key={`${label}.${index}`}
@@ -36,12 +36,12 @@ function MenuComponent() {
           onClick={() => router.push(getPageRoutes(value))}
         />
       ))}
-      <div className="w-full bg-muted h-1"></div>
+      <div className="w-full bg-border/60 h-px"></div>
       <MenuCards
         title="LogOut"
         icon={LogOut}
         cardProps={{
-          className: "bg-menu border-none",
+          className: "bg-card/70",
         }}
         onClick={handleLogout}
       />

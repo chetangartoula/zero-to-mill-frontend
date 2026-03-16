@@ -3,7 +3,8 @@ import { clearAxiosAuthTokens } from "@/utils/token";
 import { cookies } from "next/headers";
 
 export async function logout() {
-  cookies().delete("refreshToken");
+  const cookieStore = await cookies();
+  cookieStore.delete("refreshToken");
   clearAxiosAuthTokens();
   return {
     status: 200,
