@@ -81,7 +81,6 @@ function OddList({ isDisabled, onClick, total_odds = 0 }: OddListProps) {
             </p>
           </div>
           <Button
-            variant="secondary"
             className="w-full mb-4"
             disabled={isDisabled}
             onClick={onClick}
