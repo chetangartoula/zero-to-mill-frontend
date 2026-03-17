@@ -89,6 +89,9 @@ const config = {
           DEFAULT: "hsl(var(--navbackground))",
           foreground: "hsl(var(--navbackground-foreground))",
         },
+        prev:{
+          primary:"hsl(var(--prev-primary))",
+        }
       },
       borderRadius: {
         lg: "var(--radius)",
