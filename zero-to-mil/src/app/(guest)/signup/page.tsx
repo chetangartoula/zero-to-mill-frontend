@@ -86,7 +86,7 @@ function SignUp() {
           />
         </FormContentWrapper>
         <Button size={"full"}>Create Account</Button>
-        <Text variant="white" className="text-center mt-3">
+        <Text className="text-center mt-3 text-foreground">
           Do you have an account?{" "}
           <Link href={getPageRoutes("login")} className="text-primary">
             Login

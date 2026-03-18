@@ -49,16 +49,16 @@ function NumberCarousel({
             }}
           >
             <Card
-              className={`w-20 ${
+              className={`w-20 rounded ${
                 isActive === value
-                  ? "text-haravara bg-haravara-foreground"
-                  : "text-white bg-accent"
+                  ? "text-white bg-prev-primary"
+                  : "text-foreground bg-muted"
               }`}
             >
               <CardContent className="flex flex-col aspect-square items-center justify-center p-3">
                 <p
                   className={`text-xs ${
-                    isActive === value ? "text-haravara " : "text-white"
+                    isActive === value ? "text-white " : "text-black"
                   } font-medium`}
                 >
                   {name}

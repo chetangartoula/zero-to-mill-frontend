@@ -45,7 +45,7 @@ function MenuCards({
         )}
         <p
           className={cn(
-            "text-xs text-white font-semibold",
+            "text-xs text-foreground font-semibold",
             textProps?.className
           )}
         >

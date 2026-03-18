@@ -55,6 +55,7 @@ const config = {
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
+          text: "hsl(var(--muted-text))",
         },
         disabled: {
           DEFAULT: "hsl(var(--disabled))",
@@ -88,6 +89,9 @@ const config = {
           DEFAULT: "hsl(var(--navbackground))",
           foreground: "hsl(var(--navbackground-foreground))",
         },
+        prev:{
+          primary:"hsl(var(--prev-primary))",
+        }
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -41,7 +41,7 @@ export function NavCarousel({
           <CarouselItem key={index} className="pl-1 basis-1/8 h-16.5">
             {(rest.logo_url || Icon) && (
               <Card
-                className="w-fit-content min-w-[6rem] max-w-[8rem] h-17.5 bg-accent"
+                className={`w-fit-content min-w-[6rem] max-w-[8rem] h-17.5 rounded ${isActive(rest.value) ? "bg-primary" : "bg-accent"}`}
                 onClick={() => onClick && onClick(rest)}
                 title={rest.name}
               >
