@@ -10,6 +10,7 @@ interface SSEOptions<T> {
   filters?: Record<string, string | number | boolean>;
   reconnectTimeout?: number;
   maxRetries?: number;
+  eventName?: string;
 }
 
 export const useSSE = <T = unknown>(
@@ -62,7 +63,10 @@ export const useSSE = <T = unknown>(
 
     const eventSource = new EventSource(fullUrl);
 
+    const eventName = options?.eventName || "message";
+
     eventSource.onopen = (event) => {
+      console.log('SSE onOpen')
       if (!isMountedRef.current) return;
       retryCountRef.current = 0;
       setIsConnected(true);
@@ -70,16 +74,24 @@ export const useSSE = <T = unknown>(
       options?.onOpen?.(event);
     };
 
-    eventSource.onmessage = (event) => {
+    const handleMessage = (event: MessageEvent) => {
+      console.log(`SSE onMessage [${eventName}]:`, event.data);
       if (!isMountedRef.current) return;
       try {
-        const parsedData = JSON.parse(event.data) as T;
-        setMessages(parsedData);
-        options?.onMessage?.(parsedData);
+        const parsedData = JSON.parse(event.data) as T as any;
+        setMessages(parsedData?.data);
+        options?.onMessage?.(parsedData?.data);
       } catch (err) {
         console.error("Failed to parse SSE message:", err);
       }
     };
+
+    if (eventName === "message") {
+      eventSource.onmessage = handleMessage;
+    } else {
+      eventSource.addEventListener(eventName, handleMessage as EventListener);
+      eventSource.onmessage = handleMessage;
+    }
 
     eventSource.onerror = (event) => {
       if (!isMountedRef.current) return;
@@ -95,7 +107,6 @@ export const useSSE = <T = unknown>(
       eventSource.close();
       eventSourceRef.current = null;
 
-      // Stop retrying after maxRetries consecutive failures
       if (retryCountRef.current >= maxRetries) {
         console.warn(
           `SSE: Stopped reconnecting after ${maxRetries} consecutive failures.`
@@ -103,7 +114,6 @@ export const useSSE = <T = unknown>(
         return;
       }
 
-      // Auto-reconnect after delay
       reconnectTimerRef.current = setTimeout(() => {
         if (isMountedRef.current) {
           connect();
@@ -112,7 +122,7 @@ export const useSSE = <T = unknown>(
     };
 
     eventSourceRef.current = eventSource;
-  }, [accessToken, url, options, reconnectTimeout]);
+  }, [accessToken, url, options?.eventName, JSON.stringify(options?.filters), reconnectTimeout]);
 
   useEffect(() => {
     isMountedRef.current = true;
@@ -132,7 +142,7 @@ export const useSSE = <T = unknown>(
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, accessToken]);
+  }, [connect]);
 
   return {
     isConnected,

@@ -3,8 +3,8 @@ import { useAppMutation } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { OddList } from "@/types/base";
 import { BetSlipProps } from "@/types/base/betslip";
-import { isString, set } from "lodash";
-import React, { useEffect, useState } from "react";
+import { isString } from "lodash";
+import React, {  useState } from "react";
 import { BetItemsSkeleton } from "./BetItemsSkeleton";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
@@ -42,10 +42,13 @@ function BetItems({
   const queryClient = useQueryClient();
   const { numberOfSlips, setSlip } = useAppStore((store) => store);
   const [selectedSportKey, setSelectedSportKey] = useState<string | null>(null);
-  const { messages: oddList } = useSSE<OddList[]>("odds/feed", {
+  const { messages: oddList } = useSSE<OddList[]>("sports/odds/feed/", {
     filters: { sport_key: itemKey, topic: "odds_list" },
+    eventName: "odds_list"
   });
   const { toast: htoast } = useToast();
+
+  console.log('oddList', oddList)
 
   const { mutate } = useAppMutation<BetSlipProps>("betSlip", {
     onSuccess: () => {

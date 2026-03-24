@@ -20,7 +20,8 @@ export default async function getAccessToken(): Promise<any> {
     });
 
     if (status === 200) {
-      return data.access;
+      console.log('data.access',data)
+      return data?.access;
     } else {
       throw new Error("Failed to get access token");
     }
