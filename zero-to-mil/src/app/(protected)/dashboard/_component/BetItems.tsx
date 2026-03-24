@@ -1,4 +1,4 @@
-import { useWebSocket } from "@/hooks/useWebSocket";
+import { useSSE } from "@/hooks/useSSE";
 import { useAppMutation } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { OddList } from "@/types/base";
@@ -42,8 +42,8 @@ function BetItems({
   const queryClient = useQueryClient();
   const { numberOfSlips, setSlip } = useAppStore((store) => store);
   const [selectedSportKey, setSelectedSportKey] = useState<string | null>(null);
-  const { messages: oddList } = useWebSocket<OddList[]>("odds_list", {
-    filters: { sport_key: itemKey },
+  const { messages: oddList } = useSSE<OddList[]>("odds/feed", {
+    filters: { sport_key: itemKey, topic: "odds_list" },
   });
   const { toast: htoast } = useToast();
 
